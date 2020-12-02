@@ -1,1 +1,1 @@
-# B747-8i-Heavy
+# B747-8i Heavy
