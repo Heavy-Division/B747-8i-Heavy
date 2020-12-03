@@ -17,8 +17,16 @@ class Heavy_B747_8_FMC_VNAVPage {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
 			if (fmc.setSpeedRestriction(value)) {
+				SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 1);
 				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			}
+		};
+
+		fmc.onExec = () => {
+			if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
+				fmc.executeSpeedRestriction()
+			}
+			SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 0);
 		};
 
 		let speedTransCell = FMCString.Line.Dash['3'];
@@ -34,8 +42,13 @@ class Heavy_B747_8_FMC_VNAVPage {
 		}
 
 		let speedRestrictionCell = FMCString.Line.Dash['3'] + FMCString.Common.SLASH + FMCString.Line.Dash['5'];
-		if(isFinite(fmc.speedRestrictionValue) && isFinite(fmc.speedRestrictionAltitude)){
-			speedRestrictionCell = fmc.speedRestrictionValue + FMCString.Common.SLASH + fmc.speedRestrictionAltitude;
+
+		if(isFinite(fmc.clbSpeedRestrictionValue) && isFinite(fmc.clbSpeedRestrictionAltitude)){
+			speedRestrictionCell = fmc.clbSpeedRestrictionValue + FMCString.Common.SLASH + fmc.clbSpeedRestrictionAltitude;
+		}
+
+		if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
+			speedRestrictionCell = fmc.clbSpeedRestrictionValueModified + FMCString.Common.SLASH + fmc.clbSpeedRestrictionAltitudeModified;
 		}
 
 		fmc.setTemplate([

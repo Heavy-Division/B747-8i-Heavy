@@ -2,8 +2,10 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 
 	constructor() {
 		super(...arguments);
-		this.speedRestrictionValue = NaN;
-		this.speedRestrictionAltitude = NaN;
+		this.clbSpeedRestrictionValue = NaN;
+		this.clbSpeedRestrictionAltitude = NaN;
+		this.clbSpeedRestrictionValueModified = NaN
+		this.clbSpeedRestrictionAltitudeModified = NaN
 	}
 
 	Init() {
@@ -244,7 +246,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 				if (this.getIsVNAVActive()) {
 					let speed = this.getClbManagedSpeed();
 					if(this.shouldEngageSpeedRestriction()){
-						speed = this.speedRestrictionValue;
+						speed = this.clbSpeedRestrictionValue;
 					}
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
 					let altitude = Simplane.getAltitudeAboveGround();
@@ -292,20 +294,26 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		}
 	}
 
+	executeSpeedRestriction(){
+		this.clbSpeedRestrictionValue = this.clbSpeedRestrictionValueModified
+		this.clbSpeedRestrictionAltitude = this.clbSpeedRestrictionAltitudeModified
+	}
+
 	setSpeedRestriction(input) {
 		let inputSplit = input.split('/');
 		let speed = parseInt(inputSplit[0]);
 		let altitude = parseInt(inputSplit[1]);
 		if (isFinite(speed) && isFinite(altitude)) {
-			this.speedRestrictionValue = speed;
-			this.speedRestrictionAltitude = altitude;
+			this.clbSpeedRestrictionValueModified = speed;
+			this.clbSpeedRestrictionAltitudeModified = altitude;
 			return true;
 		}
+		this.showErrorMessage(FMCString.Scratchpad.Error.INVALID_ENTRY);
 		return false;
 	}
 
 	shouldEngageSpeedRestriction(){
-		return isFinite(this.speedRestrictionValue) && isFinite(this.speedRestrictionAltitude) && Simplane.getAltitude() <= this.speedRestrictionAltitude;
+		return isFinite(this.clbSpeedRestrictionValue) && isFinite(this.clbSpeedRestrictionAltitude) && Simplane.getAltitude() <= this.clbSpeedRestrictionAltitude;
 	}
 
 
