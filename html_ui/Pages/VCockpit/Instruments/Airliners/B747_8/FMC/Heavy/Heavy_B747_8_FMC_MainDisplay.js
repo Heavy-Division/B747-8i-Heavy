@@ -18,12 +18,12 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		if (isFinite(dt)) {
 			this.updateAutopilotCooldown -= dt;
 		}
-		if (SimVar.GetSimVarValue("L:AIRLINER_FMC_FORCE_NEXT_UPDATE", "number") === 1) {
-			SimVar.SetSimVarValue("L:AIRLINER_FMC_FORCE_NEXT_UPDATE", "number", 0);
+		if (SimVar.GetSimVarValue('L:AIRLINER_FMC_FORCE_NEXT_UPDATE', 'number') === 1) {
+			SimVar.SetSimVarValue('L:AIRLINER_FMC_FORCE_NEXT_UPDATE', 'number', 0);
 			this.updateAutopilotCooldown = -1;
 		}
 		if (this.updateAutopilotCooldown < 0) {
-			let currentApMasterStatus = SimVar.GetSimVarValue("AUTOPILOT MASTER", "boolean");
+			let currentApMasterStatus = SimVar.GetSimVarValue('AUTOPILOT MASTER', 'boolean');
 			if (currentApMasterStatus != this._apMasterStatus) {
 				this._apMasterStatus = currentApMasterStatus;
 				this._forceNextAltitudeUpdate = true;
@@ -38,16 +38,16 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			this._previousAThrStatus = currentAThrMasterStatus;
 			if (this.currentFlightPhase <= FlightPhase.FLIGHT_PHASE_TAKEOFF) {
 				let n1 = this.getThrustTakeOffLimit() / 100;
-				SimVar.SetSimVarValue("AUTOPILOT THROTTLE MAX THRUST", "number", n1);
+				SimVar.SetSimVarValue('AUTOPILOT THROTTLE MAX THRUST', 'number', n1);
 			}
 			if (!this.getIsAltitudeHoldActive()) {
-				Coherent.call("AP_ALT_VAR_SET_ENGLISH", 1, Simplane.getAutoPilotDisplayedAltitudeLockValue(), this._forceNextAltitudeUpdate);
+				Coherent.call('AP_ALT_VAR_SET_ENGLISH', 1, Simplane.getAutoPilotDisplayedAltitudeLockValue(), this._forceNextAltitudeUpdate);
 			}
 			let vRef = 0;
 			if (this.currentFlightPhase >= FlightPhase.FLIGHT_PHASE_DESCENT) {
 				vRef = 1.3 * Simplane.getStallSpeed();
 			}
-			SimVar.SetSimVarValue("L:AIRLINER_VREF_SPEED", "knots", vRef);
+			SimVar.SetSimVarValue('L:AIRLINER_VREF_SPEED', 'knots', vRef);
 			if (this._apHasDeactivated) {
 				this.deactivateVNAV();
 				if (!this.getIsSPDActive()) {
@@ -80,13 +80,13 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					this.doActivateVNAV();
 				}
 			}
-			if (currentApMasterStatus && SimVar.GetSimVarValue("L:AP_VNAV_ACTIVE", "number") === 1) {
+			if (currentApMasterStatus && SimVar.GetSimVarValue('L:AP_VNAV_ACTIVE', 'number') === 1) {
 				let targetAltitude = Simplane.getAutoPilotAltitudeLockValue();
 				let altitude = Simplane.getAltitude();
 				let deltaAltitude = Math.abs(targetAltitude - altitude);
 				if (deltaAltitude > 1000) {
 					if (!Simplane.getAutoPilotFLCActive()) {
-						SimVar.SetSimVarValue("K:FLIGHT_LEVEL_CHANGE_ON", "Number", 1);
+						SimVar.SetSimVarValue('K:FLIGHT_LEVEL_CHANGE_ON', 'Number', 1);
 					}
 				}
 			}
@@ -134,13 +134,13 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					this.activateSPD();
 				}
 			}
-			SimVar.SetSimVarValue("SIMVAR_AUTOPILOT_AIRSPEED_MIN_CALCULATED", "knots", Simplane.getStallProtectionMinSpeed());
-			SimVar.SetSimVarValue("SIMVAR_AUTOPILOT_AIRSPEED_MAX_CALCULATED", "knots", Simplane.getMaxSpeed(Aircraft.B747_8));
+			SimVar.SetSimVarValue('SIMVAR_AUTOPILOT_AIRSPEED_MIN_CALCULATED', 'knots', Simplane.getStallProtectionMinSpeed());
+			SimVar.SetSimVarValue('SIMVAR_AUTOPILOT_AIRSPEED_MAX_CALCULATED', 'knots', Simplane.getMaxSpeed(Aircraft.B747_8));
 			let currentAltitude = Simplane.getAltitude();
 			let groundSpeed = Simplane.getGroundSpeed();
-			let apTargetAltitude = Simplane.getAutoPilotAltitudeLockValue("feet");
+			let apTargetAltitude = Simplane.getAutoPilotAltitudeLockValue('feet');
 			let planeHeading = Simplane.getHeadingMagnetic();
-			let planeCoordinates = new LatLong(SimVar.GetSimVarValue("PLANE LATITUDE", "degree latitude"), SimVar.GetSimVarValue("PLANE LONGITUDE", "degree longitude"));
+			let planeCoordinates = new LatLong(SimVar.GetSimVarValue('PLANE LATITUDE', 'degree latitude'), SimVar.GetSimVarValue('PLANE LONGITUDE', 'degree longitude'));
 			if (this.getIsVNAVActive()) {
 				let prevWaypoint = this.flightPlanManager.getPreviousActiveWaypoint();
 				let nextWaypoint = this.flightPlanManager.getActiveWaypoint();
@@ -167,34 +167,34 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 						}
 					}
 					if (showTopOfDescent) {
-						SimVar.SetSimVarValue("L:AIRLINER_FMS_SHOW_TOP_DSCNT", "number", 1);
-						SimVar.SetSimVarValue("L:AIRLINER_FMS_LAT_TOP_DSCNT", "number", topOfDescentLat);
-						SimVar.SetSimVarValue("L:AIRLINER_FMS_LONG_TOP_DSCNT", "number", topOfDescentLong);
+						SimVar.SetSimVarValue('L:AIRLINER_FMS_SHOW_TOP_DSCNT', 'number', 1);
+						SimVar.SetSimVarValue('L:AIRLINER_FMS_LAT_TOP_DSCNT', 'number', topOfDescentLat);
+						SimVar.SetSimVarValue('L:AIRLINER_FMS_LONG_TOP_DSCNT', 'number', topOfDescentLong);
 					} else {
-						SimVar.SetSimVarValue("L:AIRLINER_FMS_SHOW_TOP_DSCNT", "number", 0);
+						SimVar.SetSimVarValue('L:AIRLINER_FMS_SHOW_TOP_DSCNT', 'number', 0);
 					}
-					let selectedAltitude = Simplane.getAutoPilotSelectedAltitudeLockValue("feet");
+					let selectedAltitude = Simplane.getAutoPilotSelectedAltitudeLockValue('feet');
 					if (!this.flightPlanManager.getIsDirectTo() &&
 						isFinite(nextWaypoint.legAltitude1) &&
 						nextWaypoint.legAltitude1 < 20000 &&
 						nextWaypoint.legAltitude1 > selectedAltitude) {
-						Coherent.call("AP_ALT_VAR_SET_ENGLISH", 2, nextWaypoint.legAltitude1, this._forceNextAltitudeUpdate);
+						Coherent.call('AP_ALT_VAR_SET_ENGLISH', 2, nextWaypoint.legAltitude1, this._forceNextAltitudeUpdate);
 						this._forceNextAltitudeUpdate = false;
-						SimVar.SetSimVarValue("L:AP_CURRENT_TARGET_ALTITUDE_IS_CONSTRAINT", "number", 1);
+						SimVar.SetSimVarValue('L:AP_CURRENT_TARGET_ALTITUDE_IS_CONSTRAINT', 'number', 1);
 					} else {
-						let altitude = Simplane.getAutoPilotSelectedAltitudeLockValue("feet");
+						let altitude = Simplane.getAutoPilotSelectedAltitudeLockValue('feet');
 						if (isFinite(altitude)) {
-							Coherent.call("AP_ALT_VAR_SET_ENGLISH", 2, this.cruiseFlightLevel * 100, this._forceNextAltitudeUpdate);
+							Coherent.call('AP_ALT_VAR_SET_ENGLISH', 2, this.cruiseFlightLevel * 100, this._forceNextAltitudeUpdate);
 							this._forceNextAltitudeUpdate = false;
-							SimVar.SetSimVarValue("L:AP_CURRENT_TARGET_ALTITUDE_IS_CONSTRAINT", "number", 0);
+							SimVar.SetSimVarValue('L:AP_CURRENT_TARGET_ALTITUDE_IS_CONSTRAINT', 'number', 0);
 						}
 					}
 				} else {
-					let altitude = Simplane.getAutoPilotSelectedAltitudeLockValue("feet");
+					let altitude = Simplane.getAutoPilotSelectedAltitudeLockValue('feet');
 					if (isFinite(altitude)) {
-						Coherent.call("AP_ALT_VAR_SET_ENGLISH", 2, this.cruiseFlightLevel * 100, this._forceNextAltitudeUpdate);
+						Coherent.call('AP_ALT_VAR_SET_ENGLISH', 2, this.cruiseFlightLevel * 100, this._forceNextAltitudeUpdate);
 						this._forceNextAltitudeUpdate = false;
-						SimVar.SetSimVarValue("L:AP_CURRENT_TARGET_ALTITUDE_IS_CONSTRAINT", "number", 0);
+						SimVar.SetSimVarValue('L:AP_CURRENT_TARGET_ALTITUDE_IS_CONSTRAINT', 'number', 0);
 					}
 				}
 			}
@@ -203,14 +203,14 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					if (!this._hasSwitchedToHoldOnTakeOff) {
 						let speed = Simplane.getIndicatedSpeed();
 						if (speed > 65) {
-							Coherent.call("GENERAL_ENG_THROTTLE_MANAGED_MODE_SET", ThrottleMode.HOLD);
+							Coherent.call('GENERAL_ENG_THROTTLE_MANAGED_MODE_SET', ThrottleMode.HOLD);
 							this._hasSwitchedToHoldOnTakeOff = true;
 						}
 					}
 				}
 			}
 			if (this._isHeadingHoldActive) {
-				Coherent.call("HEADING_BUG_SET", 2, this._headingHoldValue);
+				Coherent.call('HEADING_BUG_SET', 2, this._headingHoldValue);
 			}
 			if (!this.flightPlanManager.isActiveApproach()) {
 				let activeWaypoint = this.flightPlanManager.getActiveWaypoint();
@@ -243,6 +243,9 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			} else if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CLIMB) {
 				if (this.getIsVNAVActive()) {
 					let speed = this.getClbManagedSpeed();
+					if(this.shouldEngageSpeedRestriction()){
+						speed = this.speedRestrictionValue;
+					}
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
 					let altitude = Simplane.getAltitudeAboveGround();
 					let n1 = 100;
@@ -251,7 +254,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					} else {
 						n1 = this.getThrustClimbLimit() / 100;
 					}
-					SimVar.SetSimVarValue("AUTOPILOT THROTTLE MAX THRUST", "number", n1);
+					SimVar.SetSimVarValue('AUTOPILOT THROTTLE MAX THRUST', 'number', n1);
 				}
 			} else if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CRUISE) {
 				if (this.getIsVNAVActive()) {
@@ -264,7 +267,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					} else {
 						n1 = this.getThrustClimbLimit() / 100;
 					}
-					SimVar.SetSimVarValue("AUTOPILOT THROTTLE MAX THRUST", "number", n1);
+					SimVar.SetSimVarValue('AUTOPILOT THROTTLE MAX THRUST', 'number', n1);
 				}
 			} else if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_DESCENT) {
 				if (this.getIsVNAVActive()) {
@@ -280,7 +283,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					let altitude = Simplane.getAltitudeAboveGround();
 					if (altitude < 25) {
 						if (Simplane.getEngineThrottleMode(0) != ThrottleMode.IDLE) {
-							Coherent.call("GENERAL_ENG_THROTTLE_MANAGED_MODE_SET", ThrottleMode.IDLE);
+							Coherent.call('GENERAL_ENG_THROTTLE_MANAGED_MODE_SET', ThrottleMode.IDLE);
 						}
 					}
 				}
@@ -290,7 +293,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 	}
 
 	setSpeedRestriction(input) {
-		let inputSplit = input.split("/");
+		let inputSplit = input.split('/');
 		let speed = parseInt(inputSplit[0]);
 		let altitude = parseInt(inputSplit[1]);
 		if (isFinite(speed) && isFinite(altitude)) {
@@ -301,9 +304,11 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		return false;
 	}
 
-	isSpeedRestrictionActive() {
-
+	shouldEngageSpeedRestriction(){
+		return isFinite(this.speedRestrictionValue) && isFinite(this.speedRestrictionAltitude) && Simplane.getAltitude() <= this.speedRestrictionAltitude;
 	}
+
+
 
 	registerMainButtonsActions() {
 		this.onVNAV = () => {
@@ -312,4 +317,4 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 	}
 }
 
-registerInstrument("fmc-b747-8-main-display", Heavy_B747_8_FMC_MainDisplay);
+registerInstrument('fmc-b747-8-main-display', Heavy_B747_8_FMC_MainDisplay);
