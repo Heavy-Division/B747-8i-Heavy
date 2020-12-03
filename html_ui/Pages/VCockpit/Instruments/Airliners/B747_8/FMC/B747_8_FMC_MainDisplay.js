@@ -799,5 +799,5 @@ B747_8_FMC_MainDisplay._v2s = [
     [122, 144],
     [121, 144],
 ];
-registerInstrument("fmc-b747-8-main-display", B747_8_FMC_MainDisplay);
+
 //# sourceMappingURL=B747_8_FMC_MainDisplay.js.map
