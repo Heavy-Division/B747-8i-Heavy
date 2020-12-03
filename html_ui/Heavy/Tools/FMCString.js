@@ -4,7 +4,10 @@ const FMCString = {
 		ECON: 'ECON',
 		LIM_SPD: 'LIM SPD',
 		MCP_SPD: 'MCP SPD',
-		E_O: 'E/O'
+		E_O: 'E/O',
+		CLB: 'CLB',
+		CRZ: 'CRZ',
+		DES: 'DES'
 	},
 	LineTitle: {
 		CRZ_ALT: 'CRZ ALT',
