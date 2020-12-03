@@ -1,9 +1,9 @@
 class Heavy_B747_8_FMC_VNAVPage {
 	static ShowPage1(fmc) {
 		fmc.clearDisplay();
-		let crzAltCell = "□□□□□";
+		let crzAltCell = FMCString.Line.Box["5"];
 		if (fmc.cruiseFlightLevel) {
-			crzAltCell = fmc.cruiseFlightLevel + "FL";
+			crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel;
 		}
 		fmc.onLeftInput[0] = () => {
 			let value = fmc.inOut;
@@ -12,29 +12,29 @@ class Heavy_B747_8_FMC_VNAVPage {
 				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			}
 		};
-		let speedTransCell = "---";
+		let speedTransCell = FMCString.Line.Dash["3"];
 		let speed = fmc.getCrzManagedSpeed();
 		if (isFinite(speed)) {
 			speedTransCell = speed.toFixed(0);
 		}
-		speedTransCell += "/";
+		speedTransCell += FMCString.Common.SLASH;
 		if (isFinite(fmc.transitionAltitude)) {
 			speedTransCell += fmc.transitionAltitude.toFixed(0);
 		} else {
-			speedTransCell += "-----";
+			speedTransCell += FMCString.Line.Dash["5"];
 		}
 		fmc.setTemplate([
-			["CLB", "1", "3"],
-			["CRZ ALT"],
+			[FMCString.PageTitle.CLB, "1", "3"],
+			[FMCString.LineTitle.CRZ_ALT],
 			[crzAltCell],
-			["ECON SPD"],
+			[FMCString.LineTitle.ECON_SPD],
 			[],
-			["SPD TRANS", "TRANS ALT"],
+			[FMCString.LineTitle.SPD_TRANS, FMCString.LineTitle.TRANS_ALT],
 			[speedTransCell],
-			["SPD RESTR"],
+			[FMCString.LineTitle.SPD_RESTR],
 			[],
 			[],
-			["", "<ENG OUT"],
+			["", FMCString.Prompt.ENG_OUT_RIGHT],
 			[],
 			[]
 		]);
@@ -45,9 +45,9 @@ class Heavy_B747_8_FMC_VNAVPage {
 
 	static ShowPage2(fmc) {
 		fmc.clearDisplay();
-		let crzAltCell = "□□□□□";
+		let crzAltCell = FMCString.Line.Box["5"];
 		if (fmc.cruiseFlightLevel) {
-			crzAltCell = fmc.cruiseFlightLevel + "FL";
+			crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel;
 		}
 		fmc.onRightInput[0] = () => {
 			let value = fmc.inOut;
@@ -62,10 +62,10 @@ class Heavy_B747_8_FMC_VNAVPage {
 			n1Cell = n1Value.toFixed(1) + "%";
 		}
 		fmc.setTemplate([
-			["CRZ", "2", "3"],
-			["CRZ ALT", "STEP TO"],
+			[FMCString.PageTitle.CRZ, "2", "3"],
+			[FMCString.LineTitle.CRZ_ALT, "STEP TO"],
 			[crzAltCell],
-			["ECON SPD", "AT"],
+			[FMCString.LineTitle.ECON_SPD, "AT"],
 			[],
 			["N1"],
 			[n1Cell],
@@ -86,21 +86,21 @@ class Heavy_B747_8_FMC_VNAVPage {
 
 	static ShowPage3(fmc) {
 		fmc.clearDisplay();
-		let speedTransCell = "---";
+		let speedTransCell = FMCString.Line.Dash["3"];
 		let speed = fmc.getDesManagedSpeed();
 		if (isFinite(speed)) {
 			speedTransCell = speed.toFixed(0);
 		}
 		speedTransCell += "/10000";
 		fmc.setTemplate([
-			["DES", "3", "3"],
+			[FMCString.PageTitle.DES, "3", "3"],
 			["E/D AT"],
 			[],
-			["ECON SPD"],
+			[FMCString.LineTitle.ECON_SPD],
 			[],
-			["SPD TRANS", "WPT/ALT"],
+			[FMCString.LineTitle.SPD_TRANS, "WPT/ALT"],
 			[speedTransCell],
-			["SPD RESTR"],
+			[FMCString.LineTitle.SPD_RESTR],
 			[],
 			["PAUSE @ DIST FROM DEST"],
 			["OFF", "FORECAST>"],
