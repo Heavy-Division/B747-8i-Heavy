@@ -1,4 +1,4 @@
-class Heavy_B747_8_FMC_VNAVPage extends B747_8_FMC_VNAVPage {
+class Heavy_B747_8_FMC_VNAVPage {
     static ShowPage1(fmc) {
         fmc.clearDisplay();
         let crzAltCell = "□□□□□";
