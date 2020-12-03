@@ -23,7 +23,7 @@ const FMCString = {
 			1: '-',
 			2: '--',
 			3: '---',
-			5: '-----',
+			5: '-----'
 		},
 		Box: {
 			1: '□',
@@ -40,7 +40,11 @@ const FMCString = {
 			5: '_____'
 		}
 	},
-	Scratchpad: {},
+	Scratchpad: {
+		Error: {
+			INVALID_ENTRY: 'INVALID ENTRY'
+		}
+	},
 	Prompt: {
 		ECON_LEFT: '<ECON',
 		ENG_OUT_RIGHT: 'ENG OUT>',
