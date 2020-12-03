@@ -1,7 +1,7 @@
 class Heavy_B747_8_FMC_VNAVPage {
 	static ShowPage1(fmc) {
 		fmc.clearDisplay();
-		let crzAltCell = FMCString.Line.Box["5"];
+		let crzAltCell = FMCString.Line.Box['5'];
 		if (fmc.cruiseFlightLevel) {
 			crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel;
 		}
@@ -12,7 +12,16 @@ class Heavy_B747_8_FMC_VNAVPage {
 				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			}
 		};
-		let speedTransCell = FMCString.Line.Dash["3"];
+
+		fmc.onLeftInput[3] = () => {
+			let value = fmc.inOut;
+			fmc.clearUserInput();
+			if (fmc.setSpeedRestriction(value)) {
+				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
+			}
+		};
+
+		let speedTransCell = FMCString.Line.Dash['3'];
 		let speed = fmc.getCrzManagedSpeed();
 		if (isFinite(speed)) {
 			speedTransCell = speed.toFixed(0);
@@ -21,10 +30,16 @@ class Heavy_B747_8_FMC_VNAVPage {
 		if (isFinite(fmc.transitionAltitude)) {
 			speedTransCell += fmc.transitionAltitude.toFixed(0);
 		} else {
-			speedTransCell += FMCString.Line.Dash["5"];
+			speedTransCell += FMCString.Line.Dash['5'];
 		}
+
+		let speedRestrictionCell = FMCString.Line.Dash['3'] + FMCString.Common.SLASH + FMCString.Line.Dash['5'];
+		if(isFinite(fmc.speedRestrictionValue) && isFinite(fmc.speedRestrictionAltitude)){
+			speedRestrictionCell = fmc.speedRestrictionValue + FMCString.Common.SLASH + fmc.speedRestrictionAltitude;
+		}
+
 		fmc.setTemplate([
-			[FMCString.PageTitle.CLB, "1", "3"],
+			[FMCString.PageTitle.CLB, '1', '3'],
 			[FMCString.LineTitle.CRZ_ALT],
 			[crzAltCell],
 			[FMCString.LineTitle.ECON_SPD],
@@ -32,9 +47,9 @@ class Heavy_B747_8_FMC_VNAVPage {
 			[FMCString.LineTitle.SPD_TRANS, FMCString.LineTitle.TRANS_ALT],
 			[speedTransCell],
 			[FMCString.LineTitle.SPD_RESTR],
+			[speedRestrictionCell],
 			[],
-			[],
-			["", FMCString.Prompt.ENG_OUT_RIGHT],
+			['', FMCString.Prompt.ENG_OUT_RIGHT],
 			[],
 			[]
 		]);
@@ -45,7 +60,7 @@ class Heavy_B747_8_FMC_VNAVPage {
 
 	static ShowPage2(fmc) {
 		fmc.clearDisplay();
-		let crzAltCell = FMCString.Line.Box["5"];
+		let crzAltCell = FMCString.Line.Box['5'];
 		if (fmc.cruiseFlightLevel) {
 			crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel;
 		}
@@ -56,25 +71,25 @@ class Heavy_B747_8_FMC_VNAVPage {
 				Heavy_B747_8_FMC_VNAVPage.ShowPage2(fmc);
 			}
 		};
-		let n1Cell = "--%";
+		let n1Cell = '--%';
 		let n1Value = fmc.getThrustClimbLimit();
 		if (isFinite(n1Value)) {
-			n1Cell = n1Value.toFixed(1) + "%";
+			n1Cell = n1Value.toFixed(1) + '%';
 		}
 		fmc.setTemplate([
-			[FMCString.PageTitle.CRZ, "2", "3"],
-			[FMCString.LineTitle.CRZ_ALT, "STEP TO"],
+			[FMCString.PageTitle.CRZ, '2', '3'],
+			[FMCString.LineTitle.CRZ_ALT, 'STEP TO'],
 			[crzAltCell],
-			[FMCString.LineTitle.ECON_SPD, "AT"],
+			[FMCString.LineTitle.ECON_SPD, 'AT'],
 			[],
-			["N1"],
+			['N1'],
 			[n1Cell],
-			["STEP", "RECMD", "OPT MAX"],
+			['STEP', 'RECMD', 'OPT MAX'],
 			[],
-			["", "1X @ TOD"],
-			["", "OFF"],
-			["PAUSE @ TOD"],
-			["OFF", "<LRC"]
+			['', '1X @ TOD'],
+			['', 'OFF'],
+			['PAUSE @ TOD'],
+			['OFF', '<LRC']
 		]);
 		fmc.onPrevPage = () => {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
@@ -86,26 +101,26 @@ class Heavy_B747_8_FMC_VNAVPage {
 
 	static ShowPage3(fmc) {
 		fmc.clearDisplay();
-		let speedTransCell = FMCString.Line.Dash["3"];
+		let speedTransCell = FMCString.Line.Dash['3'];
 		let speed = fmc.getDesManagedSpeed();
 		if (isFinite(speed)) {
 			speedTransCell = speed.toFixed(0);
 		}
-		speedTransCell += "/10000";
+		speedTransCell += '/10000';
 		fmc.setTemplate([
-			[FMCString.PageTitle.DES, "3", "3"],
-			["E/D AT"],
+			[FMCString.PageTitle.DES, '3', '3'],
+			['E/D AT'],
 			[],
 			[FMCString.LineTitle.ECON_SPD],
 			[],
-			[FMCString.LineTitle.SPD_TRANS, "WPT/ALT"],
+			[FMCString.LineTitle.SPD_TRANS, 'WPT/ALT'],
 			[speedTransCell],
 			[FMCString.LineTitle.SPD_RESTR],
 			[],
-			["PAUSE @ DIST FROM DEST"],
-			["OFF", "FORECAST>"],
+			['PAUSE @ DIST FROM DEST'],
+			['OFF', 'FORECAST>'],
 			[],
-			["<OFFPATH DES"]
+			['<OFFPATH DES']
 		]);
 		fmc.onPrevPage = () => {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage2(fmc);
