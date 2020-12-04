@@ -6,7 +6,11 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		this.clbSpeedRestrictionAltitude = NaN;
 		this.clbSpeedRestrictionValueModified = NaN;
 		this.clbSpeedRestrictionAltitudeModified = NaN;
-		this.speedTransitionAltitude = 10000;
+		this.clbSpeedTransitionAltitude = 10000;
+		this.clbSpeedTransitionValue = NaN;
+		this.clbSpeedTransitionAltitudeModified = NaN;
+		this.clbSpeedTransitionValueModified = NaN;
+		this.transitionAltitude = 18000;
 	}
 
 	Init() {
@@ -253,6 +257,11 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					if (this.shouldEngageSpeedRestriction()) {
 						speed = this.clbSpeedRestrictionValue;
 					}
+
+					if (!this.shouldEngageSpeedRestriction() && this.shouldEngageSpeedTransition()) {
+						speed = this.clbSpeedTransitionValue;
+					}
+
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
 					let altitude = Simplane.getAltitudeAboveGround();
 					let n1 = 100;
@@ -321,6 +330,30 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 
 	shouldEngageSpeedRestriction() {
 		return isFinite(this.clbSpeedRestrictionValue) && isFinite(this.clbSpeedRestrictionAltitude) && Simplane.getAltitude() <= this.clbSpeedRestrictionAltitude;
+	}
+
+	setSpeedTransition(input) {
+		let inputSplit = input.split('/');
+		let speed = parseInt(inputSplit[0]);
+		let altitude = parseInt(inputSplit[1]);
+		if (isFinite(speed) && isFinite(altitude)) {
+			this.clbSpeedTransitionValue = speed;
+			this.clbSpeedTransitionAltitude = altitude;
+			return true;
+		}
+		this.showErrorMessage(FMCString.Scratchpad.Error.INVALID_ENTRY);
+		return false;
+	}
+
+	shouldEngageSpeedTransition() {
+		return isFinite(this.clbSpeedTransitionValue) && isFinite(this.clbSpeedTransitionAltitude) && Simplane.getAltitude() >= this.clbSpeedTransitionAltitude;
+	}
+
+	executeSpeedTransition() {
+		this.clbSpeedTransitionValue = this.clbSpeedTransitionValueModified;
+		this.clbSpeedTransitionAltitude = this.clbSpeedTransitionAltitudeModified;
+		this.clbSpeedTransitionValueModified = NaN;
+		this.clbSpeedTransitionAltitudeModified = NaN;
 	}
 
 

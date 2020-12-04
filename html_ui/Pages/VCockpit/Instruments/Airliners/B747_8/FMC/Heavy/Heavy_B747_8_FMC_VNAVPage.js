@@ -5,6 +5,7 @@ class Heavy_B747_8_FMC_VNAVPage {
 		if (fmc.cruiseFlightLevel) {
 			crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel;
 		}
+
 		fmc.onLeftInput[0] = () => {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
@@ -35,6 +36,17 @@ class Heavy_B747_8_FMC_VNAVPage {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 		};
 
+		fmc.onLeftInput[2] = () => {
+			let value = fmc.inOut;
+			fmc.clearUserInput();
+			if (fmc.setSpeedTransition(value)) {
+				if (isFinite(fmc.clbSpeedTransitionValueModified) && isFinite(fmc.clbSpeedTransitionAltitudeModified)) {
+					fmc.executeSpeedTransition();
+				}
+				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
+			}
+		};
+
 		/*
 				fmc.onExec = () => {
 					if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
@@ -49,16 +61,17 @@ class Heavy_B747_8_FMC_VNAVPage {
 		};
 
 		let speedTransCell = FMCString.Line.Dash['3'];
-		let speed = fmc.getCrzManagedSpeed();
-		if (isFinite(speed)) {
-			speedTransCell = speed.toFixed(0);
+
+		let speed = '';
+		let altitude = '';
+		if (isFinite(fmc.clbSpeedTransitionValue) && isFinite(fmc.clbSpeedTransitionAltitude)) {
+			speed = fmc.clbSpeedTransitionValue.toFixed(0);
+			altitude = fmc.clbSpeedTransitionAltitude.toFixed(0);
+		} else if (isFinite(fmc.getCrzManagedSpeed())) {
+			speed = fmc.getCrzManagedSpeed();
+			altitude = 10000;
 		}
-		speedTransCell += FMCString.Common.SLASH;
-		if (isFinite(fmc.transitionAltitude)) {
-			speedTransCell += fmc.speedTransitionAltitude.toFixed(0);
-		} else {
-			speedTransCell += FMCString.Line.Dash['5'];
-		}
+		speedTransCell = speed + FMCString.Common.SLASH + altitude;
 
 		let speedRestrictionCell = FMCString.Line.Dash['3'] + FMCString.Common.SLASH + FMCString.Line.Dash['5'];
 
