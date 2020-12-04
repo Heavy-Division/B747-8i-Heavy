@@ -4,8 +4,9 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		super(...arguments);
 		this.clbSpeedRestrictionValue = NaN;
 		this.clbSpeedRestrictionAltitude = NaN;
-		this.clbSpeedRestrictionValueModified = NaN
-		this.clbSpeedRestrictionAltitudeModified = NaN
+		this.clbSpeedRestrictionValueModified = NaN;
+		this.clbSpeedRestrictionAltitudeModified = NaN;
+		this.speedTransitionAltitude = 10000;
 	}
 
 	Init() {
@@ -245,11 +246,11 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			} else if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CLIMB) {
 				if (this.getIsVNAVActive()) {
 
-					if(this.refreshPageCallback) {
-						this.refreshPageCallback()
+					if (this.refreshPageCallback) {
+						this.refreshPageCallback();
 					}
 					let speed = this.getClbManagedSpeed();
-					if(this.shouldEngageSpeedRestriction()){
+					if (this.shouldEngageSpeedRestriction()) {
 						speed = this.clbSpeedRestrictionValue;
 					}
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
@@ -298,11 +299,11 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		}
 	}
 
-	executeSpeedRestriction(){
-		this.clbSpeedRestrictionValue = this.clbSpeedRestrictionValueModified
-		this.clbSpeedRestrictionAltitude = this.clbSpeedRestrictionAltitudeModified
-		this.clbSpeedRestrictionValueModified = NaN
-		this.clbSpeedRestrictionAltitudeModified = NaN
+	executeSpeedRestriction() {
+		this.clbSpeedRestrictionValue = this.clbSpeedRestrictionValueModified;
+		this.clbSpeedRestrictionAltitude = this.clbSpeedRestrictionAltitudeModified;
+		this.clbSpeedRestrictionValueModified = NaN;
+		this.clbSpeedRestrictionAltitudeModified = NaN;
 	}
 
 	setSpeedRestriction(input) {
@@ -318,10 +319,9 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		return false;
 	}
 
-	shouldEngageSpeedRestriction(){
+	shouldEngageSpeedRestriction() {
 		return isFinite(this.clbSpeedRestrictionValue) && isFinite(this.clbSpeedRestrictionAltitude) && Simplane.getAltitude() <= this.clbSpeedRestrictionAltitude;
 	}
-
 
 
 	registerMainButtonsActions() {
