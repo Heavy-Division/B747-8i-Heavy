@@ -7,9 +7,9 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		this.clbSpeedRestrictionValueModified = NaN;
 		this.clbSpeedRestrictionAltitudeModified = NaN;
 		this.clbSpeedTransitionAltitude = 10000;
-		this.clbSpeedTransitionValue = NaN;
-		this.clbSpeedTransitionAltitudeModified = NaN;
-		this.clbSpeedTransitionValueModified = NaN;
+		this.clbSpeedTransitionValue = 250;
+		this.clbSpeedTransitionAltitudeModified = 10000;
+		this.clbSpeedTransitionValueModified = 250;
 		this.transitionAltitude = 18000;
 	}
 
@@ -256,10 +256,6 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					let speed = this.getClbManagedSpeed();
 					if (this.shouldEngageSpeedRestriction()) {
 						speed = this.clbSpeedRestrictionValue;
-					}
-
-					if (!this.shouldEngageSpeedRestriction() && this.shouldEngageSpeedTransition()) {
-						speed = this.clbSpeedTransitionValue;
 					}
 
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);

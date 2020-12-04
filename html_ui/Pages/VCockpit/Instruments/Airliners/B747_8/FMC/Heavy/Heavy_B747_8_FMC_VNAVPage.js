@@ -35,7 +35,7 @@ class Heavy_B747_8_FMC_VNAVPage {
 			}
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 		};
-
+/*
 		fmc.onLeftInput[2] = () => {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
@@ -46,7 +46,7 @@ class Heavy_B747_8_FMC_VNAVPage {
 				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			}
 		};
-
+*/
 		/*
 				fmc.onExec = () => {
 					if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
