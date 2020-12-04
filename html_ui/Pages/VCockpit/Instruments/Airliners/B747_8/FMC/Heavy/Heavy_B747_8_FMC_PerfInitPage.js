@@ -1,12 +1,12 @@
-class Heavy_FMCPerfInitPage {
+class Heavy_B747_8_FMC_PerfInitPage {
 	static ShowPage1(fmc) {
 		fmc.clearDisplay();
 		fmc.updateFuelVars();
-		Heavy_FMCPerfInitPage._timer = 0;
+		Heavy_B747_8_FMC_PerfInitPage._timer = 0;
 		fmc.pageUpdate = () => {
-			FMCPerfInitPage._timer++;
-			if (FMCPerfInitPage._timer >= 15) {
-				FMCPerfInitPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_PerfInitPage._timer++;
+			if (Heavy_B747_8_FMC_PerfInitPage._timer >= 15) {
+				Heavy_B747_8_FMC_PerfInitPage.ShowPage1(fmc);
 			}
 		};
 		let grossWeightCell = FMCString.Line.Box['3'] + FMCString.Common.PERIOD + FMCString.Line.Box['1'];
@@ -18,7 +18,7 @@ class Heavy_FMCPerfInitPage {
 			fmc.clearUserInput();
 			fmc.setWeight(value, result => {
 				if (result) {
-					FMCPerfInitPage.ShowPage1(fmc);
+					Heavy_B747_8_FMC_PerfInitPage.ShowPage1(fmc);
 				}
 			}, true);
 		};
@@ -30,7 +30,7 @@ class Heavy_FMCPerfInitPage {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
 			if (fmc.setCruiseFlightLevelAndTemperature(value)) {
-				FMCPerfInitPage.ShowPage1(fmc);
+				Heavy_B747_8_FMC_PerfInitPage.ShowPage1(fmc);
 			}
 		};
 		let blockFuelCell = FMCString.Line.Box['3'] + FMCString.Common.PERIOD + FMCString.Line.Box['1'];
@@ -45,18 +45,18 @@ class Heavy_FMCPerfInitPage {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
 			if (fmc.trySetZeroFuelWeightZFWCG(value, true)) {
-				FMCPerfInitPage.ShowPage1(fmc);
+				Heavy_B747_8_FMC_PerfInitPage.ShowPage1(fmc);
 			}
 		};
 		let costIndex = FMCString.Line.Box['3'];
 		if (fmc.costIndex) {
 			costIndex = fmc.costIndex + '[color]blue';
 		}
-		fmc.onLeftInput[4] = () => {
+		fmc.onRightInput[1] = () => {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
 			if (fmc.tryUpdateCostIndex(value)) {
-				FMCPerfInitPage.ShowPage1(fmc);
+				Heavy_B747_8_FMC_PerfInitPage.ShowPage1(fmc);
 			}
 		};
 		fmc.setTemplate([
@@ -82,3 +82,5 @@ class Heavy_FMCPerfInitPage {
 		};
 	}
 }
+
+Heavy_B747_8_FMC_PerfInitPage._timer = 0;
