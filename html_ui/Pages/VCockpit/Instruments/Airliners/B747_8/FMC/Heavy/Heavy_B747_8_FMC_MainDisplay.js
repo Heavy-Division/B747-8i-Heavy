@@ -244,6 +244,10 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 				}
 			} else if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CLIMB) {
 				if (this.getIsVNAVActive()) {
+
+					if(this.refreshPageCallback) {
+						this.refreshPageCallback()
+					}
 					let speed = this.getClbManagedSpeed();
 					if(this.shouldEngageSpeedRestriction()){
 						speed = this.clbSpeedRestrictionValue;
@@ -297,6 +301,8 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 	executeSpeedRestriction(){
 		this.clbSpeedRestrictionValue = this.clbSpeedRestrictionValueModified
 		this.clbSpeedRestrictionAltitude = this.clbSpeedRestrictionAltitudeModified
+		this.clbSpeedRestrictionValueModified = NaN
+		this.clbSpeedRestrictionAltitudeModified = NaN
 	}
 
 	setSpeedRestriction(input) {

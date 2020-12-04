@@ -26,7 +26,12 @@ class Heavy_B747_8_FMC_VNAVPage {
 			if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
 				fmc.executeSpeedRestriction()
 			}
+			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 0);
+		};
+
+		fmc.refreshPageCallback = () => {
+			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 		};
 
 		let speedTransCell = FMCString.Line.Dash['3'];
@@ -51,8 +56,29 @@ class Heavy_B747_8_FMC_VNAVPage {
 			speedRestrictionCell = fmc.clbSpeedRestrictionValueModified + FMCString.Common.SLASH + fmc.clbSpeedRestrictionAltitudeModified;
 		}
 
+		let pageTitle = ""
+
+		if(isFinite(fmc.clbSpeedRestrictionValueModified) || isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
+			pageTitle += FMCString.PageTitle.MOD + ' '
+		} else {
+			if(fmc.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CLIMB){
+				pageTitle += FMCString.PageTitle.ACT + ' '
+			}
+		}
+
+		if(isFinite(fmc.clbSpeedRestrictionValue) && isFinite(fmc.clbSpeedRestrictionAltitude) && fmc.shouldEngageSpeedRestriction()){
+			pageTitle += ' ' + fmc.clbSpeedRestrictionValue + 'KT '
+		} else {
+			pageTitle += ' ' + fmc.getClbManagedSpeed() + 'KT '
+		}
+
+		fmc.flightPlanManager()
+
+
+		pageTitle += FMCString.PageTitle.CLB
+
 		fmc.setTemplate([
-			[FMCString.PageTitle.CLB, '1', '3'],
+			[pageTitle, '1', '3'],
 			[FMCString.LineTitle.CRZ_ALT],
 			[crzAltCell],
 			[FMCString.LineTitle.ECON_SPD],
