@@ -7,7 +7,9 @@ const FMCString = {
 		E_O: 'E/O',
 		CLB: 'CLB',
 		CRZ: 'CRZ',
-		DES: 'DES'
+		DES: 'DES',
+		MOD: 'MOD',
+		ACT: 'ACT'
 	},
 	LineTitle: {
 		CRZ_ALT: 'CRZ ALT',
