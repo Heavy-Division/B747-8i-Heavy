@@ -17,11 +17,14 @@ class Heavy_B747_8_FMC_VNAVPage {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
 			if (fmc.setSpeedRestriction(value)) {
-				SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 1);
+				//SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 1);
+				if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
+					fmc.executeSpeedRestriction()
+				}
 				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			}
 		};
-
+/*
 		fmc.onExec = () => {
 			if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
 				fmc.executeSpeedRestriction()
@@ -29,7 +32,7 @@ class Heavy_B747_8_FMC_VNAVPage {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 0);
 		};
-
+*/
 		fmc.refreshPageCallback = () => {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 		};
@@ -71,9 +74,6 @@ class Heavy_B747_8_FMC_VNAVPage {
 		} else {
 			pageTitle += ' ' + fmc.getClbManagedSpeed() + 'KT '
 		}
-
-		fmc.flightPlanManager()
-
 
 		pageTitle += FMCString.PageTitle.CLB
 
