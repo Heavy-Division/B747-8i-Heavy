@@ -18,21 +18,32 @@ class Heavy_B747_8_FMC_VNAVPage {
 			fmc.clearUserInput();
 			if (fmc.setSpeedRestriction(value)) {
 				//SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 1);
-				if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
-					fmc.executeSpeedRestriction()
+				if (isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)) {
+					fmc.executeSpeedRestriction();
 				}
 				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			}
 		};
-/*
-		fmc.onExec = () => {
-			if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
-				fmc.executeSpeedRestriction()
+
+		fmc.onRightInput[2] = () => {
+			let value = fmc.inOut;
+			fmc.clearUserInput();
+			let altitude = HeavyInputUtils.inputToAltitude(value);
+			if (altitude) {
+				fmc.trySetTransAltitude(altitude);
 			}
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
-			SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 0);
 		};
-*/
+
+		/*
+				fmc.onExec = () => {
+					if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
+						fmc.executeSpeedRestriction()
+					}
+					Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
+					SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 0);
+				};
+		*/
 		fmc.refreshPageCallback = () => {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 		};
@@ -44,38 +55,40 @@ class Heavy_B747_8_FMC_VNAVPage {
 		}
 		speedTransCell += FMCString.Common.SLASH;
 		if (isFinite(fmc.transitionAltitude)) {
-			speedTransCell += fmc.transitionAltitude.toFixed(0);
+			speedTransCell += fmc.speedTransitionAltitude.toFixed(0);
 		} else {
 			speedTransCell += FMCString.Line.Dash['5'];
 		}
 
 		let speedRestrictionCell = FMCString.Line.Dash['3'] + FMCString.Common.SLASH + FMCString.Line.Dash['5'];
 
-		if(isFinite(fmc.clbSpeedRestrictionValue) && isFinite(fmc.clbSpeedRestrictionAltitude)){
+		if (isFinite(fmc.clbSpeedRestrictionValue) && isFinite(fmc.clbSpeedRestrictionAltitude)) {
 			speedRestrictionCell = fmc.clbSpeedRestrictionValue + FMCString.Common.SLASH + fmc.clbSpeedRestrictionAltitude;
 		}
 
-		if(isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
+		if (isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)) {
 			speedRestrictionCell = fmc.clbSpeedRestrictionValueModified + FMCString.Common.SLASH + fmc.clbSpeedRestrictionAltitudeModified;
 		}
 
-		let pageTitle = ""
+		let pageTitle = '';
 
-		if(isFinite(fmc.clbSpeedRestrictionValueModified) || isFinite(fmc.clbSpeedRestrictionAltitudeModified)){
-			pageTitle += FMCString.PageTitle.MOD + ' '
+		if (isFinite(fmc.clbSpeedRestrictionValueModified) || isFinite(fmc.clbSpeedRestrictionAltitudeModified)) {
+			pageTitle += FMCString.PageTitle.MOD + ' ';
 		} else {
-			if(fmc.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CLIMB){
-				pageTitle += FMCString.PageTitle.ACT + ' '
+			if (fmc.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CLIMB) {
+				pageTitle += FMCString.PageTitle.ACT + ' ';
 			}
 		}
 
-		if(isFinite(fmc.clbSpeedRestrictionValue) && isFinite(fmc.clbSpeedRestrictionAltitude) && fmc.shouldEngageSpeedRestriction()){
-			pageTitle += ' ' + fmc.clbSpeedRestrictionValue + 'KT '
+		if (isFinite(fmc.clbSpeedRestrictionValue) && isFinite(fmc.clbSpeedRestrictionAltitude) && fmc.shouldEngageSpeedRestriction()) {
+			pageTitle += ' ' + fmc.clbSpeedRestrictionValue + 'KT ';
 		} else {
-			pageTitle += ' ' + fmc.getClbManagedSpeed() + 'KT '
+			pageTitle += ' ' + fmc.getClbManagedSpeed() + 'KT ';
 		}
 
-		pageTitle += FMCString.PageTitle.CLB
+		pageTitle += FMCString.PageTitle.CLB;
+
+		let alt = fmc.transitionAltitude.toFixed(0);
 
 		fmc.setTemplate([
 			[pageTitle, '1', '3'],
@@ -84,7 +97,7 @@ class Heavy_B747_8_FMC_VNAVPage {
 			[FMCString.LineTitle.ECON_SPD],
 			[],
 			[FMCString.LineTitle.SPD_TRANS, FMCString.LineTitle.TRANS_ALT],
-			[speedTransCell],
+			[speedTransCell, alt],
 			[FMCString.LineTitle.SPD_RESTR],
 			[speedRestrictionCell],
 			[],
