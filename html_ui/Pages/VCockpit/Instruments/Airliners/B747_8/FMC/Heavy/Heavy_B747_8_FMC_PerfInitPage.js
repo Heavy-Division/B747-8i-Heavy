@@ -78,7 +78,7 @@ class Heavy_B747_8_FMC_PerfInitPage {
 			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
 		};
 		fmc.onRightInput[5] = () => {
-			FMCThrustLimPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_ThrustLimPage.ShowPage1(fmc);
 		};
 	}
 }

@@ -17,28 +17,28 @@ class Heavy_B747_8_FMC_InitRefIndexPage {
 			['<APPROACH', 'MAINT>']
 		]);
 		fmc.onLeftInput[0] = () => {
-			FMCIdentPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_IdentPage.ShowPage1(fmc);
 		};
 		fmc.onRightInput[0] = () => {
-			FMCNavDataPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_NavDataPage.ShowPage1(fmc);
 		};
 		fmc.onLeftInput[1] = () => {
-			FMCPosInitPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_PosInitPage.ShowPage1(fmc);
 		};
 		fmc.onLeftInput[2] = () => {
 			Heavy_B747_8_FMC_PerfInitPage.ShowPage1(fmc);
 		};
 		fmc.onLeftInput[3] = () => {
-			FMCThrustLimPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_ThrustLimPage.ShowPage1(fmc);
 		};
 		fmc.onLeftInput[4] = () => {
-			FMCTakeOffPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_TakeOffPage.ShowPage1(fmc);
 		};
 		fmc.onLeftInput[5] = () => {
-			FMCApproachPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_ApproachPage.ShowPage1(fmc);
 		};
 		fmc.onRightInput[5] = () => {
-			FMCMaintPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_MaintPage.ShowPage1(fmc);
 		};
 	}
 }
