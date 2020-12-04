@@ -354,12 +354,25 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 
 
 	registerMainButtonsActions() {
-		this.onVNAV = () => {
-			Heavy_B747_8_FMC_VNAVPage.ShowPage1(this);
-		};
 		this.onInit = () => {
 			Heavy_B747_8_FMC_InitRefIndexPage.ShowPage1(this);
 		};
+		this.onLegs = () => {
+			Heavy_B747_8_FMC_LegsPage.ShowPage1(this);
+		};
+		this.onRte = () => {
+			Heavy_B747_8_FMC_RoutePage.ShowPage1(this);
+		};
+		this.onDepArr = () => {
+			Heavy_B747_8_FMC_DepArrIndexPage.ShowPage1(this);
+		};
+		this.onRad = () => {
+			Heavy_B747_8_FMC_NavRadioPage.ShowPage(this);
+		};
+		this.onVNAV = () => {
+			Heavy_B747_8_FMC_VNAVPage.ShowPage1(this);
+		};
+
 	}
 }
 
