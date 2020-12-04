@@ -71,8 +71,8 @@ class Heavy_B747_8_FMC_PerfInitPage {
 			[FMCString.Line.Box['3'] + FMCString.Common.PERIOD + FMCString.Line.Box['1'], '20.0%'],
 			['DATA LINK', 'STEP SIZE'],
 			['NO COMM', 'RVSM'],
-			['__FMCSEPARATOR'],
-			['<INDEX', 'THRUST LIM>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.THRUST_LIM_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);

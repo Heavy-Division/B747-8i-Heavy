@@ -46,15 +46,15 @@ class Heavy_B747_8_FMC_ThrustLimPage {
 			['SEL', 'TO N1', 'OAT'],
 			[selectedTempCell, toN1Cell, oatCell],
 			[''],
-			['<TO' + (thrustTOMode === 0 ? ' <SEL>' : ''), (thrustClimbMode === 0 ? '<SEL> ' : '') + 'CLB>'],
+			['<TO' + (thrustTOMode === 0 ? ' <SEL>' : ''), (thrustClimbMode === 0 ? '<SEL> ' : '') + FMCString.Prompt.CLB_RIGHT],
 			['TO 1'],
-			['<-10%' + (thrustTOMode === 1 ? ' <SEL>' : ''), (thrustClimbMode === 1 ? '<SEL> ' : '') + 'CLB 1>'],
+			['<-10%' + (thrustTOMode === 1 ? ' <SEL>' : ''), (thrustClimbMode === 1 ? '<SEL> ' : '') + FMCString.Prompt.CLB_1_RIGHT],
 			['TO 2'],
-			['<-20%' + (thrustTOMode === 2 ? ' <SEL>' : ''), (thrustClimbMode === 2 ? '<SEL> ' : '') + 'CLB 2>'],
+			['<-20%' + (thrustTOMode === 2 ? ' <SEL>' : ''), (thrustClimbMode === 2 ? '<SEL> ' : '') + FMCString.Prompt.CLB_2_RIGHT],
 			[''],
 			['<TO-B'],
-			['__FMCSEPARATOR'],
-			['<INDEX', 'TAKEOFF>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.TAKEOFF_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);

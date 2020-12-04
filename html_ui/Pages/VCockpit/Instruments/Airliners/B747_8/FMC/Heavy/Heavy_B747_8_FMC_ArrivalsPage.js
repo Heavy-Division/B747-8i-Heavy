@@ -4,13 +4,13 @@ class Heavy_B747_8_FMC_ArrivalsPage {
 		if (airportInfo instanceof AirportInfo) {
 			fmc.clearDisplay();
 			console.log(airport);
-			let selectedApproachCell = '---';
+			let selectedApproachCell = FMCString.Line.Dash['3'];
 			let selectedApproach = fmc.flightPlanManager.getApproach();
 			console.log(selectedApproach);
 			if (selectedApproach) {
 				selectedApproachCell = Avionics.Utils.formatRunway(selectedApproach.name);
 			}
-			let selectedStarCell = '------';
+			let selectedStarCell = FMCString.Line.Dash['6'];
 			let selectedDeparture = airportInfo.arrivals[fmc.flightPlanManager.getArrivalProcIndex()];
 			if (selectedDeparture) {
 				selectedStarCell = selectedDeparture.name;
@@ -82,7 +82,7 @@ class Heavy_B747_8_FMC_ArrivalsPage {
 				rows[3],
 				rows[4],
 				rows[5],
-				['<RETURN']
+				[FMCString.Prompt.RETURN_LEFT]
 			]);
 			fmc.onLeftInput[5] = () => {
 				Heavy_B747_8_FMC_LegsPage.ShowPage1(fmc);

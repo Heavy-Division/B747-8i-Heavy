@@ -63,7 +63,7 @@ class Heavy_B747_8_FMC_DeparturesPage {
 				rows[5],
 				rows[6],
 				rows[7],
-				['<RETURN']
+				[FMCString.Prompt.RETURN_LEFT]
 			]);
 			fmc.onLeftInput[5] = () => {
 				Heavy_B747_8_FMC_LegsPage.ShowPage1(fmc);

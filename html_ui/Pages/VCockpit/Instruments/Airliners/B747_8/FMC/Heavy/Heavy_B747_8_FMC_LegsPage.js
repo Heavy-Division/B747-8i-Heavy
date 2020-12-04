@@ -191,8 +191,8 @@ class Heavy_B747_8_FMC_LegsPage {
 		fmc.setTemplate([
 			[(fmc.getIsRouteActivated() ? 'MOD' : 'ACT') + ' RTE 1 LEGS', currentPage.toFixed(0), pageCount.toFixed(0)],
 			...rows,
-			['__FMCSEPARATOR'],
-			['<RTE 2 LEGS', isMapModePlan ? 'STEP>' : 'RTE DATA>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.RTE_2_LEGS_LEFT, isMapModePlan ? FMCString.Prompt.STEP_RIGHT : FMCString.Prompt.RTE_DATA_RIGHT]
 		]);
 		fmc.onPrevPage = () => {
 			if (currentPage > 1) {

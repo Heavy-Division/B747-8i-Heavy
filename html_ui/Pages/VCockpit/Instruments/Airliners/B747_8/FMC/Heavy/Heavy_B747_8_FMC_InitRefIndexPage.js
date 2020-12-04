@@ -2,19 +2,19 @@ class Heavy_B747_8_FMC_InitRefIndexPage {
 	static ShowPage1(fmc) {
 		fmc.clearDisplay();
 		fmc.setTemplate([
-			['INIT/REF INDEX'],
+			[FMCString.Prompt.INIT_REF_INDEX_LEFT],
 			[''],
-			['<IDENT', 'NAV DATA>'],
+			[FMCString.Prompt.IDENT_LEFT, FMCString.Prompt.NAV_DATA_RIGHT],
 			[''],
-			['<POS'],
+			[FMCString.Prompt.POS_LEFT],
 			[''],
-			['<PERF'],
+			[FMCString.Prompt.PERF_LEFT],
 			[''],
-			['<THRUST LIM'],
+			[FMCString.Prompt.THRUST_LIM_LEFT],
 			[''],
-			['<TAKEOFF'],
+			[FMCString.Prompt.TAKEOFF_LEFT],
 			[''],
-			['<APPROACH', 'MAINT>']
+			[FMCString.Prompt.APPROACH_LEFT, FMCString.Prompt.MAINT_RIGHT]
 		]);
 		fmc.onLeftInput[0] = () => {
 			Heavy_B747_8_FMC_IdentPage.ShowPage1(fmc);

@@ -8,7 +8,7 @@ class Heavy_B747_8_FMC_NavRadioPage {
 		let vor1FrequencyCell = '';
 		let vor1CourseCell = '';
 		if (!radioOn) {
-			vor1FrequencyCell = '-----';
+			vor1FrequencyCell = FMCString.Line.Dash['5'];
 			if (fmc.vor1Frequency > 0) {
 				vor1FrequencyCell = '/ ' + fmc.vor1Frequency.toFixed(2);
 			}
@@ -37,7 +37,7 @@ class Heavy_B747_8_FMC_NavRadioPage {
 					fmc.showErrorMessage(fmc.defaultInputErrorMessage);
 				}
 			};
-			vor1CourseCell = '-----';
+			vor1CourseCell = FMCString.Line.Dash['5'];
 			if (fmc.vor1Course >= 0) {
 				vor1CourseCell = fmc.vor1Course.toFixed(0) + '°';
 			}
@@ -60,7 +60,7 @@ class Heavy_B747_8_FMC_NavRadioPage {
 		let vor2FrequencyCell = '';
 		let vor2CourseCell = '';
 		if (!radioOn) {
-			vor2FrequencyCell = '-----';
+			vor2FrequencyCell = FMCString.Line.Dash['5'];
 			if (fmc.vor2Frequency > 0) {
 				vor2FrequencyCell = '/ ' + fmc.vor2Frequency.toFixed(2);
 			}
@@ -89,7 +89,7 @@ class Heavy_B747_8_FMC_NavRadioPage {
 					fmc.showErrorMessage(fmc.defaultInputErrorMessage);
 				}
 			};
-			vor2CourseCell = '-----';
+			vor2CourseCell = FMCString.Line.Dash['5'];
 			if (fmc.vor2Course >= 0) {
 				vor2CourseCell = fmc.vor2Course.toFixed(0) + '°';
 			}
@@ -114,7 +114,7 @@ class Heavy_B747_8_FMC_NavRadioPage {
 		let ilsFrequencyCell = '';
 		let ilsCourseCell = '';
 		if (!radioOn) {
-			adf1FrequencyCell = '-----';
+			adf1FrequencyCell = FMCString.Line.Dash['5'];
 			if (fmc.adf1Frequency > 0) {
 				adf1FrequencyCell = fmc.adf1Frequency.toFixed(2);
 			}
@@ -133,7 +133,7 @@ class Heavy_B747_8_FMC_NavRadioPage {
 					fmc.showErrorMessage(fmc.defaultInputErrorMessage);
 				}
 			};
-			adf2FrequencyCell = '-----';
+			adf2FrequencyCell = FMCString.Line.Dash['5'];
 			if (fmc.adf2Frequency > 0) {
 				adf2FrequencyCell = fmc.adf2Frequency.toFixed(2);
 			}
@@ -188,7 +188,7 @@ class Heavy_B747_8_FMC_NavRadioPage {
 			[''],
 			[''],
 			['', '', 'PRESELECT'],
-			['------', '------']
+			[FMCString.Line.Dash['6'], FMCString.Line.Dash['6']]
 		]);
 	}
 }

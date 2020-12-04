@@ -8,7 +8,7 @@ class Heavy_B747_8_FMC_PosInitPage {
 		if (fmc.lastPos) {
 			lastPos = fmc.lastPos;
 		}
-		let refAirport = '□□□□';
+		let refAirport = FMCString.Line.Box['4'];
 		if (fmc.refAirport && fmc.refAirport.ident) {
 			refAirport = fmc.refAirport.ident;
 		}
@@ -16,7 +16,7 @@ class Heavy_B747_8_FMC_PosInitPage {
 		if (fmc.refAirport && fmc.refAirport.infos && fmc.refAirport.infos.coordinates) {
 			refAirportCoordinates = fmc.refAirport.infos.coordinates.toDegreeString();
 		}
-		let gate = '-----';
+		let gate = FMCString.Line.Dash['5'];
 		if (fmc.refGate) {
 			gate = fmc.refGate;
 		}
@@ -41,8 +41,8 @@ class Heavy_B747_8_FMC_PosInitPage {
 			[dateString, currPos],
 			['SET HDG', 'SET IRS POS'],
 			[heading, irsPos],
-			['__FMCSEPARATOR'],
-			['<INDEX', 'ROUTE>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.ROUTE_RIGHT]
 		]);
 		fmc.onRightInput[0] = () => {
 			fmc.inOut = fmc.lastPos;
@@ -108,9 +108,9 @@ class Heavy_B747_8_FMC_PosInitPage {
 			[''],
 			[''],
 			['-----------------', 'GPS NAV'],
-			['<PURGE', 'INHIBIT>'],
+			[FMCString.Prompt.PURGE_LEFT, FMCString.Prompt.INHIBIT_RIGHT],
 			[''],
-			['<INDEX', 'BRG/DIST>']
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.BRG_DIST_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
@@ -139,8 +139,8 @@ class Heavy_B747_8_FMC_PosInitPage {
 			['000°/0.0NM', '290KT'],
 			['GPS R', 'GS'],
 			['000°/0.0NM', '290KT'],
-			['__FMCSEPARATOR'],
-			['<INDEX', 'LAT/LON>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.LAT_LON_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);

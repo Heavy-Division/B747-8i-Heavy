@@ -33,9 +33,9 @@ class Heavy_B747_8_FMC_LateralRevisionPage {
 			['ENABLE[color]blue', 'NEW DEST'],
 			['←ALTN[color]blue', '[ ][color]blue'],
 			[''],
-			['', 'AIRWAYS>'],
+			['', FMCString.Prompt.AIRWAYS_RIGHT],
 			[''],
-			['<RETURN']
+			[FMCString.Prompt.RETURN_LEFT]
 		]);
 		fmc.onRightInput[2] = async () => {
 			let value = fmc.inOut;

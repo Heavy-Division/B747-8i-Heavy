@@ -25,14 +25,25 @@ const FMCString = {
 			1: '-',
 			2: '--',
 			3: '---',
-			5: '-----'
+			4: '----',
+			5: '-----',
+			6: '------',
+			7: '-------',
+			8: '--------',
+			9: '---------',
+			10: '----------'
 		},
 		Box: {
 			1: '□',
 			2: '□□',
 			3: '□□□',
 			4: '□□□□',
-			5: '□□□□□'
+			5: '□□□□□',
+			6: '□□□□□□',
+			7: '□□□□□□□',
+			8: '□□□□□□□□',
+			9: '□□□□□□□□□',
+			10: '□□□□□□□□□□'
 		},
 		Underscore: {
 			1: '_',
@@ -49,6 +60,8 @@ const FMCString = {
 	},
 	Prompt: {
 		INDEX_LEFT: '<INDEX',
+		INIT_REF_INDEX_LEFT: 'INIT/REF INDEX',
+		RETURN_LEFT: '<RETURN',
 		ECON_LEFT: '<ECON',
 		ENG_OUT_RIGHT: 'ENG OUT>',
 		CLB_DIR_RIGHT: 'CLB DIR>',
@@ -128,6 +141,7 @@ const FMCString = {
 		POS_INIT_RIGHT: 'POS INIT>',
 		ROUTE_RIGHT: 'ROUTE>',
 		ACTIVATE_RIGHT: 'ACTIVATE>',
+		PERF_INIT_RIGHT: 'PERF INIT>',
 		RTE_2_LEFT: '<RTE 2',
 		DEP_LEFT: '<DEP',
 		ARR: 'ARR>',
@@ -138,6 +152,7 @@ const FMCString = {
 		RTE_DATA_RIGHT: 'RTE DATA>',
 		STEP_RIGHT: 'STEP>',
 		RTE_2_LEGS_RIGHT: 'RTE 2 LEGS>',
+		RTE_2_LEGS_LEFT: '<RTE 2 LEGS',
 		GA_LEFT: '<GA',
 		CON_LEFT: '<CON',
 		CRZ_LEFT: '<CRZ',
@@ -155,7 +170,9 @@ const FMCString = {
 		SELECT_ON_RIGHT: 'SELECT ON>',
 		PPOS_RIGHT: 'PPOS>',
 		NEXT_HOLD_LEFT: '<NEXT HOLD',
-		EXIT_HOLD_RIGHT: 'EXIT HOLD>'
+		EXIT_HOLD_RIGHT: 'EXIT HOLD>',
+		AIRWAYS_RIGHT: 'AIRWAYS>',
+		LAT_LON_RIGHT: 'LAT/LON>'
 
 	},
 	Common: {

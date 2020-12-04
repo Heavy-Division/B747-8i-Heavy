@@ -1,7 +1,7 @@
 class Heavy_B747_8_FMC_RoutePage {
 	static ShowPage1(fmc) {
 		fmc.clearDisplay();
-		let originCell = '□□□□';
+		let originCell = FMCString.Line.Box['4'];
 		if (fmc && fmc.flightPlanManager) {
 			let origin = fmc.flightPlanManager.getOrigin();
 			if (origin) {
@@ -19,7 +19,7 @@ class Heavy_B747_8_FMC_RoutePage {
 				}
 			});
 		};
-		let destinationCell = '□□□□';
+		let destinationCell = FMCString.Line.Box['4'];
 		if (fmc && fmc.flightPlanManager) {
 			let destination = fmc.flightPlanManager.getDestination();
 			if (destination) {
@@ -37,7 +37,7 @@ class Heavy_B747_8_FMC_RoutePage {
 				}
 			});
 		};
-		let flightNoCell = '--------';
+		let flightNoCell = FMCString.Line.Dash['8'];
 		let flightNoValue = SimVar.GetSimVarValue('ATC FLIGHT NUMBER', 'string');
 		if (flightNoValue) {
 			flightNoCell = flightNoValue;
@@ -51,7 +51,7 @@ class Heavy_B747_8_FMC_RoutePage {
 				}
 			});
 		};
-		let coRouteCell = '--------';
+		let coRouteCell = FMCString.Line.Dash['8'];
 		if (fmc.coRoute) {
 			coRouteCell = fmc.coRoute;
 		}
@@ -69,7 +69,7 @@ class Heavy_B747_8_FMC_RoutePage {
 		let activateCell = '';
 		if (fmc.flightPlanManager.getCurrentFlightPlanIndex() === 1) {
 			if (!fmc.getIsRouteActivated()) {
-				activateCell = 'ACTIVATE>';
+				activateCell = FMCString.Prompt.ACTIVATE_RIGHT;
 				fmc.onRightInput[5] = () => {
 					fmc.activateRoute();
 					Heavy_B747_8_FMC_RoutePage.ShowPage1(fmc);
@@ -77,7 +77,7 @@ class Heavy_B747_8_FMC_RoutePage {
 			}
 		}
 		if (activateCell === '') {
-			activateCell = 'PERF INIT>';
+			activateCell = FMCString.Prompt.PERF_INIT_RIGHT;
 			fmc.onRightInput[5] = () => {
 				fmc.activateRoute();
 				FMCPerfInitPage.ShowPage1(fmc);
@@ -104,13 +104,13 @@ class Heavy_B747_8_FMC_RoutePage {
 			['RUNWAY', 'FLT NO'],
 			[runwayCell, flightNoCell],
 			['REQUEST', 'CO ROUTE'],
-			['<SEND', coRouteCell],
-			['__FMCSEPARATOR'],
+			[FMCString.Prompt.SEND_LEFT, coRouteCell],
+			[FMCString.Common.FMC_SEPARATOR],
 			[''],
 			[''],
 			[''],
 			[''],
-			['<RTE 2', activateCell]
+			[FMCString.Prompt.RTE_2_LEFT, activateCell]
 		]);
 		fmc.onNextPage = () => {
 			Heavy_B747_8_FMC_RoutePage.ShowPage2(fmc);
@@ -119,7 +119,7 @@ class Heavy_B747_8_FMC_RoutePage {
 
 	static ShowPage2(fmc, offset = 0, pendingAirway, discontinuity = -1) {
 		fmc.clearDisplay();
-		let rows = [['----'], [''], [''], [''], ['']];
+		let rows = [[FMCString.Line.Dash['4']], [''], [''], [''], ['']];
 		let allRows = Heavy_B747_8_FMC_RoutePage._GetAllRows(fmc);
 		let page = (2 + (Math.floor(offset / 4)));
 		let pageCount = (Math.floor(allRows.length / 4) + 2);
@@ -135,7 +135,7 @@ class Heavy_B747_8_FMC_RoutePage {
 				rows[i] = allRows[ii];
 				let waypointFlightPlanIndex = ii + fmc.flightPlanManager.getDepartureWaypointsCount() + (fmc.flightPlanManager.getDepartureProcIndex() > -1 ? 0 : 1);
 				if (!discontinued && i + offset === discontinuity) {
-					rows[i] = ['-----', '-----'];
+					rows[i] = [FMCString.Line.Dash['5'], FMCString.Line.Dash['5']];
 					discontinued = true;
 					fmc.onRightInput[i] = () => {
 						let value = fmc.inOut;
@@ -174,7 +174,7 @@ class Heavy_B747_8_FMC_RoutePage {
 			} else if (!showInput) {
 				showInput = true;
 				if (!pendingAirway) {
-					rows[i] = ['-----', '-----'];
+					rows[i] = [FMCString.Line.Dash['5'], FMCString.Line.Dash['5']];
 					fmc.onRightInput[i] = async () => {
 						let value = fmc.inOut;
 						if (value.length > 0) {
@@ -202,7 +202,7 @@ class Heavy_B747_8_FMC_RoutePage {
 						}
 					};
 				} else {
-					rows[i] = [pendingAirway.name, '-----'];
+					rows[i] = [pendingAirway.name, FMCString.Line.Dash['5']];
 					fmc.onRightInput[i] = () => {
 						let value = fmc.inOut;
 						if (value.length > 0) {
@@ -215,7 +215,7 @@ class Heavy_B747_8_FMC_RoutePage {
 						}
 					};
 					if (rows[i + 1]) {
-						rows[i + 1] = ['-----'];
+						rows[i + 1] = [FMCString.Line.Dash['5']];
 					}
 				}
 			}
@@ -223,14 +223,14 @@ class Heavy_B747_8_FMC_RoutePage {
 		let activateCell = '';
 		if (fmc.flightPlanManager.getCurrentFlightPlanIndex() === 1) {
 			if (!fmc.getIsRouteActivated()) {
-				activateCell = 'ACTIVATE>';
+				activateCell = FMCString.Prompt.ACTIVATE_RIGHT;
 				fmc.onRightInput[5] = () => {
 					fmc.activateRoute();
 					Heavy_B747_8_FMC_RoutePage.ShowPage2(fmc);
 				};
 			}
 		} else {
-			activateCell = 'PERF INIT>';
+			activateCell = FMCString.Prompt.PERF_INIT_RIGHT;
 			fmc.onRightInput[5] = () => {
 				fmc.activateRoute();
 				FMCPerfInitPage.ShowPage1(fmc);
@@ -249,7 +249,7 @@ class Heavy_B747_8_FMC_RoutePage {
 			[''],
 			rows[4],
 			[''],
-			['<RTE 2', activateCell]
+			[FMCString.Prompt.RTE_2_LEFT, activateCell]
 		]);
 		fmc.onPrevPage = () => {
 			if (offset === 0) {

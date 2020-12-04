@@ -168,8 +168,8 @@ class Heavy_B747_8_FMC_DepArrIndexPage {
 			[originIdent + ' DEPARTURES', currentPage.toFixed(0), pageCount.toFixed(0)],
 			['SIDS', 'RUNWAYS', 'RTE 1'],
 			...rows,
-			['__FMCSEPARATOR'],
-			['<INDEX', 'ROUTE>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.ROUTE_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			Heavy_B747_8_FMC_DepArrIndexPage.ShowPage1(fmc);
@@ -347,8 +347,8 @@ class Heavy_B747_8_FMC_DepArrIndexPage {
 			[destinationIdent + ' ARRIVALS', currentPage.toFixed(0), pageCount.toFixed(0)],
 			['STAR', 'APPROACH', 'RTE 1'],
 			...rows,
-			['__FMCSEPARATOR'],
-			['<INDEX', 'ROUTE>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.ROUTE_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			Heavy_B747_8_FMC_DepArrIndexPage.ShowPage1(fmc);

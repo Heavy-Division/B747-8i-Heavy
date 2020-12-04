@@ -3,11 +3,11 @@ class Heavy_B747_8_FMC_VerticalRevisionPage {
 		let waypointInfo = waypoint.infos;
 		if (waypointInfo instanceof WayPointInfo) {
 			fmc.clearDisplay();
-			let waypointIdent = '---';
+			let waypointIdent = FMCString.Line.Dash['3'];
 			if (waypoint) {
 				waypointIdent = waypoint.ident;
 			}
-			let coordinates = '---';
+			let coordinates = FMCString.Line.Dash['3'];
 			if (waypointInfo.coordinates) {
 				coordinates = waypointInfo.coordinates.toDegreeString();
 			}
@@ -22,9 +22,9 @@ class Heavy_B747_8_FMC_VerticalRevisionPage {
 				['ENABLE[color]blue', 'NEW DEST'],
 				['←ALTN[color]blue', '[ ][color]blue'],
 				[''],
-				['', 'AIRWAYS>'],
+				['', FMCString.Prompt.AIRWAYS_RIGHT],
 				[''],
-				['<RETURN']
+				[FMCString.Prompt.RETURN_LEFT]
 			]);
 			fmc.onLeftInput[5] = () => {
 				Heavy_B747_8_FMC_LegsPage.ShowPage1(fmc);

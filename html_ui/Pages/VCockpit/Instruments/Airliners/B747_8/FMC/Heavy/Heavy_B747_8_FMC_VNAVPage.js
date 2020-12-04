@@ -183,9 +183,9 @@ class Heavy_B747_8_FMC_VNAVPage {
 			[FMCString.LineTitle.SPD_RESTR],
 			[],
 			['PAUSE @ DIST FROM DEST'],
-			['OFF', 'FORECAST>'],
+			['OFF', FMCString.Prompt.FORECAST_RIGHT],
 			[],
-			['<OFFPATH DES']
+			[FMCString.Prompt.OFFPATH_DES_LEFT]
 		]);
 		fmc.onPrevPage = () => {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage2(fmc);

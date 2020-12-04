@@ -87,7 +87,7 @@ class Heavy_B747_8_FMC_TakeOffPage {
 		if (isFinite(fmc.thrustReductionAltitude)) {
 			thrRedCell = fmc.thrustReductionAltitude.toFixed(0);
 		} else {
-			thrRedCell = '---';
+			thrRedCell = FMCString.Line.Dash['3'];
 		}
 		thrRedCell += 'FT[color]blue';
 		fmc.onLeftInput[2] = () => {
@@ -97,7 +97,7 @@ class Heavy_B747_8_FMC_TakeOffPage {
 				Heavy_B747_8_FMC_TakeOffPage.ShowPage1(fmc);
 			}
 		};
-		let runwayCell = '---';
+		let runwayCell = FMCString.Line.Dash['3'];
 		let selectedRunway = fmc.flightPlanManager.getDepartureRunway();
 		if (selectedRunway) {
 			runwayCell = 'RW ' + Avionics.Utils.formatRunway(selectedRunway.designation);
@@ -131,8 +131,8 @@ class Heavy_B747_8_FMC_TakeOffPage {
 			['H00/U0.0', cgCell, trimCell],
 			['RW COND', 'POS'],
 			['DRY', runwayCell],
-			['__FMCSEPARATOR'],
-			['<INDEX', 'THRUST LIM>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.THRUST_LIM_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);

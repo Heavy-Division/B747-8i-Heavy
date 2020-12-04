@@ -18,8 +18,8 @@ class Heavy_B747_8_FMC_IdentPage {
 			['AW-P010-0-0', 'VS1001'],
 			['OPC'],
 			['AW-C010-0-0', ''],
-			['__FMCSEPARATOR'],
-			['<INDEX', 'POS INIT>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.POS_INIT_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);

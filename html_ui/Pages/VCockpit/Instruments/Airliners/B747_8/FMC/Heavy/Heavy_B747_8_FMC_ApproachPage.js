@@ -26,8 +26,8 @@ class Heavy_B747_8_FMC_ApproachPage {
 				};
 			}
 		}
-		let finalCell = '-----';
-		let runwayLengthCell = '---';
+		let finalCell = FMCString.Line.Dash['5'];
+		let runwayLengthCell = FMCString.Line.Dash['3'];
 		let approach = fmc.flightPlanManager.getApproach();
 		if (approach && approach.name) {
 			finalCell = Avionics.Utils.formatRunway(approach.name);
@@ -40,13 +40,13 @@ class Heavy_B747_8_FMC_ApproachPage {
 		if (isFinite(fmc.selectedApproachFlap)) {
 			selectedFlapSpeedCell = fmc.selectedApproachFlap.toFixed(0) + '°';
 		} else {
-			selectedFlapSpeedCell = '---';
+			selectedFlapSpeedCell = FMCString.Line.Dash['3'];
 		}
-		selectedFlapSpeedCell += '/ ';
+		selectedFlapSpeedCell += FMCString.Common.SLASH + ' ';
 		if (isFinite(fmc.selectedApproachSpeed)) {
 			selectedFlapSpeedCell += fmc.selectedApproachSpeed.toFixed(0) + 'KT';
 		} else {
-			selectedFlapSpeedCell += '---';
+			selectedFlapSpeedCell += FMCString.Line.Dash['3'];
 		}
 		fmc.onRightInput[3] = () => {
 			let value = fmc.inOut;
@@ -67,8 +67,8 @@ class Heavy_B747_8_FMC_ApproachPage {
 			[runwayLengthCell, selectedFlapSpeedCell],
 			[''],
 			[''],
-			['__FMCSEPARATOR'],
-			['<INDEX', 'THRUST LIM>']
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.THRUST_LIM_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
 			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
