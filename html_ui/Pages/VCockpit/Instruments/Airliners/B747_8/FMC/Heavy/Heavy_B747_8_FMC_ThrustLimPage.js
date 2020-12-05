@@ -57,7 +57,7 @@ class Heavy_B747_8_FMC_ThrustLimPage {
 			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.TAKEOFF_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
-			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
 		};
 		fmc.onRightInput[5] = () => {
 			Heavy_B747_8_FMC_TakeOffPage.ShowPage1(fmc);

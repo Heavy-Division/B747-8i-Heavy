@@ -87,7 +87,7 @@ class B747_8_FMC_MainDisplay extends Boeing_FMC {
         this.onDepArr = () => { B747_8_FMC_DepArrIndexPage.ShowPage1(this); };
         this.onRad = () => { B747_8_FMC_NavRadioPage.ShowPage(this); };
         this.onVNAV = () => { B747_8_FMC_VNAVPage.ShowPage1(this); };
-        FMCIdentPage.ShowPage1(this);
+        //FMCIdentPage.ShowPage1(this);
     }
     onPowerOn() {
         super.onPowerOn();

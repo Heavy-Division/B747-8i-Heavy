@@ -82,7 +82,7 @@ class Heavy_B747_8_FMC_PosInitPage {
 			}
 		};
 		fmc.onLeftInput[5] = () => {
-			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
 		};
 		fmc.onRightInput[5] = () => {
 			Heavy_B747_8_FMC_RoutePage.ShowPage1(fmc);
@@ -113,7 +113,7 @@ class Heavy_B747_8_FMC_PosInitPage {
 			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.BRG_DIST_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
-			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
 		};
 		fmc.onRightInput[5] = () => {
 		};
@@ -143,7 +143,7 @@ class Heavy_B747_8_FMC_PosInitPage {
 			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.LAT_LON_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
-			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
 		};
 		fmc.onRightInput[5] = () => {
 		};

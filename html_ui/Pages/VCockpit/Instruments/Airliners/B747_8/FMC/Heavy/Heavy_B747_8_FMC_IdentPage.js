@@ -22,7 +22,7 @@ class Heavy_B747_8_FMC_IdentPage {
 			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.POS_INIT_RIGHT]
 		]);
 		fmc.onLeftInput[5] = () => {
-			B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_InitRefIndexPage.ShowPage1(fmc);
 		};
 		fmc.onRightInput[5] = () => {
 			Heavy_B747_8_FMC_PosInitPage.ShowPage1(fmc);
