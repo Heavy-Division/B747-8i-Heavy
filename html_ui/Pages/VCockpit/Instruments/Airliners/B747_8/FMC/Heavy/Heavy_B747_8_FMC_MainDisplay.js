@@ -304,6 +304,31 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		}
 	}
 
+	setDepartureIndex(departureIndex, callback = EmptyCallback.Boolean) {
+		this.ensureCurrentFlightPlanIsTemporary(() => {
+			if(departureIndex === -1){
+				return this.flightPlanManager.setDepartureProcIndex(-1, () => {
+					return callback(true);
+				});
+			}
+			let currentRunway = this.flightPlanManager.getDepartureRunway();
+			this.flightPlanManager.setDepartureProcIndex(departureIndex, () => {
+				if (currentRunway) {
+					let departure = this.flightPlanManager.getDeparture();
+					let departureRunwayIndex = departure.runwayTransitions.findIndex(t => {
+						return t.name.indexOf(currentRunway.designation) != -1;
+					});
+					if (departureRunwayIndex >= -1) {
+						return this.flightPlanManager.setDepartureRunwayIndex(departureRunwayIndex, () => {
+							return callback(true);
+						});
+					}
+				}
+				return callback(true);
+			});
+		});
+	}
+
 	executeSpeedRestriction() {
 		this.clbSpeedRestrictionValue = this.clbSpeedRestrictionValueModified;
 		this.clbSpeedRestrictionAltitude = this.clbSpeedRestrictionAltitudeModified;
