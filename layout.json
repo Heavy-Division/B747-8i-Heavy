@@ -2,8 +2,8 @@
     "content": [
         {
             "path": "html_ui/Heavy/Tools/FMCString.js",
-            "size": 4356,
-            "date": 132515949358198652
+            "size": 4401,
+            "date": 132517780500375824
         },
         {
             "path": "html_ui/Heavy/Utils/HeavyInputUtils.js",
@@ -12,8 +12,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC.html",
-            "size": 5125,
-            "date": 132515949358198652
+            "size": 5137,
+            "date": 132517843874233896
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC_MainDisplay.js",
@@ -38,7 +38,7 @@
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_DeparturesPage.js",
             "size": 4539,
-            "date": 132517762983200338
+            "date": 132517823884410300
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_IdentPage.js",
@@ -62,8 +62,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MainDisplay.js",
-            "size": 15123,
-            "date": 132517761042851006
+            "size": 16149,
+            "date": 132517842712807422
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MaintPage.js",
@@ -119,6 +119,11 @@
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_VNAVPage.js",
             "size": 5839,
             "date": 132515949358278444
+        },
+        {
+            "path": "html_ui/Pages/VCockpit/Instruments/Shared/FlightElements/Heavy/Heavy_FlightPlanManager.js",
+            "size": 119,
+            "date": 132517841477856400
         }
     ]
 }

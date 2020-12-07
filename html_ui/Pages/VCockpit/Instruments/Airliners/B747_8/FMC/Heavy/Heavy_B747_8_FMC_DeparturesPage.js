@@ -35,10 +35,12 @@ class Heavy_B747_8_FMC_DeparturesPage {
 				departures = airportInfo.departures;
 			}
 		}
-		if (selectedRunway) {
-			rows[0] = ['', '<SEL> ' + Avionics.Utils.formatRunway(selectedRunway.designation)];
+
+		if ((selectedRunway && fmc.activeRunway && selectedRunway.designation !== fmc.activeRunway.designation) || (selectedRunway && !fmc.activeRunway)) {
+			rows[0] = ['', (fmc.getIsRouteActivated() ? FMCString.Prompt.SEL_BOTH : FMCString.Prompt.ACT_BOTH) + ' ' + Avionics.Utils.formatRunway(selectedRunway.designation)];
 			fmc.onRightInput[0] = () => {
 				fmc.setRunwayIndex(-1, (success) => {
+					fmc.setSelectedRunway(undefined);
 					fmc.activateRoute();
 					Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc);
 				});
@@ -50,7 +52,7 @@ class Heavy_B747_8_FMC_DeparturesPage {
 				let runway = runways[i];
 				let appendRow = false;
 				let index = i;
-				if (!selectedDeparture) {
+				if (!selectedDeparture || !fmc.selectedSID) {
 					appendRow = true;
 					displayableRunwaysCount++;
 				} else {
@@ -65,8 +67,16 @@ class Heavy_B747_8_FMC_DeparturesPage {
 				}
 				if (appendRow) {
 					if (rowIndex >= 0 && rowIndex < 5) {
-						rows[2 * rowIndex] = ['', Avionics.Utils.formatRunway(runway.designation)];
+						if (fmc.activeRunway && fmc.activeRunway.designation === runway.designation){
+							rows[2 * rowIndex] = ['', FMCString.Prompt.ACT_BOTH + ' ' + Avionics.Utils.formatRunway(runway.designation)];
+						} else if (fmc.selectedRunway && fmc.selectedRunway.designation === runway.designation){
+							rows[2 * rowIndex] = ['', FMCString.Prompt.SEL_BOTH + ' ' + Avionics.Utils.formatRunway(runway.designation)];
+						} else {
+							rows[2 * rowIndex] = ['', Avionics.Utils.formatRunway(runway.designation)];
+						}
+
 						fmc.onRightInput[rowIndex] = () => {
+							fmc.setSelectedRunway(runway);
 							if (fmc.flightPlanManager.getDepartureProcIndex() === -1) {
 								fmc.setOriginRunwayIndex(index, () => {
 									fmc.activateRoute();
@@ -85,10 +95,11 @@ class Heavy_B747_8_FMC_DeparturesPage {
 				i++;
 			}
 		}
-		if (selectedDeparture) {
-			rows[0][0] = selectedDeparture.name + ' <SEL>';
+		if ((selectedDeparture && fmc.activeSID && selectedDeparture.name !== fmc.activeSID.name) || (selectedDeparture && !fmc.activeSID)) {
+			rows[0][0] = selectedDeparture.name + (fmc.getIsRouteActivated() ? FMCString.Prompt.SEL_BOTH : FMCString.Prompt.ACT_BOTH);
 			fmc.onLeftInput[0] = () => {
 				fmc.setDepartureIndex(-1, () => {
+					fmc.setSelectedSID(undefined);
 					fmc.activateRoute();
 					Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc);
 				});
@@ -99,7 +110,7 @@ class Heavy_B747_8_FMC_DeparturesPage {
 			while (i < departures.length) {
 				let departure = departures[i];
 				let appendRow = false;
-				if (!selectedRunway) {
+				if (!selectedRunway || !fmc.selectedRunway) {
 					appendRow = true;
 					displayableDeparturesCount++;
 				} else {
@@ -114,8 +125,15 @@ class Heavy_B747_8_FMC_DeparturesPage {
 				if (appendRow) {
 					if (rowIndex >= 0 && rowIndex < 5) {
 						let ii = i;
-						rows[2 * rowIndex][0] = departure.name;
+						if (fmc.activeSID && fmc.activeSID.name === departure.name){
+							rows[2 * rowIndex][0] = departure.name + ' ' + FMCString.Prompt.ACT_BOTH;
+						} else if (fmc.selectedSID && fmc.selectedSID.name === departure.name){
+							rows[2 * rowIndex][0] = departure.name + ' ' + FMCString.Prompt.SEL_BOTH;
+						} else {
+							rows[2 * rowIndex][0] = departure.name;
+						}
 						fmc.onLeftInput[rowIndex] = () => {
+							fmc.setSelectedSID(departure);
 							fmc.setDepartureIndex(ii, () => {
 								fmc.activateRoute();
 								Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc);
@@ -152,5 +170,13 @@ class Heavy_B747_8_FMC_DeparturesPage {
 				Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, currentPage + 1);
 			}
 		};
+
+		fmc.onExec  = () => {
+			fmc._isRouteActivated = false;
+			SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 0);
+			fmc.executeSelectedRunway()
+			fmc.executeSelectedSID()
+			Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, undefined);
+		}
 	}
 }
