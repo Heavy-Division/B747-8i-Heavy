@@ -143,7 +143,7 @@ class Heavy_B747_8_FMC_DeparturesPage {
 			Heavy_B747_8_FMC_RoutePage.ShowPage1(fmc);
 		};
 		fmc.onPrevPage = () => {
-			if (currentPage > 0) {
+			if (currentPage > 1) {
 				Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, currentPage - 1);
 			}
 		};
