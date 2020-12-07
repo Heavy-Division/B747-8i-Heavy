@@ -1,92 +1,156 @@
 class Heavy_B747_8_FMC_DeparturesPage {
-	static ShowPage(fmc, airport, pageCurrent = 0, selectedRunwayIndex = NaN) {
-		let airportInfo = airport.infos;
-		console.log(airportInfo);
-		if (airportInfo instanceof AirportInfo) {
-			fmc.clearDisplay();
-			let selectedRunwayCell = '---';
-			let selectedRunway;
-			if (isNaN(selectedRunwayIndex)) {
-				selectedRunway = fmc.flightPlanManager.getDepartureRunway();
-			} else {
-				selectedRunway = airportInfo.oneWayRunways[selectedRunwayIndex];
+	static ShowPage(fmc, currentPage = 1) {
+		fmc.clearDisplay();
+		let originIdent = '';
+		let origin = fmc.flightPlanManager.getOrigin();
+		if (origin) {
+			originIdent = origin.ident;
+		}
+		let rows = [
+			[''],
+			[''],
+			[''],
+			[''],
+			[''],
+			[''],
+			[''],
+			[''],
+			['']
+		];
+		let runways = [];
+		let displayableRunwaysCount = 0;
+		let departures = [];
+		let selectedDeparture;
+		let displayableDeparturesCount = 0;
+		let selectedRunway = fmc.flightPlanManager.getDepartureRunway();
+		if (origin) {
+			let airportInfo = origin.infos;
+			if (airportInfo instanceof AirportInfo) {
+				let departureRunway = fmc.flightPlanManager.getDepartureRunway();
+				if (departureRunway) {
+					selectedRunway = departureRunway;
+				}
+				runways = airportInfo.oneWayRunways;
+				selectedDeparture = airportInfo.departures[fmc.flightPlanManager.getDepartureProcIndex()];
+				departures = airportInfo.departures;
 			}
-			if (selectedRunway) {
-				selectedRunwayCell = Avionics.Utils.formatRunway(selectedRunway.designation);
-			}
-			let selectedSidCell = '------';
-			let selectedDeparture = airportInfo.departures[fmc.flightPlanManager.getDepartureProcIndex()];
-			if (selectedDeparture) {
-				selectedSidCell = selectedDeparture.name;
-			}
-			let runways = airportInfo.oneWayRunways;
-			let rows = [[''], [''], [''], [''], [''], [''], [''], ['']];
-			if (isNaN(selectedRunwayIndex)) {
-				for (let i = 0; i < 4; i++) {
-					let index = i + pageCurrent;
-					let runway = runways[index];
-					if (runway) {
-						rows[2 * i] = ['←' + Avionics.Utils.formatRunway(runway.designation) + '[color]blue', runway.length.toFixed(0) + 'M[color]blue'];
-						rows[2 * i + 1] = ['042[color]blue'];
-						fmc.onLeftInput[i + 1] = async () => {
-							Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, airport, 0, index);
-						};
+		}
+		if (selectedRunway) {
+			rows[0] = ['', '<SEL> ' + Avionics.Utils.formatRunway(selectedRunway.designation)];
+			fmc.onRightInput[0] = () => {
+				fmc.setRunwayIndex(-1, (success) => {
+					fmc.activateRoute();
+					Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc);
+				});
+			};
+		} else {
+			let i = 0;
+			let rowIndex = -5 * (currentPage - 1);
+			while (i < runways.length) {
+				let runway = runways[i];
+				let appendRow = false;
+				let index = i;
+				if (!selectedDeparture) {
+					appendRow = true;
+					displayableRunwaysCount++;
+				} else {
+					for (let j = 0; j < selectedDeparture.runwayTransitions.length; j++) {
+						if (selectedDeparture.runwayTransitions[j].name.indexOf(runway.designation) !== -1) {
+							appendRow = true;
+							displayableRunwaysCount++;
+							index = j;
+							break;
+						}
 					}
 				}
-			} else {
-				for (let i = 0; i < 4; i++) {
-					let index = i + pageCurrent;
-					let sid = airportInfo.departures[index];
-					if (sid) {
-						rows[2 * i] = ['←' + sid.name + '[color]blue'];
-						rows[2 * i + 1] = ['042[color]blue'];
-						fmc.onLeftInput[i + 1] = () => {
-							fmc.setRunwayIndex(selectedRunwayIndex, (success) => {
-								fmc.setDepartureIndex(index, () => {
-									Heavy_B747_8_FMC_LegsPage.ShowPage1(fmc);
+				if (appendRow) {
+					if (rowIndex >= 0 && rowIndex < 5) {
+						rows[2 * rowIndex] = ['', Avionics.Utils.formatRunway(runway.designation)];
+						fmc.onRightInput[rowIndex] = () => {
+							if (fmc.flightPlanManager.getDepartureProcIndex() === -1) {
+								fmc.setOriginRunwayIndex(index, () => {
+									fmc.activateRoute();
+									Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, undefined);
 								});
+							} else {
+								fmc.setRunwayIndex(index, () => {
+									fmc.activateRoute();
+									Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, undefined);
+								});
+							}
+						};
+					}
+					rowIndex++;
+				}
+				i++;
+			}
+		}
+		if (selectedDeparture) {
+			rows[0][0] = selectedDeparture.name + ' <SEL>';
+			fmc.onLeftInput[0] = () => {
+				fmc.setDepartureIndex(-1, () => {
+					fmc.activateRoute();
+					Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc);
+				});
+			};
+		} else {
+			let i = 0;
+			let rowIndex = -5 * (currentPage - 1);
+			while (i < departures.length) {
+				let departure = departures[i];
+				let appendRow = false;
+				if (!selectedRunway) {
+					appendRow = true;
+					displayableDeparturesCount++;
+				} else {
+					for (let j = 0; j < departure.runwayTransitions.length; j++) {
+						if (departure.runwayTransitions[j].name.indexOf(selectedRunway.designation) !== -1) {
+							appendRow = true;
+							displayableDeparturesCount++;
+							break;
+						}
+					}
+				}
+				if (appendRow) {
+					if (rowIndex >= 0 && rowIndex < 5) {
+						let ii = i;
+						rows[2 * rowIndex][0] = departure.name;
+						fmc.onLeftInput[rowIndex] = () => {
+							fmc.setDepartureIndex(ii, () => {
+								fmc.activateRoute();
+								Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc);
 							});
 						};
 					}
+					rowIndex++;
 				}
+				i++;
 			}
-			fmc.setTemplate([
-				['DEPARTURES FROM ' + airport.ident + ' →'],
-				['RWY', 'TRANS', 'SID'],
-				[selectedRunwayCell, '------', selectedSidCell],
-				['', '', 'AVAILABLE ' + (isFinite(selectedRunwayIndex) ? 'SIDS' : 'RUNWAYS')],
-				rows[0],
-				rows[1],
-				rows[2],
-				rows[3],
-				rows[4],
-				rows[5],
-				rows[6],
-				rows[7],
-				[FMCString.Prompt.RETURN_LEFT]
-			]);
-			fmc.onLeftInput[5] = () => {
-				Heavy_B747_8_FMC_LegsPage.ShowPage1(fmc);
-			};
-			fmc.onPrevPage = () => {
-				pageCurrent++;
-				if (isFinite(selectedRunwayIndex)) {
-					pageCurrent = Math.min(pageCurrent, airportInfo.departures.length - 3);
-				} else {
-					pageCurrent = Math.min(pageCurrent, airportInfo.runways.length - 3);
-				}
-				if (pageCurrent < 0) {
-					pageCurrent = 0;
-				}
-				Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, airport, pageCurrent, selectedRunwayIndex);
-			};
-			fmc.onNextPage = () => {
-				pageCurrent--;
-				if (pageCurrent < 0) {
-					pageCurrent = 0;
-				}
-				Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, airport, pageCurrent, selectedRunwayIndex);
-			};
 		}
+		let rowsCount = Math.max(displayableRunwaysCount, displayableDeparturesCount);
+		let pageCount = Math.floor(rowsCount / 5) + 1;
+		fmc.setTemplate([
+			[originIdent + ' DEPARTURES', currentPage.toFixed(0), pageCount.toFixed(0)],
+			['SIDS', 'RUNWAYS', 'RTE 1'],
+			...rows,
+			[FMCString.Common.FMC_SEPARATOR],
+			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.ROUTE_RIGHT]
+		]);
+		fmc.onLeftInput[5] = () => {
+			Heavy_B747_8_FMC_DepArrIndexPage.ShowPage1(fmc);
+		};
+		fmc.onRightInput[5] = () => {
+			Heavy_B747_8_FMC_RoutePage.ShowPage1(fmc);
+		};
+		fmc.onPrevPage = () => {
+			if (currentPage > 0) {
+				Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, currentPage - 1);
+			}
+		};
+		fmc.onNextPage = () => {
+			if (currentPage < pageCount) {
+				Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc, currentPage + 1);
+			}
+		};
 	}
 }
