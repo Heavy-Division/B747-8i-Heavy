@@ -321,9 +321,9 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 	}
 
 	executeSelectedRunway() {
-		if(this.selectedRunway !== undefined){
+		if (this.selectedRunway !== undefined) {
 			this.setActiveRunway(this.selectedRunway);
-			this.setSelectedRunway(undefined)
+			this.setSelectedRunway(undefined);
 		}
 	}
 
@@ -336,9 +336,9 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 	}
 
 	executeSelectedSID() {
-		if(this.selectedSID !== undefined){
+		if (this.selectedSID !== undefined) {
 			this.setActiveSID(this.selectedSID);
-			this.setSelectedSID(undefined)
+			this.setSelectedSID(undefined);
 		}
 	}
 
