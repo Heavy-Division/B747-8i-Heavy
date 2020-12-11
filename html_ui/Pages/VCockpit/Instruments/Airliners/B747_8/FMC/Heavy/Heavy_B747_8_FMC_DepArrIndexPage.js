@@ -6,7 +6,7 @@ class Heavy_B747_8_FMC_DepArrIndexPage {
 		if (origin) {
 			rowOrigin = ['<DEP', '', origin.ident];
 			fmc.onLeftInput[0] = () => {
-				Heavy_B747_8_FMC_DeparturesPage.ShowPage(fmc);
+				new Heavy_B747_8_FMC_DeparturesPage(fmc).showPage()
 			};
 		}
 		let rowDestination = [''];

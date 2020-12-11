@@ -172,7 +172,9 @@ const FMCString = {
 		NEXT_HOLD_LEFT: '<NEXT HOLD',
 		EXIT_HOLD_RIGHT: 'EXIT HOLD>',
 		AIRWAYS_RIGHT: 'AIRWAYS>',
-		LAT_LON_RIGHT: 'LAT/LON>'
+		LAT_LON_RIGHT: 'LAT/LON>',
+		SEL_BOTH: '<SEL>',
+		ACT_BOTH: '<ACT>',
 
 	},
 	Common: {
