@@ -11,17 +11,10 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		this.clbSpeedTransitionAltitudeModified = 10000;
 		this.clbSpeedTransitionValueModified = 250;
 		this.transitionAltitude = 18000;
-		this.activeRunway = undefined;
-		this.selectedRunway = undefined;
-
-		this.activeSID = undefined;
-		this.selectedSID = undefined;
 	}
 
 	Init() {
 		super.Init();
-		this.currFlightPlanManager = new Heavy_FlightPlanManager(this);
-		this.currFlightPlan = new FlightPlan(this, this.currFlightPlanManager);
 		this.registerMainButtonsActions();
 	}
 
@@ -308,37 +301,6 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 				}
 			}
 			this.updateAutopilotCooldown = this._apCooldown;
-		}
-	}
-
-
-	setActiveRunway(runway) {
-		this.activeRunway = runway;
-	}
-
-	setSelectedRunway(runway) {
-		this.selectedRunway = runway;
-	}
-
-	executeSelectedRunway() {
-		if (this.selectedRunway !== undefined) {
-			this.setActiveRunway(this.selectedRunway);
-			this.setSelectedRunway(undefined);
-		}
-	}
-
-	setActiveSID(SID) {
-		this.activeSID = SID;
-	}
-
-	setSelectedSID(SID) {
-		this.selectedSID = SID;
-	}
-
-	executeSelectedSID() {
-		if (this.selectedSID !== undefined) {
-			this.setActiveSID(this.selectedSID);
-			this.setSelectedSID(undefined);
 		}
 	}
 

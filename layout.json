@@ -3,7 +3,7 @@
         {
             "path": "html_ui/Heavy/Tools/FMCString.js",
             "size": 4401,
-            "date": 132517780500375824
+            "date": 132519401057420304
         },
         {
             "path": "html_ui/Heavy/Utils/HeavyInputUtils.js",
@@ -12,8 +12,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC.html",
-            "size": 5137,
-            "date": 132517843874233896
+            "size": 5125,
+            "date": 132521274417296600
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC_MainDisplay.js",
@@ -32,13 +32,13 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_DepArrIndexPage.js",
-            "size": 6257,
-            "date": 132517761042831064
+            "size": 6262,
+            "date": 132521274417266682
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_DeparturesPage.js",
-            "size": 4539,
-            "date": 132517823884410300
+            "size": 9664,
+            "date": 132521274417237230
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_IdentPage.js",
@@ -62,8 +62,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MainDisplay.js",
-            "size": 16149,
-            "date": 132517842712807422
+            "size": 15123,
+            "date": 132521282925120944
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MaintPage.js",
@@ -119,11 +119,6 @@
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_VNAVPage.js",
             "size": 5839,
             "date": 132515949358278444
-        },
-        {
-            "path": "html_ui/Pages/VCockpit/Instruments/Shared/FlightElements/Heavy/Heavy_FlightPlanManager.js",
-            "size": 119,
-            "date": 132517841477856400
         }
     ]
 }
