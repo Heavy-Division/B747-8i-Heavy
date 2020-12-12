@@ -9,7 +9,9 @@ const FMCString = {
 		CRZ: 'CRZ',
 		DES: 'DES',
 		MOD: 'MOD',
-		ACT: 'ACT'
+		ACT: 'ACT',
+		HEAVY_MENU: 'HEAVY MENU',
+		HEAVY: 'HEAVY'
 	},
 	LineTitle: {
 		CRZ_ALT: 'CRZ ALT',
@@ -59,6 +61,8 @@ const FMCString = {
 		}
 	},
 	Prompt: {
+		HEAVY_LEFT: '<HEAVY',
+		BACK_LEFT: '<BACK',
 		INDEX_LEFT: '<INDEX',
 		INIT_REF_INDEX_LEFT: 'INIT/REF INDEX',
 		RETURN_LEFT: '<RETURN',
@@ -174,7 +178,7 @@ const FMCString = {
 		AIRWAYS_RIGHT: 'AIRWAYS>',
 		LAT_LON_RIGHT: 'LAT/LON>',
 		SEL_BOTH: '<SEL>',
-		ACT_BOTH: '<ACT>',
+		ACT_BOTH: '<ACT>'
 
 	},
 	Common: {

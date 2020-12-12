@@ -372,6 +372,10 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		this.onVNAV = () => {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(this);
 		};
+
+		this.onMenu = () => {
+			new Heavy_B747_8_FMC_MenuPage().showPage(this);
+		};
 		Heavy_B747_8_FMC_IdentPage.ShowPage1(this);
 	}
 }
