@@ -11,7 +11,8 @@ const FMCString = {
 		MOD: 'MOD',
 		ACT: 'ACT',
 		HEAVY_MENU: 'HEAVY MENU',
-		HEAVY: 'HEAVY'
+		HEAVY: 'HEAVY',
+		SIM_RATE_MANAGER: 'SIM RATE MANAGER'
 	},
 	LineTitle: {
 		CRZ_ALT: 'CRZ ALT',
@@ -62,6 +63,7 @@ const FMCString = {
 	},
 	Prompt: {
 		HEAVY_LEFT: '<HEAVY',
+		SIM_RATE_MANAGER_LEFT: '<SIM RATE MANAGER',
 		BACK_LEFT: '<BACK',
 		INDEX_LEFT: '<INDEX',
 		INIT_REF_INDEX_LEFT: 'INIT/REF INDEX',
