@@ -133,6 +133,8 @@
 	</UseTemplate>
 	<UseTemplate Name="ASOBO_FMC_Emissive_EXEC_Template">
 	</UseTemplate>
+	<UseTemplate Name="ASOBO_FMC_Screen">
+	</UseTemplate>
 </Template>
 
 <Template Name="ASOBO_FMC_AS01B">

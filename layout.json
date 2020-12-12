@@ -142,8 +142,8 @@
         },
         {
             "path": "SimObjects/Airplanes/Asobo_B747_8i/model/747_8I_INTERIOR.xml",
-            "size": 187555,
-            "date": 132512431785850000
+            "size": 183301,
+            "date": 132522523467931612
         },
         {
             "path": "ModelBehaviorDefs/Asobo/Airliner/AirlinerCommon.xml",
@@ -157,8 +157,8 @@
         },
         {
             "path": "ModelBehaviorDefs/Asobo/Airliner/FMC.xml",
-            "size": 63028,
-            "date": 132512550421570000
+            "size": 63085,
+            "date": 132522512918973742
         }
     ]
 }

@@ -268,6 +268,7 @@
 			-->
 
 			<Component ID="CDUs">
+				<!--
 				<DefaultTemplateParameters>
 					<ANIM_NEVER_FAILS>True</ANIM_NEVER_FAILS>
 					<FAILURE>(A:LIGHT PANEL ON:3, Bool)</FAILURE>
@@ -275,8 +276,15 @@
 					<BRT_DIM_SWITCH_DIRECTION>Horizontal</BRT_DIM_SWITCH_DIRECTION>
 					<BRT_DIM_INVERT_ANIM>True</BRT_DIM_INVERT_ANIM>
 				</DefaultTemplateParameters>
+				-->
 				<Component ID="CDU_1">
+					<DefaultTemplateParameters>
+						<ANIM_NEVER_FAILS>True</ANIM_NEVER_FAILS>
+						<FAILURE>(A:LIGHT PANEL ON:3, Bool)</FAILURE>
+						<DONT_OVERRIDE_BASE_EMISSIVE>False</DONT_OVERRIDE_BASE_EMISSIVE>
+					</DefaultTemplateParameters>
 					<UseTemplate Name="ASOBO_FMC_B747">
+						<ID>1</ID>
 						<SEQ1_SUFFIX>_decal</SEQ1_SUFFIX>
 						<NODE_ID_INIT>btn_CDU1_INIT</NODE_ID_INIT>
 						<ANIM_NAME_INIT>cdu1_push_INIT</ANIM_NAME_INIT>
@@ -423,6 +431,7 @@
 						<NODE_ID_FAIL>CDU1_FAIL_decal</NODE_ID_FAIL>
 						<NODE_ID_DSPL>CDU1_DSPY_decal</NODE_ID_DSPL>
 						<NODE_ID_EMISSIVE_EXEC>CDU_EXEC_Active_1</NODE_ID_EMISSIVE_EXEC>
+						<NODE_ID_SCREEN>SCREEN_FMC1</NODE_ID_SCREEN>
 					</UseTemplate>
 				<!--
 					cdu1_push_dot
@@ -433,6 +442,7 @@
 				</Component>
 				<Component ID="CDU_2">
 					<UseTemplate Name="ASOBO_FMC_B747">
+						<ID>2</ID>
 						<SEQ1_SUFFIX>_decal</SEQ1_SUFFIX>
 						<NODE_ID_INIT>btn_CDU2_INIT</NODE_ID_INIT>
 						<ANIM_NAME_INIT>CDU2_push_INIT</ANIM_NAME_INIT>
@@ -579,6 +589,7 @@
 						<NODE_ID_FAIL>CDU2_FAIL_decal</NODE_ID_FAIL>
 						<NODE_ID_DSPL>CDU2_DSPY_decal</NODE_ID_DSPL>
 						<NODE_ID_EMISSIVE_EXEC>CDU_EXEC_Active_2</NODE_ID_EMISSIVE_EXEC>
+						<NODE_ID_SCREEN>SCREEN_FMC2</NODE_ID_SCREEN>
 					</UseTemplate>
 				<!--
 					cdu2_push_dot
@@ -622,6 +633,7 @@
 					<DONT_OVERRIDE_BASE_EMISSIVE>False</DONT_OVERRIDE_BASE_EMISSIVE>
 				</DefaultTemplateParameters>
 				<UseTemplate Name="ASOBO_FMC_B747">
+					<ID>3</ID>
 					<SEQ1_SUFFIX>_decal</SEQ1_SUFFIX>
 					<NODE_ID_INIT>btn_CDU3_INIT</NODE_ID_INIT>
 					<ANIM_NAME_INIT>CDU3_push_INIT</ANIM_NAME_INIT>
@@ -768,6 +780,7 @@
 					<NODE_ID_FAIL>CDU3_FAIL_decal</NODE_ID_FAIL>
 					<NODE_ID_DSPL>CDU3_DSPY_decal</NODE_ID_DSPL>
 					<NODE_ID_EMISSIVE_EXEC>CDU_EXEC_Active_3</NODE_ID_EMISSIVE_EXEC>
+					<NODE_ID_SCREEN>SCREEN_FMC3</NODE_ID_SCREEN>
 				</UseTemplate>
 			<!--
 				cdu3_push_dot
@@ -3043,22 +3056,7 @@
 					<UseTemplate Name="ASOBO_GT_Screen_Template">
 						<NODE_ID>SCREEN_TCI</NODE_ID>
 						<SCREEN_ID>ATC</SCREEN_ID>
-					</UseTemplate>	
-					<UseTemplate Name="ASOBO_GT_Screen_Template">
-						<NODE_ID>SCREEN_FMC1</NODE_ID>
-						<SCREEN_ID>FMC</SCREEN_ID>
-						<CIRCUIT_ID>27</CIRCUIT_ID>
-					</UseTemplate>	
-					<UseTemplate Name="ASOBO_GT_Screen_Template">
-						<NODE_ID>SCREEN_FMC2</NODE_ID>
-						<SCREEN_ID>FMC</SCREEN_ID>
-						<CIRCUIT_ID>28</CIRCUIT_ID>
-					</UseTemplate>	
-					<UseTemplate Name="ASOBO_GT_Screen_Template">
-						<NODE_ID>SCREEN_FMC3</NODE_ID>
-						<SCREEN_ID>FMC</SCREEN_ID>
-						<CIRCUIT_ID>29</CIRCUIT_ID>
-					</UseTemplate>	
+					</UseTemplate>
 					<UseTemplate Name="ASOBO_GT_Screen_Template">
 						<NODE_ID>SCREEN_COM1</NODE_ID>
 						<SCREEN_ID>Com_1</SCREEN_ID>
