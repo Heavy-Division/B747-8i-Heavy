@@ -2,8 +2,8 @@
     "content": [
         {
             "path": "html_ui/Heavy/Tools/FMCString.js",
-            "size": 4496,
-            "date": 132522679458942904
+            "size": 4584,
+            "date": 132522687031831598
         },
         {
             "path": "html_ui/Heavy/Utils/HeavyInputUtils.js",
@@ -12,8 +12,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC.html",
-            "size": 5402,
-            "date": 132522674936144090
+            "size": 5549,
+            "date": 132522687780206608
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC_MainDisplay.js",
@@ -42,8 +42,13 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_HeavyMenuPage.js",
-            "size": 449,
-            "date": 132522680607856846
+            "size": 587,
+            "date": 132522690808206782
+        },
+        {
+            "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_HeavySimRateManager.js",
+            "size": 467,
+            "date": 132522686214295008
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_IdentPage.js",
@@ -68,7 +73,7 @@
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MainDisplay.js",
             "size": 15208,
-            "date": 132522666971570104
+            "date": 132522683881889588
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MaintPage.js",
@@ -78,7 +83,7 @@
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MenuPage.js",
             "size": 541,
-            "date": 132522678174398808
+            "date": 132522683881889588
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_NavDataPage.js",
