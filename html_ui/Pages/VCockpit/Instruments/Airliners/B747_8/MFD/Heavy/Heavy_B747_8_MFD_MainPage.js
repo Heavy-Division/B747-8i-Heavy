@@ -1,3 +1,9 @@
+B747_8_MFD_MainPage.prototype.altitudeArcOffsets = [
+	// [TOP, Triangle offset, Triangle]
+	[110, 510, 525], // uncentered map
+	[110, 330, 360]  // centered map
+];
+
 B747_8_MFD_MainPage.prototype.getAbsoluteAltitudeDeltaForAltitudeArc = function () {
 	return Math.abs(Simplane.getAutoPilotDisplayedAltitudeLockValue() - Simplane.getAltitude());
 };
@@ -21,24 +27,20 @@ B747_8_MFD_MainPage.prototype.shouldBeAltitudeArcVisible = function () {
 };
 
 B747_8_MFD_MainPage.prototype.calculateAltitudeArcPosition = function (distance = NaN) {
-	let altitudeArcOffsets = [
-		// [TOP, Triangle offset, Triangle]
-		[110, 510, 525], // uncentered map
-		[110, 330, 360]  // centered map
-	];
-
 	let isMapCentered = this.mapIsCentered | 0;
 
 	if (!isFinite(distance)) {
-		return altitudeArcOffsets[isMapCentered][2] - ((altitudeArcOffsets[isMapCentered][2] - altitudeArcOffsets[isMapCentered][0]) / this.map.zoomRanges[this.mapRange]) * this.calculateDistanceForDescending();
+		return this.altitudeArcOffsets[isMapCentered][2] - ((this.altitudeArcOffsets[isMapCentered][2] - this.altitudeArcOffsets[isMapCentered][0]) / this.map.zoomRanges[this.mapRange]) * this.calculateDistanceForDescending();
 	}
-	return altitudeArcOffsets[isMapCentered][2] - ((altitudeArcOffsets[isMapCentered][2] - altitudeArcOffsets[isMapCentered][0]) / this.map.zoomRanges[this.mapRange]) * distance;
+	return this.altitudeArcOffsets[isMapCentered][2] - ((this.altitudeArcOffsets[isMapCentered][2] - this.altitudeArcOffsets[isMapCentered][0]) / this.map.zoomRanges[this.mapRange]) * distance;
 };
 
 B747_8_MFD_MainPage.prototype.updateAltitudeArc = function (_deltatime) {
 	let altitudeArcPath = document.getElementById('altitudeArcPath');
-	if (this.shouldBeAltitudeArcVisible()) {
-		altitudeArcPath.setAttribute('transform', `translate(0, ${this.calculateAltitudeArcPosition()})`);
+	let altitudeArcPosition = this.calculateAltitudeArcPosition();
+	let isMapCentered = this.mapIsCentered | 0;
+	if (this.shouldBeAltitudeArcVisible() && altitudeArcPosition < this.altitudeArcOffsets[isMapCentered][2] && altitudeArcPosition > this.altitudeArcOffsets[isMapCentered][0]) {
+		altitudeArcPath.setAttribute('transform', `translate(0, ${altitudeArcPosition})`);
 		altitudeArcPath.style.visibility = 'visible';
 	} else {
 		altitudeArcPath.style.visibility = 'hidden';
