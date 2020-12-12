@@ -37,7 +37,7 @@ B747_8_MFD_MainPage.prototype.calculateAltitudeArcPosition = function (distance 
 
 B747_8_MFD_MainPage.prototype.updateAltitudeArc = function (_deltatime) {
 	let altitudeArcPath = document.getElementById('altitudeArcPath');
-	if (this.shouldBeAltitudeArcVisible()) {p
+	if (this.shouldBeAltitudeArcVisible()) {
 		altitudeArcPath.setAttribute('transform', `translate(0, ${this.calculateAltitudeArcPosition()})`);
 		altitudeArcPath.style.visibility = 'visible';
 	} else {
