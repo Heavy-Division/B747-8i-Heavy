@@ -133,7 +133,32 @@
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Heavy/Heavy_B747_8_MFD_MainPage.js",
             "size": 2634,
-            "date": 132522113500827570
+            "date": 132522119371542592
+        },
+        {
+            "path": "SimObjects/Airplanes/Asobo_B747_8i/model/747_8I.xml",
+            "size": 14580,
+            "date": 132512431795980000
+        },
+        {
+            "path": "SimObjects/Airplanes/Asobo_B747_8i/model/747_8I_INTERIOR.xml",
+            "size": 183301,
+            "date": 132522523467931612
+        },
+        {
+            "path": "ModelBehaviorDefs/Asobo/Airliner/AirlinerCommon.xml",
+            "size": 46776,
+            "date": 132512550421470000
+        },
+        {
+            "path": "ModelBehaviorDefs/Asobo/Airliner/Boeing.xml",
+            "size": 43010,
+            "date": 132512550421540000
+        },
+        {
+            "path": "ModelBehaviorDefs/Asobo/Airliner/FMC.xml",
+            "size": 63085,
+            "date": 132522512918973742
         }
     ]
 }
