@@ -21,7 +21,7 @@ class Heavy_B747_8_FMC_HeavyMenuPage {
 		fmc.setTemplate(rows);
 
 		fmc.onLeftInput[0] = () => {
-			new Heavy_B747_8_FMC_HeavySimRateManager().showPage(fmc);
+			new Heavy_B747_8_FMC_HeavySimRateManager(fmc).showPage();
 		};
 
 		fmc.onLeftInput[5] = () => {
