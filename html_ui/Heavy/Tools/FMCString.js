@@ -192,5 +192,15 @@ const FMCString = {
 		BOX: '□',
 		FMC_SEPARATOR: '------------------------',
 		FLIGHT_LEVEL: 'FL'
+	},
+	Component: {
+		SimRateManager: {
+			RateMode: {
+				OFF: 'OFF',
+				LINEAR: 'LINEAR',
+				NORMAL: 'NORMAL',
+				AGGRESSIVE: 'AGGRESSIVE'
+			}
+		}
 	}
 };
