@@ -25,6 +25,6 @@
 ### Sim rate manager will automatically change sim rate to 1x few miles before TOD or DECEL waypoint.
 
 ## Emergency shutdown
-###Terminates all sim rate manager interventions immediately. During an emergency shutdown is not possible to use FMC for 6 seconds. You will be able to deactivate an emergency shutdown or leave the page without deactivation after 6 seconds.
+### Terminates all sim rate manager interventions immediately. During an emergency shutdown is not possible to use FMC for 6 seconds. You will be able to deactivate an emergency shutdown or leave the page without deactivation after 6 seconds.
 
 ---
