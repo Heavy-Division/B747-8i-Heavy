@@ -516,8 +516,8 @@
 	
 	<UseTemplate Name="ASOBO_EICAS_PAGE_BUTTON_Template_Boeing">
 		<BASE_NAME>drs</BASE_NAME>
-		<TOOLTIPID>TT:COCKPIT.TOOLTIPS.INOP TT:COCKPIT.TOOLTIPS.EICAS_PUSH_DRS</TOOLTIPID>
-		<GROUP_INDEX>-7</GROUP_INDEX> <!--Change to positive to activate-->
+		<TOOLTIPID>TT:COCKPIT.TOOLTIPS.EICAS_PUSH_DRS</TOOLTIPID>
+		<GROUP_INDEX>7</GROUP_INDEX> <!--Change to positive to activate-->
 	</UseTemplate>
 	
 	<UseTemplate Name="ASOBO_EICAS_PAGE_BUTTON_Template_Boeing">
