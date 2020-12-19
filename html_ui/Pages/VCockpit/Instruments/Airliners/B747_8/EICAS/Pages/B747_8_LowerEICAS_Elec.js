@@ -13,7 +13,6 @@ var B747_8_LowerEICAS_Elec;
 			this.apu = {1: {}, 2: {}};
 			this.external = {1: {}, 2: {}};
 			this.bus = {1: {}, 2: {}, 3: {}, 4: {}, 'main': {}};
-			this.cache = false;
 		}
 
 		get templateID() {
@@ -91,10 +90,10 @@ var B747_8_LowerEICAS_Elec;
 		prepareSimVars() {
 			this.apu['1'].active = SimVar.GetSimVarValue('APU GENERATOR ACTIVE:1', 'Boolean');
 			this.apu['1'].on = SimVar.GetSimVarValue('APU GENERATOR SWITCH:1', 'Boolean');
-			this.apu['1'].available = SimVar.GetSimVarValue('APU PCT RPM', 'Percent') > 95
+			this.apu['1'].available = SimVar.GetSimVarValue('APU PCT RPM', 'Percent') > 95;
 			this.apu['2'].active = SimVar.GetSimVarValue('APU GENERATOR ACTIVE:2', 'Boolean');
 			this.apu['2'].on = SimVar.GetSimVarValue('APU GENERATOR SWITCH:2', 'Boolean');
-			this.apu['2'].available = SimVar.GetSimVarValue('APU PCT RPM', 'Percent') > 95
+			this.apu['2'].available = SimVar.GetSimVarValue('APU PCT RPM', 'Percent') > 95;
 
 			this.external['1'].available = SimVar.GetSimVarValue('EXTERNAL POWER AVAILABLE:1', 'Boolean');
 			this.external['1'].on = SimVar.GetSimVarValue('EXTERNAL POWER ON:1', 'Boolean');
@@ -126,17 +125,6 @@ var B747_8_LowerEICAS_Elec;
 			this.engine['4'].alternator.active = this.engine['4'].alternator.on && this.engine['4'].combustion;
 		}
 
-		/**
-		 * voltage 1 -
-		 * voltage 2 - ENG 1 ISLN
-		 * voltage 3 - ENG 2 ISLN
-		 * voltage 4 - ENG 3 ISLN
-		 * voltage 5 - ENG 4 ISLN
-		 * voltage 6 - battery
-		 *
-		 * @param number
-		 * @returns {*}
-		 */
 		getApu(number) {
 			return this.apu[number];
 		}
@@ -166,7 +154,6 @@ var B747_8_LowerEICAS_Elec;
 				return;
 			}
 
-			this.cache = false;
 			this.prepareSimVars();
 
 			// Is APU active
@@ -194,25 +181,37 @@ var B747_8_LowerEICAS_Elec;
 			 * condition 3) (APU 1 ON) && (ALTERNATOR 3 OR 4 ON) -> disconnected
 			 * condition 4) (APU 2 ON) && (ALTERNATOR 1 OR 2 ON) -> disconnected
 			 * condition 5) (APU INOP) -> connected
+			 * condition 6)
+			 * 	a) External 1 active, External 2 available, Gen 3 and 4 active
+			 * 	b) External 2 active, External 1 available, Gen 1 and 2 active
 			 */
 
 			if (
 				(
+					// condition 1
 					((this.getApu(1).on && this.getApu(1).active && this.getApu(1).available) || this.getExternal(1).active)
-					&
+					&&
 					((this.getApu(2).on && this.getApu(2).active && this.getApu(2).available) || this.getExternal(2).active)
 				)
 				||
 				(
-					((this.getEngine(1).alternator.active && this.getBus(1).connection) || (this.getEngine(2).alternator.active && this.getBus(2).connection))
-					&
-					((this.getEngine(3).alternator.active && this.getBus(3).connection) || (this.getEngine(4).alternator.active && this.getBus(4).connection))
+					((this.getEngine(1).alternator.active && this.getBus(1).connection) || (this.getEngine(2).alternator.active && this.getBus(2).connection)) && this.getApu(1).available
+					&&
+					((this.getEngine(3).alternator.active && this.getBus(3).connection) || (this.getEngine(4).alternator.active && this.getBus(4).connection)) && this.getApu(2).available
 				)
 				||
 				(
-					((this.getApu(1).on && this.getApu(1).active && this.getApu(1).available) && (this.getEngine(3).alternator.active && this.getBus(3).connection) || (this.getEngine(4).alternator.active && this.getBus(4).connection))
+					((this.getApu(1).on && this.getApu(1).active && this.getApu(1).available) && ((this.getEngine(3).alternator.active && this.getBus(3).connection) || (this.getEngine(4).alternator.active && this.getBus(4).connection)))
 					||
-					((this.getApu(2).on && this.getApu(2).active && this.getApu(2).available) && (this.getEngine(1).alternator.active && this.getBus(1).connection) || (this.getEngine(2).alternator.active && this.getBus(2).connection))
+					((this.getApu(2).on && this.getApu(2).active && this.getApu(2).available) && ((this.getEngine(1).alternator.active && this.getBus(1).connection) || (this.getEngine(2).alternator.active && this.getBus(2).connection)))
+				)
+				||
+				(
+					// condition 6a
+					((this.getExternal(1).active && this.getExternal(2).available && !this.getExternal(2).on) && (this.getEngine(3).alternator.active && this.getEngine(4).alternator.active) && (this.getBus(3).connection || this.getBus(4).connection))
+					||
+					// condition 6b
+					((this.getExternal(2).active && this.getExternal(1).available && !this.getExternal(1).on) && (this.getEngine(1).alternator.active && this.getEngine(2).alternator.active) && (this.getBus(1).connection || this.getBus(2).connection))
 				)
 			) {
 				this.hideElement(this.elementFlowSsb);
@@ -257,11 +256,11 @@ var B747_8_LowerEICAS_Elec;
 			 * Voltage > 0 - The bus is powered from ALTERNATOR (28 volts) or MAIN BUS (SYNC BUS) [External power (30.25 volts), APU (28 volts)]
 			 * BUT -> It works only for ENG 1 (index 2) right now!!!! Indexes 3 - 5 is updated only by ISLN. Value is 0 volts when BUS is ISOLATED and ALTERNATOR active.
 			 */
-			[1,2,3,4].forEach((number) => {
+			[1, 2, 3, 4].forEach((number) => {
 				if (!(this.getEngine(number).alternator.active || (this.getBus('main').voltage > 0 && this.getBus(number).connection))) {
-					this.elementBusInfoGroup[number].classList.add('bus-info-group-amber')
+					this.elementBusInfoGroup[number].classList.add('bus-info-group-amber');
 				} else {
-					this.elementBusInfoGroup[number].classList.remove('bus-info-group-amber')
+					this.elementBusInfoGroup[number].classList.remove('bus-info-group-amber');
 				}
 			});
 		}
