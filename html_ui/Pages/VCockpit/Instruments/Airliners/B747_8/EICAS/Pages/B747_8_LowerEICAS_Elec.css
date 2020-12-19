@@ -1,0 +1,125 @@
+﻿:root {
+    --eicasWhite: white;
+    --eicasBlack: black;
+    --eicasGrey: #c8c8c8;
+    --eicasBlue: #009696;
+    --eicasGreen: green;
+    --eicasOrange: #db7200;
+    --eicasRed: red;
+    --eicasMagenta: magenta;
+    --eicasAmber: #ffbf00
+}
+
+:root text {
+    font-family: Roboto-Bold;
+}
+
+:root .flow {
+    stroke: var(--eicasGreen);
+    stroke-width: 5;
+}
+
+b747-8-lower-eicas-elec {
+    position: relative;
+    left: 3.5%;
+    width: 95.5%;
+    top: 4.25%;
+    height: 88%;
+    display: block;
+}
+
+b747-8-lower-eicas-elec svg {
+    width: 100%;
+    height: 100%;
+}
+
+#B747-8i rect {
+    stroke: var(--eicasBlue);
+    stroke-width: 2;
+}
+
+#B747-8i text {
+    fill: var(--eicasBlue);
+    font-size: 14px;
+}
+
+#B747-8i .bus-text-holder {
+    stroke: var(--eicasGreen);
+    stroke-width: 2;
+}
+
+#B747-8i .outline {
+    stroke: var(--eicasWhite);
+    stroke-width: 1;
+}
+
+#B747-8i .flow {
+  stroke: var(--eicasGreen);
+  stroke-width: 5;
+}
+
+#B747-8i .flow-group > .flow {
+    stroke: var(--eicasGreen);
+    stroke-width: 5;
+}
+
+#B747-8i .flow-group > path {
+    stroke: var(--eicasWhite);
+    stroke-width: 1;
+}
+
+#B747-8i .isln-group > text {
+  fill: var(--eicasAmber);
+  font-size: 14px;
+}
+
+#B747-8i .isln-group > rect {
+  stroke: var(--eicasAmber);
+  stroke-width: 1;
+}
+
+#B747-8i .gen-off-group > text {
+    fill: var(--eicasAmber);
+    font-size: 14px;
+}
+
+#B747-8i .gen-off-group > rect {
+    stroke: var(--eicasAmber);
+    stroke-width: 1;
+}
+
+#B747-8i .ssb-circle {
+    stroke: var(--eicasWhite);
+    stroke-width: 1;
+    fill: var(--eicasBlack);
+}
+
+#B747-8i .drive-group > text {
+    fill: var(--eicasAmber);
+    font-size: 14px;
+}
+
+#B747-8i .drive-group > rect {
+    stroke: var(--eicasWhite);
+    stroke-width: 1;
+}
+
+#B747-8i .bus-info-group > text {
+    fill: var(--eicasGreen);
+    font-size: 14px;
+}
+
+#B747-8i .bus-info-group > path {
+    stroke: var(--eicasGreen);
+    stroke-width: 1;
+}
+
+#B747-8i .bus-info-group-amber > text {
+    fill: var(--eicasAmber);
+    font-size: 14px;
+}
+
+#B747-8i .bus-info-group-amber > path {
+    stroke: var(--eicasAmber);
+    stroke-width: 1;
+}
