@@ -7,6 +7,7 @@
         * CLB Speed Restriction implemented
 * ### EICAS
     *  Doors synoptic page
+    *  Electrical synoptic page
 * ### MFD / ND
     *  Altitude Arc
     
