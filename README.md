@@ -5,11 +5,14 @@
 * ### FMC
     * #### VNAV
         * CLB Speed Restriction implemented
+    * #### MISC
+        * Departure page reworked
 * ### EICAS
     *  Doors synoptic page
     *  Electrical synoptic page
 * ### MFD / ND
     *  Altitude Arc
+* ### IRS
     
 ## Special functions
 
