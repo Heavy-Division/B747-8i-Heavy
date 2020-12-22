@@ -1,6 +1,19 @@
 class Heavy_B747_8_FMC_PosInitPage {
 	static ShowPage1(fmc) {
-		let currPos = new LatLong(SimVar.GetSimVarValue('GPS POSITION LAT', 'degree latitude'), SimVar.GetSimVarValue('GPS POSITION LON', 'degree longitude')).toDegreeString();
+		fmc.clearDisplay();
+
+		fmc.refreshPageCallback = function() {
+			Heavy_B747_8_FMC_PosInitPage.ShowPage1(fmc);
+		};
+
+		let currPos = '';
+
+		let isIrsInited = SimVar.GetSimVarValue('L:HEAVY_B747_8_IS_IRS_INITED', 'Number')
+
+		if(isIrsInited > 100000){
+			currPos = new LatLong(SimVar.GetSimVarValue('GPS POSITION LAT', 'degree latitude'), SimVar.GetSimVarValue('GPS POSITION LON', 'degree longitude')).toDegreeString();
+		}
+
 		console.log(currPos);
 		let date = new Date();
 		let dateString = date.getHours().toFixed(0).padStart(2, '0') + date.getMinutes().toFixed(0).padStart(2, '0') + 'z';
@@ -28,7 +41,6 @@ class Heavy_B747_8_FMC_PosInitPage {
 		if (fmc.initCoordinates) {
 			irsPos = fmc.initCoordinates;
 		}
-		fmc.clearDisplay();
 		fmc.setTemplate([
 			['POS INIT', '1', '3'],
 			['', 'LAST POS'],

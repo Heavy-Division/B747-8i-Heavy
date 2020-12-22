@@ -4,6 +4,8 @@ B747_8_MFD_MainPage.prototype.altitudeArcOffsets = [
 	[110, 330, 360]  // centered map
 ];
 
+B747_8_MFD_MainPage.prototype.heavyIRSSimulator = new HeavyIRSSimulator();
+
 B747_8_MFD_MainPage.prototype.getAbsoluteAltitudeDeltaForAltitudeArc = function () {
 	return Math.abs(Simplane.getAutoPilotDisplayedAltitudeLockValue() - Simplane.getAltitude());
 };
@@ -47,9 +49,88 @@ B747_8_MFD_MainPage.prototype.updateAltitudeArc = function (_deltatime) {
 	}
 };
 
+B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
+	this.heavyIRSSimulator.update();
+
+	if(this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2){
+		document.getElementById('align-times').style.visibility = 'hidden';
+		return;
+	}
+
+	if(this.heavyIRSSimulator.irsLState === 3 || this.heavyIRSSimulator.irsCState === 3 || this.heavyIRSSimulator.irsRState === 3){
+		document.getElementById('align-times').style.visibility = 'hidden';
+		document.getElementById('FakeMapBox').style.visibility = 'hidden';
+		document.getElementById('FakeCompassBoxHdg').style.visibility = 'hidden';
+		document.getElementById('FakeCompassBox').style.visibility = 'hidden';
+
+
+
+		document.getElementById('Map').style.visibility = 'visible';
+		document.getElementById('headingGroup').style.visibility = 'visible';
+		document.getElementById('CourseInfo').style.visibility = 'visible';
+		document.getElementById('selectedHeadingGroup').style.visibility = 'visible';
+		document.getElementById('selectedTrackGroup').style.visibility = 'visible';
+		document.getElementById('ILSGroup').style.visibility = 'visible';
+		document.getElementById('currentRefGroup').style.visibility = 'visible';
+		document.getElementById('RangeGroup').style.visibility = 'visible';
+
+		document.getElementById('NDInfo').style.visibility = 'visible';
+
+		let compassCircleGroup = document.getElementById('circleGroup');
+		compassCircleGroup.querySelectorAll('text').forEach((element) => {
+			element.style.visibility = 'visible';
+		});
+		return;
+	}
+	document.getElementById('Map').style.visibility = 'hidden';
+
+	document.getElementById('headingGroup').style.visibility = 'hidden';
+	document.getElementById('CourseInfo').style.visibility = 'hidden';
+	document.getElementById('selectedHeadingGroup').style.visibility = 'hidden';
+	document.getElementById('selectedTrackGroup').style.visibility = 'hidden';
+	document.getElementById('ILSGroup').style.visibility = 'hidden';
+	document.getElementById('currentRefGroup').style.visibility = 'hidden';
+	document.getElementById('RangeGroup').style.visibility = 'hidden';
+
+	document.getElementById('NDInfo').style.visibility = 'hidden';
+
+	if(this.heavyIRSSimulator.irsLState === 2 || this.heavyIRSSimulator.irsCState === 2 || this.heavyIRSSimulator.irsRState === 2){
+		document.getElementById('time-to-align').style.visibility = 'visible';
+	}
+
+	let aligns = [document.getElementById('l-align'), document.getElementById('c-align'), document.getElementById('r-align')]
+	let times = [];
+	let position = 0;
+	let now = Math.floor(Date.now() / 1000);
+	if (this.heavyIRSSimulator.irsLState === 2){
+		aligns[position].textContent = 'L ' +  Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60) + '+ MIN';
+		console.log("L " + position)
+		position++
+	}
+
+	if (this.heavyIRSSimulator.irsCState === 2){
+		aligns[position].textContent = 'C ' +  Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60) + '+ MIN';
+		console.log("C " + position)
+		position++
+	}
+
+	if (this.heavyIRSSimulator.irsRState === 2){
+		aligns[position].textContent = 'R ' +  Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60) + '+ MIN';
+		console.log("R " + position)
+		position++
+	}
+
+	// Hides all texts from compass circle
+	let compassCircleGroup = document.getElementById('circleGroup');
+	compassCircleGroup.querySelectorAll('text').forEach((element) => {
+		element.style.visibility = 'hidden';
+	});
+};
+
 B747_8_MFD_MainPage.prototype.onUpdate = function (_deltatime) {
 	NavSystemPage.prototype.onUpdate.call(this, _deltatime);
 	this.updateMap(_deltatime);
 	this.updateNDInfo(_deltatime);
 	this.updateAltitudeArc(_deltatime);
+	this.updateMapIfIrsNotAligned();
 };

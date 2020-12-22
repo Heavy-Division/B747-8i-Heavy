@@ -1,0 +1,3 @@
+<ModelBehaviors>
+    <Include RelativeFile="Switches\Index.xml"/>
+</ModelBehaviors>

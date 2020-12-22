@@ -81,12 +81,29 @@ class B747_8_FMC_MainDisplay extends Boeing_FMC {
         this._thrustTakeOffTemp = Math.ceil(oat / 10) * 10;
         this.aircraftType = Aircraft.B747_8;
         this.maxCruiseFL = 430;
-        this.onInit = () => { B747_8_FMC_InitRefIndexPage.ShowPage1(this); };
-        this.onLegs = () => { B747_8_FMC_LegsPage.ShowPage1(this); };
-        this.onRte = () => { FMCRoutePage.ShowPage1(this); };
-        this.onDepArr = () => { B747_8_FMC_DepArrIndexPage.ShowPage1(this); };
-        this.onRad = () => { B747_8_FMC_NavRadioPage.ShowPage(this); };
-        this.onVNAV = () => { B747_8_FMC_VNAVPage.ShowPage1(this); };
+        this.onInit = () => {
+            Heavy_B747_8_FMC_InitRefIndexPage.ShowPage1(this);
+        };
+        this.onLegs = () => {
+            Heavy_B747_8_FMC_LegsPage.ShowPage1(this);
+        };
+        this.onRte = () => {
+            Heavy_B747_8_FMC_RoutePage.ShowPage1(this);
+        };
+        this.onDepArr = () => {
+            Heavy_B747_8_FMC_DepArrIndexPage.ShowPage1(this);
+        };
+        this.onRad = () => {
+            Heavy_B747_8_FMC_NavRadioPage.ShowPage(this);
+        };
+        this.onVNAV = () => {
+            Heavy_B747_8_FMC_VNAVPage.ShowPage1(this);
+        };
+
+        super.onMenu = () => {
+            new Heavy_B747_8_FMC_MenuPage().showPage(this);
+        };
+        Heavy_B747_8_FMC_IdentPage.ShowPage1(this);
         //FMCIdentPage.ShowPage1(this);
     }
     onPowerOn() {

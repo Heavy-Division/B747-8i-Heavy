@@ -18,6 +18,13 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		this.registerMainButtonsActions();
 	}
 
+	onUpdate(_deltaTime) {
+		super.onUpdate(_deltaTime);
+		if(this.refreshPageCallback){
+			this.refreshPageCallback();
+		}
+	}
+
 	updateAutopilot() {
 		let now = performance.now();
 		let dt = now - this._lastUpdateAPTime;
@@ -377,6 +384,17 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			new Heavy_B747_8_FMC_MenuPage().showPage(this);
 		};
 		Heavy_B747_8_FMC_IdentPage.ShowPage1(this);
+	}
+
+	async tryUpdateIrsCoordinatesDisplay(newIrsCoordinatesDisplay) {
+		if (!this.dataManager.IsValidLatLon(newIrsCoordinatesDisplay)) {
+			this.showErrorMessage(this.defaultInputErrorMessage);
+			return false;
+		}
+		await SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_POSITION_SET', 'Boolean', true)
+		this.initCoordinates = newIrsCoordinatesDisplay;
+		this.lastPos = this.initCoordinates;
+		return true;
 	}
 }
 

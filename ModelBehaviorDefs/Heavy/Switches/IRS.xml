@@ -1,0 +1,12 @@
+<ModelBehaviors>
+    <Template Name="HEAVY_IRS_Switch_Template">
+        <Component ID="#NODE_ID#" Node="#NODE_ID#">
+            <UseTemplate Name="ASOBO_GT_Switch_4States">
+                <SWITCH_DIRECTION>Horizontal</SWITCH_DIRECTION>
+                <ARROW_TYPE>Curved</ARROW_TYPE>
+                <SWITCH_POSITION_TYPE>L</SWITCH_POSITION_TYPE>
+                <SWITCH_POSITION_VAR>HEAVY_B747_8_IRS_#ID#_SWITCH_STATE</SWITCH_POSITION_VAR>
+            </UseTemplate>
+        </Component>
+    </Template>
+</ModelBehaviors>
