@@ -1,11 +1,11 @@
 class Heavy_B747_8_FMC_ProgPage {
 	static ShowPage1(fmc) {
 		fmc.clearDisplay();
-		B747_8_FMC_ProgPage._timer = 0;
+		Heavy_B747_8_FMC_ProgPage._timer = 0;
 		fmc.pageUpdate = () => {
-			B747_8_FMC_ProgPage._timer++;
-			if (B747_8_FMC_ProgPage._timer >= 15) {
-				B747_8_FMC_ProgPage.ShowPage1(fmc);
+			Heavy_B747_8_FMC_ProgPage._timer++;
+			if (Heavy_B747_8_FMC_ProgPage._timer >= 15) {
+				Heavy_B747_8_FMC_ProgPage.ShowPage1(fmc);
 			}
 		};
 		let planeCoordinates = new LatLong(SimVar.GetSimVarValue('PLANE LATITUDE', 'degree latitude'), SimVar.GetSimVarValue('PLANE LONGITUDE', 'degree longitude'));
@@ -147,4 +147,4 @@ class Heavy_B747_8_FMC_ProgPage {
 	}
 }
 
-B747_8_FMC_ProgPage._timer = 0;
+Heavy_B747_8_FMC_ProgPage._timer = 0;
