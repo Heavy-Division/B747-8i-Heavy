@@ -5,7 +5,6 @@ class Heavy_B747_8_FMC_VNAVPage {
 		if (fmc.cruiseFlightLevel) {
 			crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel;
 		}
-
 		fmc.onLeftInput[0] = () => {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
@@ -13,7 +12,6 @@ class Heavy_B747_8_FMC_VNAVPage {
 				Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 			}
 		};
-
 		fmc.onLeftInput[3] = () => {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
