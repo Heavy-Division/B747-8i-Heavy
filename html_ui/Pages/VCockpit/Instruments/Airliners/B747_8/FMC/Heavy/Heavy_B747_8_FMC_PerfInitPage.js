@@ -1,4 +1,4 @@
-class FMCPerfInitPage {
+class Heavy_B747_8_FMC_PerfInitPage {
 	static ShowPage1(fmc) {
 		fmc.updateFuelVars().then(() => {
 			fmc.clearDisplay();
