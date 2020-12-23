@@ -11,7 +11,7 @@ class Heavy_B747_8_FMC_ThrustLimPage {
 		};
 		let toN1Cell = fmc.getThrustTakeOffLimit().toFixed(1) + '%';
 		let oatValue = SimVar.GetSimVarValue('AMBIENT TEMPERATURE', 'celsius');
-		let oatCell = oatValue.toFixed(1) + '°';
+		let oatCell = oatValue.toFixed(0) + '°C';
 		let thrustTOMode = fmc.getThrustTakeOffMode();
 		let thrustClimbMode = fmc.getThrustCLBMode();
 		fmc.onLeftInput[1] = () => {
@@ -46,13 +46,13 @@ class Heavy_B747_8_FMC_ThrustLimPage {
 			['SEL', 'TO N1', 'OAT'],
 			[selectedTempCell, toN1Cell, oatCell],
 			[''],
-			['<TO' + (thrustTOMode === 0 ? ' <SEL>' : ''), (thrustClimbMode === 0 ? '<SEL> ' : '') + FMCString.Prompt.CLB_RIGHT],
+			['\<TO' + (thrustTOMode === 0 ? ' <SEL>' : ''), (thrustClimbMode === 0 ? '<SEL> ' : '') + FMCString.Prompt.CLB_RIGHT],
 			['TO 1'],
-			['<-10%' + (thrustTOMode === 1 ? ' <SEL>' : ''), (thrustClimbMode === 1 ? '<SEL> ' : '') + FMCString.Prompt.CLB_1_RIGHT],
+			['\<-10%' + (thrustTOMode === 1 ? ' <SEL>' : ''), (thrustClimbMode === 1 ? '<SEL> ' : '') + FMCString.Prompt.CLB_1_RIGHT],
 			['TO 2'],
-			['<-20%' + (thrustTOMode === 2 ? ' <SEL>' : ''), (thrustClimbMode === 2 ? '<SEL> ' : '') + FMCString.Prompt.CLB_2_RIGHT],
+			['\<-20%' + (thrustTOMode === 2 ? ' <SEL>' : ''), (thrustClimbMode === 2 ? '<SEL> ' : '') + FMCString.Prompt.CLB_2_RIGHT],
 			[''],
-			['<TO-B'],
+			['\<TO-B'],
 			[FMCString.Common.FMC_SEPARATOR],
 			[FMCString.Prompt.INDEX_LEFT, FMCString.Prompt.TAKEOFF_RIGHT]
 		]);
@@ -64,3 +64,5 @@ class Heavy_B747_8_FMC_ThrustLimPage {
 		};
 	}
 }
+
+//# sourceMappingURL=B747_8_FMC_ThrustLimPage.js.map
