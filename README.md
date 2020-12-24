@@ -15,6 +15,8 @@
 * ### IRS
     * IRS implemented
     * IRS L, C and R are fully independent
+    * IRS align time can be set to INSTANT, FAST or NORMAL through Heavy menu
+    * IRS can be instantly aligned through Heavy menu
 
 ## Special functions
 
