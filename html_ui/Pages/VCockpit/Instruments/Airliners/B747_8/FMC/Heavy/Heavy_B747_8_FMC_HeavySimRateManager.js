@@ -49,6 +49,47 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 		this._emergencyIntervalId = id;
 	}
 
+	static get MODE() {
+		return {'SLOW_DOWN': 'SLOW_DOWN', 'PAUSE': 'PAUSE'};
+	}
+
+	showPageModeEditing() {
+		this.fmc.clearDisplay();
+		let mode = HeavyDataStorage.get('SIM_RATE_MODE', Heavy_B747_8_FMC_HeavySimRateManager.MODE.SLOW_DOWN);
+		let modeString;
+		switch (mode) {
+			case Heavy_B747_8_FMC_HeavySimRateManager.MODE.SLOW_DOWN:
+				modeString = 'SLOW DOWN';
+				break;
+			case Heavy_B747_8_FMC_HeavySimRateManager.MODE.PAUSE:
+				modeString = 'PAUSE';
+				break;
+		}
+
+		let rows = HeavyArray.Fmc.EmptyRows;
+		rows[1][0] = 'MODE';
+		rows[2][0] = modeString;
+		rows[4][0] = '<SLOW DOWN[s-text]';
+		rows[6][0] = '<PAUSE[s-text]';
+		rows[12][0] = FMCString.Prompt.BACK_LEFT;
+
+		this.fmc.setTemplate(rows);
+
+		this.fmc.onLeftInput[1] = () => {
+			HeavyDataStorage.set('SIM_RATE_MODE', Heavy_B747_8_FMC_HeavySimRateManager.MODE.SLOW_DOWN)
+			this.showPage();
+		};
+
+		this.fmc.onLeftInput[2] = () => {
+			HeavyDataStorage.set('SIM_RATE_MODE', Heavy_B747_8_FMC_HeavySimRateManager.MODE.PAUSE)
+			this.showPage();
+		};
+
+		this.fmc.onLeftInput[5] = () => {
+			this.showPage();
+		};
+	}
+
 	/**
 	 * Default page
 	 */
@@ -57,10 +98,25 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 		if (!isFinite(Heavy_B747_8_FMC_HeavySimRateManager.emergencyIntervalId) && Heavy_B747_8_FMC_HeavySimRateManager.emergencyShutdownTime) {
 			this.activateEmergencyShutdown();
 		}
+
+		let mode = HeavyDataStorage.get('SIM_RATE_MODE', Heavy_B747_8_FMC_HeavySimRateManager.MODE.SLOW_DOWN);
+		let modeString;
+		switch (mode) {
+			case Heavy_B747_8_FMC_HeavySimRateManager.MODE.SLOW_DOWN:
+				modeString = 'SLOW DOWN';
+				break;
+			case Heavy_B747_8_FMC_HeavySimRateManager.MODE.PAUSE:
+				modeString = 'PAUSE';
+				break;
+		}
+
 		let rows = HeavyArray.Fmc.EmptyRows;
 		rows[0][0] = FMCString.PageTitle.SIM_RATE_MANAGER;
+		rows[1][0] = 'MODE';
+		rows[2][0] = modeString;
 		rows[1][1] = 'AUTO RATE';
 		rows[2][1] = (this.isSimRateManagerActive ? FMCString.Prompt.ACT_BOTH : FMCString.Prompt.SEL_BOTH) + ' ' + this.autoRateMode[this.activeAutoRateMode];
+		rows[8][0] = '<UNPAUSE';
 		rows[10][0] = FMCString.Prompt.EMERGENCY_SHUTDOWN_LEFT;
 		rows[12][0] = FMCString.Prompt.BACK_LEFT;
 		rows[12][1] = (isFinite(Heavy_B747_8_FMC_HeavySimRateManager.managedIntervalId) ? FMCString.Prompt.DEACTIVATE_RIGHT : FMCString.Prompt.ACTIVATE_RIGHT);
@@ -73,9 +129,16 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 	 * Default page events
 	 */
 	prepareEventsForDefaultPage() {
+		this.fmc.onLeftInput[0] = () => {
+			this.showPageModeEditing();
+		};
 		this.fmc.onRightInput[0] = () => {
 			this.isEditActivatedForAutoRateMode = true;
 			this.showPageRateModeEditing();
+		};
+		this.fmc.onLeftInput[3] = () => {
+			SimVar.SetSimVarValue('K:PAUSE_SET', 'Boolean', 0);
+			this.showPage();
 		};
 
 		this.fmc.onLeftInput[4] = () => {
@@ -92,11 +155,12 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 
 		this.fmc.onRightInput[5] = () => {
 			if (isFinite(Heavy_B747_8_FMC_HeavySimRateManager.managedIntervalId)) {
-				this.deactivateAutoRate();
+				this.deactivateAutoRate(false);
 			} else {
 				this.activateAutoRate();
 			}
 		};
+
 	}
 
 	/**
@@ -245,13 +309,13 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 				case 0:
 					break;
 				case 1:
-					this.executeLinearMode(actualSimRate)
+					this.executeLinearMode(actualSimRate);
 					break;
 				case 2:
-					this.executeNormalMode(actualSimRate)
+					this.executeNormalMode(actualSimRate);
 					break;
 				case 3:
-					this.executeAggressiveMode(actualSimRate)
+					this.executeAggressiveMode(actualSimRate);
 					break;
 				default:
 					break;
@@ -296,7 +360,7 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 		return false;
 	}
 
-	executeLinearMode(actualSimRate){
+	executeLinearMode(actualSimRate) {
 		if (actualSimRate < this.linearModeRate) {
 			SimVar.SetSimVarValue('K:SIM_RATE_INCR', 'number', 1);
 		}
@@ -305,42 +369,42 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 		}
 	}
 
-	executeNormalMode(actualSimRate){
+	executeNormalMode(actualSimRate) {
 		let planeCoordinates = new LatLong(SimVar.GetSimVarValue('PLANE LATITUDE', 'degree latitude'), SimVar.GetSimVarValue('PLANE LONGITUDE', 'degree longitude'));
 		let previousWaypoint = this.fmc.flightPlanManager.getPreviousActiveWaypoint();
 		let nextWaypoint = this.fmc.flightPlanManager.getActiveWaypoint();
 		let previousDistance = Avionics.Utils.computeGreatCircleDistance(previousWaypoint.infos.coordinates, planeCoordinates);
 		let nextDistance = Avionics.Utils.computeGreatCircleDistance(nextWaypoint.infos.coordinates, planeCoordinates);
-		if(actualSimRate > 4){
+		if (actualSimRate > 4) {
 			let newActualSimRate = SimVar.GetGlobalVarValue('SIMULATION RATE', 'Number');
-			while(newActualSimRate > 4){
+			while (newActualSimRate > 4) {
 				SimVar.SetSimVarValue('K:SIM_RATE_DECR', 'number', 1);
 			}
 		}
-		if (nextDistance < 5 || previousDistance < 3){
-			if (actualSimRate > 2){
+		if (nextDistance < 5 || previousDistance < 3) {
+			if (actualSimRate > 2) {
 				SimVar.SetSimVarValue('K:SIM_RATE_DECR', 'number', 1);
 			}
 		} else {
-			if(actualSimRate < 4){
+			if (actualSimRate < 4) {
 				SimVar.SetSimVarValue('K:SIM_RATE_INCR', 'number', 1);
 			}
 		}
 	}
 
-	executeAggressiveMode(actualSimRate){
+	executeAggressiveMode(actualSimRate) {
 		let planeCoordinates = new LatLong(SimVar.GetSimVarValue('PLANE LATITUDE', 'degree latitude'), SimVar.GetSimVarValue('PLANE LONGITUDE', 'degree longitude'));
 		let previousWaypoint = this.fmc.flightPlanManager.getPreviousActiveWaypoint();
 		let nextWaypoint = this.fmc.flightPlanManager.getActiveWaypoint();
 		let previousDistance = Avionics.Utils.computeGreatCircleDistance(previousWaypoint.infos.coordinates, planeCoordinates);
 		let nextDistance = Avionics.Utils.computeGreatCircleDistance(nextWaypoint.infos.coordinates, planeCoordinates);
 
-		if (nextDistance < 9 || previousDistance < 3){
-			if(actualSimRate > 4){
+		if (nextDistance < 9 || previousDistance < 3) {
+			if (actualSimRate > 4) {
 				SimVar.SetSimVarValue('K:SIM_RATE_DECR', 'number', 1);
 			}
 		} else {
-			if(actualSimRate < 8){
+			if (actualSimRate < 8) {
 				SimVar.SetSimVarValue('K:SIM_RATE_INCR', 'number', 1);
 			}
 		}
@@ -351,10 +415,10 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 	 *
 	 * This function will start interval of auto rate deactivation
 	 */
-	deactivateAutoRate() {
+	deactivateAutoRate(autoDeactivation = true) {
 		SimVar.SetSimVarValue('L:HEAVY_SIM_RATE_MANAGER_ACTIVATED', 'Boolean', 0).then(() => {
 			let interval = {};
-			interval.id = setInterval(this.autoRateIntervalDeactivation.bind(this, interval), 1000);
+			interval.id = setInterval(this.autoRateIntervalDeactivation.bind(this, interval, autoDeactivation), 1000);
 			Heavy_B747_8_FMC_HeavySimRateManager.slowDownIntervalId = interval.id;
 			clearInterval(Heavy_B747_8_FMC_HeavySimRateManager.managedIntervalId);
 			Heavy_B747_8_FMC_HeavySimRateManager.managedIntervalId = NaN;
@@ -369,7 +433,7 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 	 * Need to be here and not in anonymous function because of binding interval ids for self-destroying.
 	 * Interval will self-destruct after emergency shutdown activation.
 	 */
-	autoRateIntervalDeactivation(interval) {
+	autoRateIntervalDeactivation(interval, autoDeactivation = false) {
 		let thisIntervalId = interval.id;
 		if (Heavy_B747_8_FMC_HeavySimRateManager.emergencyShutdown === true) {
 			clearInterval(thisIntervalId);
@@ -382,6 +446,9 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 		} else {
 			clearInterval(thisIntervalId);
 			Heavy_B747_8_FMC_HeavySimRateManager.slowDownIntervalId = NaN;
+			if (HeavyDataStorage.get('SIM_RATE_MODE', Heavy_B747_8_FMC_HeavySimRateManager.MODE.SLOW_DOWN) === Heavy_B747_8_FMC_HeavySimRateManager.MODE.PAUSE) {
+				SimVar.SetSimVarValue('K:PAUSE_SET', 'Boolean', 1);
+			}
 		}
 	}
 }
