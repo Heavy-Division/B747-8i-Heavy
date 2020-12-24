@@ -31,13 +31,13 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 		switch (HeavyDataStorage.get('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.NORMAL)) {
 			case HeavyIRSSimulator.ALIGN_SPEED.INSTANT:
-				irsAlignSpeed = 'INSTANT';
+				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.INSTANT;
 				break;
 			case HeavyIRSSimulator.ALIGN_SPEED.FAST:
-				irsAlignSpeed = 'FAST';
+				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.FAST;
 				break;
 			case HeavyIRSSimulator.ALIGN_SPEED.NORMAL:
-				irsAlignSpeed = 'NORMAL';
+				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.NORMAL;
 				break;
 		}
 
@@ -47,8 +47,8 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 		let rows = [
 			[FMCString.PageTitle.HEAVY_IRS],
-			[FMCString.LineTitle.IRS_STATUS, FMCString.Prompt.ALIGN_TIME_RIGHT],
-			[irsStateString, irsAlignSpeed],
+			[FMCString.LineTitle.IRS_STATUS, FMCString.LineTitle.ALIGN_TIME],
+			[irsStateString, irsAlignSpeed + '>'],
 			['', ''],
 			['', ''],
 			['', ''],
@@ -110,13 +110,13 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 		switch (HeavyDataStorage.get('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.NORMAL)) {
 			case HeavyIRSSimulator.ALIGN_SPEED.INSTANT:
-				irsAlignSpeed = 'INSTANT';
+				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.INSTANT;
 				break;
 			case HeavyIRSSimulator.ALIGN_SPEED.FAST:
-				irsAlignSpeed = 'FAST';
+				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.FAST;
 				break;
 			case HeavyIRSSimulator.ALIGN_SPEED.NORMAL:
-				irsAlignSpeed = 'NORMAL';
+				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.NORMAL;
 				break;
 		}
 
