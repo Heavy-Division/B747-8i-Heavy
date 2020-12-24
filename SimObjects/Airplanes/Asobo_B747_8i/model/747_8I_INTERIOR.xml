@@ -282,6 +282,8 @@
 				</DefaultTemplateParameters>
 				<Component ID="CDU_1">
 					<UseTemplate Name="ASOBO_FMC_B747">
+						<!-- BRT Anim hotfix -->
+						<BRT_DIM_SWITCH_DIRECTION>Vertical</BRT_DIM_SWITCH_DIRECTION>
 						<NODE_ID_SCREEN>SCREEN_FMC1</NODE_ID_SCREEN>
 						<CIRCUIT_ID>27</CIRCUIT_ID>
 						<ID>1</ID>
@@ -442,6 +444,8 @@
 				</Component>
 				<Component ID="CDU_2">
 					<UseTemplate Name="ASOBO_FMC_B747">
+						<!-- BRT Anim hotfix -->
+						<BRT_DIM_SWITCH_DIRECTION>Vertical</BRT_DIM_SWITCH_DIRECTION>
 						<ID>2</ID>
 						<NODE_ID_SCREEN>SCREEN_FMC2</NODE_ID_SCREEN>
 						<CIRCUIT_ID>27</CIRCUIT_ID>
@@ -638,6 +642,8 @@
 					<SCREEN_ID>FMC</SCREEN_ID>
 				</DefaultTemplateParameters>
 				<UseTemplate Name="ASOBO_FMC_B747">
+					<!-- BRT Anim hotfix -->
+					<BRT_DIM_SWITCH_DIRECTION>Vertical</BRT_DIM_SWITCH_DIRECTION>
 					<ID>3</ID>
 					<NODE_ID_SCREEN>SCREEN_FMC3</NODE_ID_SCREEN>
 					<CIRCUIT_ID>27</CIRCUIT_ID>
