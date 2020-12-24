@@ -1,5 +1,6 @@
 ﻿:root {
     --bodyHeightScale: 1;
+    --colorAmber: #ffbf00;
 }
 
 @keyframes TemporaryShow {
@@ -203,3 +204,46 @@ b747-8-pfd-element #Mainframe #FakeBlackMask {
     border: none;
     overflow: hidden;
 }
+
+b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg rect {
+    stroke-width: 1;
+    stroke: var(--colorAmber);
+    fill: none;
+}
+
+b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg text {
+    fill: var(--colorAmber);
+    font-size: 18px;
+    letter-spacing:8px;
+}
+
+b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg #hor-left {
+    fill: none;
+    stroke: white;
+    stroke-width: 1px;
+}
+
+b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg #hor-right {
+    fill: none;
+    stroke: white;
+    stroke-width: 1px;
+}
+
+b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg #hor-center {
+    stroke: white;
+    stroke-width: 3px;
+}
+
+b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg .bank-lines {
+    fill: white;
+    stroke: white;
+    stroke-width: 3px;
+}
+
+b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg .bank-triangle {
+    fill: white;
+}
+
+
+
+

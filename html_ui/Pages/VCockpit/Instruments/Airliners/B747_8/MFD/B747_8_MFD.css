@@ -1,6 +1,6 @@
 ﻿:root {
     --bodyHeightScale: 1;
-    --colorAmber: #ffbf00
+    --colorAmber: #ffbf00;
 }
 
 @keyframes TemporaryShow {
@@ -447,7 +447,7 @@ b747-8-mfd-element #Mainframe #align-times text.align {
     alignment-baseline: central;
 }
 
-b747-8-mfd-element #Mainframe #align-times text.time-to-align {
+b747-8-mfd-element #Mainframe #align-times text#time-to-align {
     visibility: hidden;
 }
 

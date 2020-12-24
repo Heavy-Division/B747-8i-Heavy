@@ -54,16 +54,9 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 
 	if(this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2){
 		document.getElementById('align-times').style.visibility = 'hidden';
-		return;
-	}
-
-	if(this.heavyIRSSimulator.irsLState === 3 || this.heavyIRSSimulator.irsCState === 3 || this.heavyIRSSimulator.irsRState === 3){
-		document.getElementById('align-times').style.visibility = 'hidden';
 		document.getElementById('FakeMapBox').style.visibility = 'hidden';
 		document.getElementById('FakeCompassBoxHdg').style.visibility = 'hidden';
 		document.getElementById('FakeCompassBox').style.visibility = 'hidden';
-
-
 
 		document.getElementById('Map').style.visibility = 'visible';
 		document.getElementById('headingGroup').style.visibility = 'visible';
@@ -82,6 +75,17 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 		});
 		return;
 	}
+
+	document.getElementById('align-times').style.visibility = 'visible';
+
+	if(this.heavyIRSSimulator.irsLState > 0 || this.heavyIRSSimulator.irsCState > 0 || this.heavyIRSSimulator.irsRState > 0){
+		document.getElementById('FakeCompassBoxHdg').style.visibility = 'hidden';
+		document.getElementById('FakeCompassBox').style.visibility = 'visible';
+	} else {
+		document.getElementById('FakeCompassBoxHdg').style.visibility = 'visible';
+		document.getElementById('FakeCompassBox').style.visibility = 'hidden';
+	}
+
 	document.getElementById('Map').style.visibility = 'hidden';
 
 	document.getElementById('headingGroup').style.visibility = 'hidden';
@@ -94,29 +98,38 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 
 	document.getElementById('NDInfo').style.visibility = 'hidden';
 
+	let aligns = [document.getElementById('l-align'), document.getElementById('c-align'), document.getElementById('r-align')]
+
+
 	if(this.heavyIRSSimulator.irsLState === 2 || this.heavyIRSSimulator.irsCState === 2 || this.heavyIRSSimulator.irsRState === 2){
 		document.getElementById('time-to-align').style.visibility = 'visible';
+	} else {
+		document.getElementById('time-to-align').style.visibility = 'hidden';
 	}
 
-	let aligns = [document.getElementById('l-align'), document.getElementById('c-align'), document.getElementById('r-align')]
+	aligns.forEach((element) =>{
+		element.style.visibility = 'hidden';
+		element.textContent = '';
+	});
+
 	let times = [];
 	let position = 0;
 	let now = Math.floor(Date.now() / 1000);
 	if (this.heavyIRSSimulator.irsLState === 2){
 		aligns[position].textContent = 'L ' +  Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60) + '+ MIN';
-		console.log("L " + position)
+		aligns[position].style.visibility = 'visible';
 		position++
 	}
 
 	if (this.heavyIRSSimulator.irsCState === 2){
 		aligns[position].textContent = 'C ' +  Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60) + '+ MIN';
-		console.log("C " + position)
+		aligns[position].style.visibility = 'visible';
 		position++
 	}
 
 	if (this.heavyIRSSimulator.irsRState === 2){
 		aligns[position].textContent = 'R ' +  Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60) + '+ MIN';
-		console.log("R " + position)
+		aligns[position].style.visibility = 'visible';
 		position++
 	}
 

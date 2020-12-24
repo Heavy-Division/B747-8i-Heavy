@@ -5,14 +5,34 @@
     <div id="Mainframe">
         <div id="Electricity" state="off">
             <div id="FakeBlackMask">
-                <svg id="svg8" version="1.1" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                    <g id="layer1">
+                <svg id="FakeMaskSvg" version="1.1" viewBox="0 0 600 600 " xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <!-- VertBox -->
+                    <rect id="VertBox" x="556" y="271" width="26" height="85"/>
+                    <!-- Vert -->
+                    <text id="VertText" transform="rotate(90)" x="292" y="-564">
+                        <tspan id="VertTextSpan" rotate="270 270 270 270 0">VERT</tspan>
+                    </text>
 
-                        <path id="path18" d="m158 316v-6h57.8v28h-5v-22h-40z" fill="none" stroke="#fff" stroke-width="1px"/>
-                        <path id="path18-2" d="m388 316v-6h-57.8v28h5v-22h40z" fill="none" stroke="#fff" stroke-width="1px"/>
-                        <rect id="rect41" x="268" y="308.5" width="9" height="9" stroke="#fff" stroke-width="3"/>
-                    </g>
+                    <!-- Triangle -->
+                    <path class="bank-triangle" d="m 265.26786,140.22321 h 15.37946 l -7.70089,12.23215 z"/>
+                    <!-- FakeBank -->
+                    <path class="bank-lines" d="m 131.07143,206.78571 23.21429,13.48215"/>
+                    <path class="bank-lines" d="m 166.35478,182.42268 9.82143,9.33036"/>
+                    <path class="bank-lines" d="m 190.82662,146.87309 13.52533,23.18919"/>
+                    <path class="bank-lines" d="m 221.42456,147.37046 4.64845,12.72426"/>
+                    <path class="bank-lines" d="m 246.63867,140.67399 2.36837,13.33818"/>
+                    <path class="bank-lines" d="m 298.80804,140.67399 -2.36837,13.33818"/>
+                    <path class="bank-lines" d="M 324.08845,147.37047 319.44,160.09472"/>
+                    <path class="bank-lines" d="m 354.63395,146.87309 -13.52533,23.18919"/>
+                    <path class="bank-lines" d="m 379.23537,182.42268 -9.82143,9.33036"/>
+                    <path class="bank-lines" d="m 414.68864,206.78571 -23.21429,13.48215"/>
+
+                    <!-- Hor -->
+                    <path id="hor-left" d="m158 316v-6h57.8v28h-5v-22h-40z"/>
+                    <path id="hor-right" d="m388 316v-6h-57.8v28h5v-22h40z"/>
+                    <rect id="hor-center" x="268" y="308.5" width="9" height="9"/>
                 </svg>
+
             </div>
 
             <div id="HorizonContainer">

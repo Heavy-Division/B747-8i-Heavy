@@ -66,7 +66,8 @@ class HeavyIRSSimulator {
 			this.irsRState = 1;
 		}
 
-		SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_INITED', 'Number', Math.floor(Date.now() / 1000));
+		this.isIrsInited = Math.floor(Date.now() / 1000)
+		SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_INITED', 'Number', this.isIrsInited);
 	}
 
 	executeIRSDeinit() {
@@ -74,6 +75,9 @@ class HeavyIRSSimulator {
 		this.initLAlignTime = null;
 		this.initCAlignTime = null;
 		this.initRAlignTime = null;
+		this.irsLState = 0;
+		this.irsCState = 0;
+		this.irsRState = 0;
 		this.irsLTimeForAligning = this.generateTimeForAligning(420, 480);
 		this.irsCTimeForAligning = this.generateTimeForAligning(420, 480);
 		this.irsRTimeForAligning = this.generateTimeForAligning(420, 480);
@@ -97,6 +101,10 @@ class HeavyIRSSimulator {
 					this.irsLState = 3
 				}
 			}
+		} else {
+			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_L_STATE', 'Number', 0);
+			this.initLAlignTime = null
+			this.irsLState = 0
 		}
 
 		if (this.irsCSwitchState > 0) {
@@ -110,6 +118,10 @@ class HeavyIRSSimulator {
 					this.irsCState = 3;
 				}
 			}
+		} else {
+			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_C_STATE', 'Number', 0);
+			this.initCAlignTime = null
+			this.irsCState = 0
 		}
 
 		if (this.irsRSwitchState > 0) {
@@ -123,6 +135,10 @@ class HeavyIRSSimulator {
 					this.irsRState = 3;
 				}
 			}
+		} else {
+			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_R_STATE', 'Number', 0);
+			this.initRAlignTime = null
+			this.irsRState = 0
 		}
 	}
 
