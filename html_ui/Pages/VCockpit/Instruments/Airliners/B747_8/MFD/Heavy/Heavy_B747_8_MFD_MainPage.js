@@ -52,7 +52,7 @@ B747_8_MFD_MainPage.prototype.updateAltitudeArc = function (_deltatime) {
 B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 	this.heavyIRSSimulator.update();
 
-	if(this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2){
+	if (this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2) {
 		document.getElementById('align-times').style.visibility = 'hidden';
 		document.getElementById('FakeMapBox').style.visibility = 'hidden';
 		document.getElementById('FakeCompassBoxHdg').style.visibility = 'hidden';
@@ -78,7 +78,7 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 
 	document.getElementById('align-times').style.visibility = 'visible';
 
-	if(this.heavyIRSSimulator.irsLState > 0 || this.heavyIRSSimulator.irsCState > 0 || this.heavyIRSSimulator.irsRState > 0){
+	if (this.heavyIRSSimulator.irsLState > 0 || this.heavyIRSSimulator.irsCState > 0 || this.heavyIRSSimulator.irsRState > 0) {
 		document.getElementById('FakeCompassBoxHdg').style.visibility = 'hidden';
 		document.getElementById('FakeCompassBox').style.visibility = 'visible';
 	} else {
@@ -98,16 +98,16 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 
 	document.getElementById('NDInfo').style.visibility = 'hidden';
 
-	let aligns = [document.getElementById('l-align'), document.getElementById('c-align'), document.getElementById('r-align')]
+	let aligns = [document.getElementById('l-align'), document.getElementById('c-align'), document.getElementById('r-align')];
 
 
-	if(this.heavyIRSSimulator.irsLState === 2 || this.heavyIRSSimulator.irsCState === 2 || this.heavyIRSSimulator.irsRState === 2){
+	if (this.heavyIRSSimulator.irsLState === 2 || this.heavyIRSSimulator.irsCState === 2 || this.heavyIRSSimulator.irsRState === 2) {
 		document.getElementById('time-to-align').style.visibility = 'visible';
 	} else {
 		document.getElementById('time-to-align').style.visibility = 'hidden';
 	}
 
-	aligns.forEach((element) =>{
+	aligns.forEach((element) => {
 		element.style.visibility = 'hidden';
 		element.textContent = '';
 	});
@@ -115,22 +115,22 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 	let times = [];
 	let position = 0;
 	let now = Math.floor(Date.now() / 1000);
-	if (this.heavyIRSSimulator.irsLState === 2){
-		aligns[position].textContent = 'L ' +  Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60) + '+ MIN';
+	if (this.heavyIRSSimulator.irsLState === 2) {
+		aligns[position].textContent = 'L ' + Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60) + '+ MIN';
 		aligns[position].style.visibility = 'visible';
-		position++
+		position++;
 	}
 
-	if (this.heavyIRSSimulator.irsCState === 2){
-		aligns[position].textContent = 'C ' +  Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60) + '+ MIN';
+	if (this.heavyIRSSimulator.irsCState === 2) {
+		aligns[position].textContent = 'C ' + Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60) + '+ MIN';
 		aligns[position].style.visibility = 'visible';
-		position++
+		position++;
 	}
 
-	if (this.heavyIRSSimulator.irsRState === 2){
-		aligns[position].textContent = 'R ' +  Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60) + '+ MIN';
+	if (this.heavyIRSSimulator.irsRState === 2) {
+		aligns[position].textContent = 'R ' + Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60) + '+ MIN';
 		aligns[position].style.visibility = 'visible';
-		position++
+		position++;
 	}
 
 	// Hides all texts from compass circle

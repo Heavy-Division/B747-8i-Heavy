@@ -7,7 +7,7 @@ class Heavy_B747_8_FMC_HeavyMenuPage {
 			['', ''],
 			[FMCString.Prompt.SIM_RATE_MANAGER_LEFT, ''],
 			['', ''],
-			['', ''],
+			[FMCString.Prompt.HEAVY_IRS_LEFT, ''],
 			['', ''],
 			['', ''],
 			['', ''],
@@ -22,6 +22,10 @@ class Heavy_B747_8_FMC_HeavyMenuPage {
 
 		fmc.onLeftInput[0] = () => {
 			new Heavy_B747_8_FMC_HeavySimRateManager(fmc).showPage();
+		};
+
+		fmc.onLeftInput[1] = () => {
+			new Heavy_B747_8_FMC_HeavyIRSMenuPage(fmc).showPage();
 		};
 
 		fmc.onLeftInput[5] = () => {

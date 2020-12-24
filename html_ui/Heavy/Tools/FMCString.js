@@ -12,6 +12,7 @@ const FMCString = {
 		ACT: 'ACT',
 		HEAVY_MENU: 'HEAVY MENU',
 		HEAVY: 'HEAVY',
+		HEAVY_IRS: 'HEAVY IRS',
 		SIM_RATE_MANAGER: 'SIM RATE MANAGER'
 	},
 	LineTitle: {
@@ -21,7 +22,8 @@ const FMCString = {
 		SPD_TRANS: 'SPD TRANS',
 		SPD_RESTR: 'SPD RESTR',
 		TRANS_ALT: 'TRANS ALT',
-		MAX_ANGLE: 'MAX ANGLE'
+		MAX_ANGLE: 'MAX ANGLE',
+		IRS_STATUS: 'IRS STATUS'
 	},
 	Line: {
 		Dash: {
@@ -54,7 +56,12 @@ const FMCString = {
 			3: '___',
 			4: '____',
 			5: '_____'
-		}
+		},
+		OFF: 'OFF',
+		INITED: 'INITED',
+		ALIGNING: 'ALIGNING',
+		ALIGNED: 'ALIGNED',
+		ALIGN_TIME: 'ALIGN TIME',
 	},
 	Scratchpad: {
 		Error: {
@@ -64,6 +71,8 @@ const FMCString = {
 	Prompt: {
 		HEAVY_LEFT: '<HEAVY',
 		SIM_RATE_MANAGER_LEFT: '<SIM RATE MANAGER',
+		HEAVY_IRS_LEFT: '<IRS',
+		ALIGN_TIME_RIGHT: 'ALIGN TIME>',
 		BACK_LEFT: '<BACK',
 		INDEX_LEFT: '<INDEX',
 		INIT_REF_INDEX_LEFT: 'INIT/REF INDEX',
@@ -182,7 +191,8 @@ const FMCString = {
 		LAT_LON_RIGHT: 'LAT/LON>',
 		SEL_BOTH: '<SEL>',
 		ACT_BOTH: '<ACT>',
-		EMERGENCY_SHUTDOWN_LEFT: '<EMERGENCY SHUTDOWN'
+		EMERGENCY_SHUTDOWN_LEFT: '<EMERGENCY SHUTDOWN',
+		FORCE_ALIGN_RIGHT: 'FORCE ALIGN>'
 	},
 	Common: {
 		SLASH: '/',
