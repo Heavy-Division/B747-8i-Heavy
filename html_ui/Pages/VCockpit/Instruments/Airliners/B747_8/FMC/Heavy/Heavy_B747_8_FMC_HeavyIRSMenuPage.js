@@ -122,14 +122,14 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 		let rows = [
 			[FMCString.PageTitle.HEAVY_IRS],
-			[FMCString.LineTitle.IRS_STATUS, FMCString.Prompt.ALIGN_TIME_RIGHT],
+			[FMCString.LineTitle.IRS_STATUS, FMCString.LineTitle.ALIGN_TIME],
 			[irsStateString, irsAlignSpeed],
 			['', ''],
-			['', 'INSTANT>'],
+			['', 'INSTANT>[s-text]'],
 			['', ''],
-			['', 'FAST>'],
+			['', 'FAST>[s-text]'],
 			['', ''],
-			['', 'NORMAL>'],
+			['', 'NORMAL>[s-text]'],
 			['', ''],
 			['', ''],
 			['', ''],

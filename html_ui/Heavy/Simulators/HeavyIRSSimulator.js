@@ -7,12 +7,7 @@ class HeavyIRSSimulator {
 		return {'INSTANT': 'INSTANT', 'FAST': 'FAST', 'NORMAL': 'NORMAL'};
 	}
 
-	//static set ALIGN_SPEED(value){
-	//	this._ALIGN_SPEED = value;
-	//}
-
 	constructor() {
-		//HeavyIRSSimulator.ALIGN_SPEED = {'INSTANT': 0, 'FAST': 1, 'NORMAL': 2}
 		this.initLAlignTime = null;
 		this.initCAlignTime = null;
 		this.initRAlignTime = null;

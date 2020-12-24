@@ -23,7 +23,8 @@ const FMCString = {
 		SPD_RESTR: 'SPD RESTR',
 		TRANS_ALT: 'TRANS ALT',
 		MAX_ANGLE: 'MAX ANGLE',
-		IRS_STATUS: 'IRS STATUS'
+		IRS_STATUS: 'IRS STATUS',
+		ALIGN_TIME: 'ALIGN TIME'
 	},
 	Line: {
 		Dash: {
@@ -61,7 +62,6 @@ const FMCString = {
 		INITED: 'INITED',
 		ALIGNING: 'ALIGNING',
 		ALIGNED: 'ALIGNED',
-		ALIGN_TIME: 'ALIGN TIME',
 	},
 	Scratchpad: {
 		Error: {
