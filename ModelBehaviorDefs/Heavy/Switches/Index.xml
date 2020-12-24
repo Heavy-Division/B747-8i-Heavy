@@ -1,0 +1,3 @@
+<ModelBehaviors>
+    <Include RelativeFile="IRS.xml"/>
+</ModelBehaviors>

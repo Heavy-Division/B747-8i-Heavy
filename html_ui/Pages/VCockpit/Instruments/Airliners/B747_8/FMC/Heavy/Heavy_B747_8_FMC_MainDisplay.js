@@ -18,6 +18,13 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		this.registerMainButtonsActions();
 	}
 
+	onUpdate(_deltaTime) {
+		super.onUpdate(_deltaTime);
+		if (this.refreshPageCallback) {
+			this.refreshPageCallback();
+		}
+	}
+
 	updateAutopilot() {
 		let now = performance.now();
 		let dt = now - this._lastUpdateAPTime;
@@ -34,6 +41,14 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			if (currentApMasterStatus != this._apMasterStatus) {
 				this._apMasterStatus = currentApMasterStatus;
 				this._forceNextAltitudeUpdate = true;
+				if (currentApMasterStatus) {
+					if (this.flightPlanManager.hasFlightPlan()) {
+						this.activateLNAV();
+						this.activateVNAV();
+					} else {
+						this.activateFLCH();
+					}
+				}
 			}
 			this._apHasDeactivated = !currentApMasterStatus && this._previousApMasterStatus;
 			this._previousApMasterStatus = currentApMasterStatus;
@@ -102,7 +117,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 				let altitude = Simplane.getAltitude();
 				let deltaAltitude = Math.abs(targetAltitude - altitude);
 				if (deltaAltitude < 150) {
-					this.activateAltitudeHold();
+					this.activateAltitudeHold(true);
 				}
 			}
 			if (this.getIsVSpeedActive()) {
@@ -110,7 +125,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 				let altitude = Simplane.getAltitude();
 				let deltaAltitude = Math.abs(targetAltitude - altitude);
 				if (deltaAltitude < 150) {
-					this.activateAltitudeHold();
+					this.activateAltitudeHold(true);
 				}
 			}
 			if (this._pendingHeadingSelActivation) {
@@ -148,6 +163,18 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			let apTargetAltitude = Simplane.getAutoPilotAltitudeLockValue('feet');
 			let planeHeading = Simplane.getHeadingMagnetic();
 			let planeCoordinates = new LatLong(SimVar.GetSimVarValue('PLANE LATITUDE', 'degree latitude'), SimVar.GetSimVarValue('PLANE LONGITUDE', 'degree longitude'));
+			if (this.currentFlightPhase >= FlightPhase.FLIGHT_PHASE_CLIMB) {
+				let activeWaypoint = this.flightPlanManager.getActiveWaypoint();
+				if (activeWaypoint != this._activeWaypoint) {
+					console.log('Update FMC Active Waypoint');
+					if (this._activeWaypoint) {
+						this._activeWaypoint.altitudeWasReached = Simplane.getAltitudeAboveGround();
+						this._activeWaypoint.timeWasReached = SimVar.GetGlobalVarValue('LOCAL TIME', 'seconds');
+						this._activeWaypoint.fuelWasReached = SimVar.GetSimVarValue('FUEL TOTAL QUANTITY', 'gallons') * SimVar.GetSimVarValue('FUEL WEIGHT PER GALLON', 'kilograms') / 1000;
+					}
+					this._activeWaypoint = activeWaypoint;
+				}
+			}
 			if (this.getIsVNAVActive()) {
 				let prevWaypoint = this.flightPlanManager.getPreviousActiveWaypoint();
 				let nextWaypoint = this.flightPlanManager.getActiveWaypoint();
@@ -184,7 +211,8 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					if (!this.flightPlanManager.getIsDirectTo() &&
 						isFinite(nextWaypoint.legAltitude1) &&
 						nextWaypoint.legAltitude1 < 20000 &&
-						nextWaypoint.legAltitude1 > selectedAltitude) {
+						nextWaypoint.legAltitude1 > selectedAltitude &&
+						Simplane.getAltitude() > nextWaypoint.legAltitude1 - 200) {
 						Coherent.call('AP_ALT_VAR_SET_ENGLISH', 2, nextWaypoint.legAltitude1, this._forceNextAltitudeUpdate);
 						this._forceNextAltitudeUpdate = false;
 						SimVar.SetSimVarValue('L:AP_CURRENT_TARGET_ALTITUDE_IS_CONSTRAINT', 'number', 1);
@@ -204,8 +232,10 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 						SimVar.SetSimVarValue('L:AP_CURRENT_TARGET_ALTITUDE_IS_CONSTRAINT', 'number', 0);
 					}
 				}
+			} else if (!this.getIsFLCHActive() && this.getIsSPDActive()) {
+				this.setAPSpeedHoldMode();
 			}
-			if (this._isVNAVArmed && !this._isVNAVActive) {
+			if (this.getIsVNAVArmed() && !this.getIsVNAVActive()) {
 				if (Simplane.getAutoPilotThrottleArmed()) {
 					if (!this._hasSwitchedToHoldOnTakeOff) {
 						let speed = Simplane.getIndicatedSpeed();
@@ -219,7 +249,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			if (this._isHeadingHoldActive) {
 				Coherent.call('HEADING_BUG_SET', 2, this._headingHoldValue);
 			}
-			if (!this.flightPlanManager.isActiveApproach()) {
+			if (!this.flightPlanManager.isActiveApproach() && this.currentFlightPhase != FlightPhase.FLIGHT_PHASE_APPROACH) {
 				let activeWaypoint = this.flightPlanManager.getActiveWaypoint();
 				let nextActiveWaypoint = this.flightPlanManager.getNextActiveWaypoint();
 				if (activeWaypoint && nextActiveWaypoint) {
@@ -244,7 +274,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			}
 			if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_TAKEOFF) {
 				if (this.getIsVNAVActive()) {
-					let speed = this.getCleanTakeOffSpeed();
+					let speed = this.getTakeOffManagedSpeed();
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
 				}
 			} else if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CLIMB) {
@@ -376,7 +406,22 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		this.onMenu = () => {
 			new Heavy_B747_8_FMC_MenuPage().showPage(this);
 		};
+
+		this.onProg = () => {
+			Heavy_B747_8_FMC_ProgPage.ShowPage1(this);
+		};
 		Heavy_B747_8_FMC_IdentPage.ShowPage1(this);
+	}
+
+	async tryUpdateIrsCoordinatesDisplay(newIrsCoordinatesDisplay) {
+		if (!this.dataManager.IsValidLatLon(newIrsCoordinatesDisplay)) {
+			this.showErrorMessage(this.defaultInputErrorMessage);
+			return false;
+		}
+		await SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_POSITION_SET', 'Boolean', true);
+		this.initCoordinates = newIrsCoordinatesDisplay;
+		this.lastPos = this.initCoordinates;
+		return true;
 	}
 }
 

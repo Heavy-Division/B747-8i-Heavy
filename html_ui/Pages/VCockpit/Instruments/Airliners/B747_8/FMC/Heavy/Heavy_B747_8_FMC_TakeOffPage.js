@@ -1,7 +1,6 @@
 class Heavy_B747_8_FMC_TakeOffPage {
 	static ShowPage1(fmc) {
 		fmc.clearDisplay();
-		fmc.updateVSpeeds();
 		Heavy_B747_8_FMC_TakeOffPage._timer = 0;
 		fmc.pageUpdate = () => {
 			Heavy_B747_8_FMC_TakeOffPage._timer++;
@@ -17,8 +16,7 @@ class Heavy_B747_8_FMC_TakeOffPage {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
 			if (value === FMCMainDisplay.clrValue) {
-				fmc.v1Speed = undefined;
-				SimVar.SetSimVarValue('L:AIRLINER_V1_SPEED', 'Knots', -1);
+				fmc.trySetV1Speed(undefined);
 				Heavy_B747_8_FMC_TakeOffPage.ShowPage1(fmc);
 			} else if (value === '') {
 				fmc._computeV1Speed();
@@ -37,8 +35,7 @@ class Heavy_B747_8_FMC_TakeOffPage {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
 			if (value === FMCMainDisplay.clrValue) {
-				fmc.vRSpeed = undefined;
-				SimVar.SetSimVarValue('L:AIRLINER_VR_SPEED', 'Knots', -1);
+				fmc.trySetVRSpeed(undefined);
 				Heavy_B747_8_FMC_TakeOffPage.ShowPage1(fmc);
 			} else if (value === '') {
 				fmc._computeVRSpeed();
@@ -57,8 +54,7 @@ class Heavy_B747_8_FMC_TakeOffPage {
 			let value = fmc.inOut;
 			fmc.clearUserInput();
 			if (value === FMCMainDisplay.clrValue) {
-				fmc.v2Speed = undefined;
-				SimVar.SetSimVarValue('L:AIRLINER_V2_SPEED', 'Knots', -1);
+				fmc.trySetV2Speed(undefined);
 				Heavy_B747_8_FMC_TakeOffPage.ShowPage1(fmc);
 			} else if (value === '') {
 				fmc._computeV2Speed();
@@ -69,7 +65,7 @@ class Heavy_B747_8_FMC_TakeOffPage {
 				}
 			}
 		};
-		let flapsCell = '---';
+		let flapsCell = FMCString.Line.Dash['3'];
 		let flapsAngle = fmc.getTakeOffFlap();
 		if (isFinite(flapsAngle) && flapsAngle >= 0) {
 			flapsCell = flapsAngle.toFixed(0) + '°';

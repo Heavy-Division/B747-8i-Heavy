@@ -85,6 +85,32 @@
                     </svg>
                 </div>
             </jet-mfd-nd-info>
+
+            <svg id="FakeCompassBox" viewBox = "0 0 600 600">
+                <text x="266" y="57" fill="green" font-size="21" font-family="Roboto-Bold" text-anchor="end" alignment-baseline="central">HDG</text>
+                <text x="300" y="57" fill="white" font-size="26" font-family="Roboto-Bold" text-anchor="middle" alignment-baseline="central">---</text>
+                <text x="335" y="57" fill="green" font-size="21" font-family="Roboto-Bold" text-anchor="start" alignment-baseline="central">MAG</text>
+                <path d="M 270 38 L 270 75 L 330 75 L 330 38" stroke-width="1" stroke="white" fill="none"></path>
+            </svg>
+
+            <svg id="FakeCompassBoxHdg" viewBox = "0 0 600 600">
+                <text x="300" y="57">HDG</text>
+                <path d="M273 43L273 70L326 70L326 43L273 43"></path>
+            </svg>
+
+            <svg id="FakeMapBox" viewBox = "0 0 600 600">
+                <text x="300" y="320">MAP</text>
+                <path d="M273 307L273 334L326 334L326 307L273 307"></path>
+            </svg>
+
+            <svg id="align-times">
+                <text id="GS_FakeText" class="Small" x="70" y="101" alignment-baseline="baseline">GS</text>
+                <text id="GS_FakeValue" class="Value" x="130" y="101" alignment-baseline="baseline">---</text>
+                <text id="time-to-align" class="align" x="50" y="150" alignment-baseline="baseline">TIME TO ALIGN</text>
+                <text id="l-align" class="align" x="50" y="190" alignment-baseline="baseline"></text>
+                <text id="c-align" class="align" x="50" y="220" alignment-baseline="baseline"></text>
+                <text id="r-align" class="align" x="50" y="250" alignment-baseline="baseline"></text>
+            </svg>
         </div>
     </div>
 </script>
@@ -107,6 +133,7 @@
 
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/MFD/NDCompass.js"></script>
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/MFD/NDInfo.js"></script>
+<script type="text/html" import-script="/Heavy/Simulators/HeavyIRSSimulator.js"></script>
 
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/B747_8_MFD.js"></script>
 <script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Heavy/Heavy_B747_8_MFD_MainPage.js"></script>

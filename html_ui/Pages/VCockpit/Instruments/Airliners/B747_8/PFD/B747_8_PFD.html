@@ -1,0 +1,87 @@
+﻿<link rel="stylesheet" href="B747_8_PFD.css" />
+
+<script type="text/html" id="B747_8_PFD">
+    <glasscockpit-highlight id="highlight"></glasscockpit-highlight>
+    <div id="Mainframe">
+        <div id="Electricity" state="off">
+            <div id="FakeBlackMask">
+                <svg id="FakeMaskSvg" version="1.1" viewBox="0 0 600 600 " xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <!-- VertBox -->
+                    <rect id="VertBox" x="556" y="271" width="26" height="85"/>
+                    <!-- Vert -->
+                    <text id="VertText" transform="rotate(90)" x="292" y="-564">
+                        <tspan id="VertTextSpan" rotate="270 270 270 270 0">VERT</tspan>
+                    </text>
+
+                    <!-- Triangle -->
+                    <path class="bank-triangle" d="m 265.26786,140.22321 h 15.37946 l -7.70089,12.23215 z"/>
+                    <!-- FakeBank -->
+                    <path class="bank-lines" d="m 131.07143,206.78571 23.21429,13.48215"/>
+                    <path class="bank-lines" d="m 166.35478,182.42268 9.82143,9.33036"/>
+                    <path class="bank-lines" d="m 190.82662,146.87309 13.52533,23.18919"/>
+                    <path class="bank-lines" d="m 221.42456,147.37046 4.64845,12.72426"/>
+                    <path class="bank-lines" d="m 246.63867,140.67399 2.36837,13.33818"/>
+                    <path class="bank-lines" d="m 298.80804,140.67399 -2.36837,13.33818"/>
+                    <path class="bank-lines" d="M 324.08845,147.37047 319.44,160.09472"/>
+                    <path class="bank-lines" d="m 354.63395,146.87309 -13.52533,23.18919"/>
+                    <path class="bank-lines" d="m 379.23537,182.42268 -9.82143,9.33036"/>
+                    <path class="bank-lines" d="m 414.68864,206.78571 -23.21429,13.48215"/>
+
+                    <!-- Hor -->
+                    <path id="hor-left" d="m158 316v-6h57.8v28h-5v-22h-40z"/>
+                    <path id="hor-right" d="m388 316v-6h-57.8v28h5v-22h40z"/>
+                    <rect id="hor-center" x="268" y="308.5" width="9" height="9"/>
+                </svg>
+
+            </div>
+
+            <div id="HorizonContainer">
+                <jet-pfd-attitude-indicator id="Horizon" background="true"></jet-pfd-attitude-indicator>
+            </div>
+
+            <div id="InstrumentsContainer">
+                <jet-pfd-airspeed-indicator id="Airspeed"></jet-pfd-airspeed-indicator>
+                <jet-pfd-vspeed-indicator id="VSpeed"></jet-pfd-vspeed-indicator>
+                <jet-pfd-altimeter-indicator id="Altimeter"></jet-pfd-altimeter-indicator>
+                <jet-pfd-hs-indicator id="Compass"></jet-pfd-hs-indicator>
+                <boeing-fma id="FMA" class="B747_8_PFD"></boeing-fma>
+                <jet-pfd-ils-indicator id="ILS"></jet-pfd-ils-indicator>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" import-script="/JS/SimPlane.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/Utils/RadioNav.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/Templates/Highlight/Highlight.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/FlightPlan.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/FlightPlanManager.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/Waypoint.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/NearestWaypoint.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/Approach.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/Runway.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Shared/FlightElements/GeoCalc.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/LogicElements/SelectableElement.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/LogicElements/SearchField.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/NavSystems/Shared/NavSystem.js"></script>
+
+<script type="text/html" import-script="/Heavy/Simulators/HeavyIRSSimulator.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/PFD/AirspeedIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/PFD/AltimeterIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/PFD/HSIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/PFD/AttitudeIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/PFD/VerticalSpeedIndicator.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/PFD/ILSIndicator.js"></script>
+
+<script type="text/html" import-template="/Pages/VCockpit/Instruments/Airliners/Shared/Boeing/Boeing_FMA.html"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/Shared/BaseAirliners.js"></script>
+
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/B747_8/PFD/B747_8_PFD.js"></script>
+<script type="text/html" import-script="/Pages/VCockpit/Instruments/Airliners/B747_8/PFD/Heavy/Heavy_B747_8_PFD.js"></script>

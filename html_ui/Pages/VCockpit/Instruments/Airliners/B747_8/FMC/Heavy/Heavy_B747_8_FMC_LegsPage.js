@@ -18,11 +18,12 @@ class Heavy_B747_8_FMC_LegsPage {
 			['']
 		];
 		let offset = Math.floor((currentPage - 1) * 5);
+		let activeWaypoint = 0;
 		let flightPlanManagerWaypoints = fmc.flightPlanManager.getWaypoints();
 		if (flightPlanManagerWaypoints) {
 			let waypoints = [...fmc.flightPlanManager.getWaypoints()];
 			if (waypoints.length > 2) {
-				let activeWaypoint = fmc.flightPlanManager.getActiveWaypointIndex();
+				activeWaypoint = fmc.flightPlanManager.getActiveWaypointIndex();
 				waypoints.pop();
 				let firstApproachWaypointIndex = waypoints.length;
 				let approachWaypoints = fmc.flightPlanManager.getApproachWaypoints();
@@ -160,7 +161,7 @@ class Heavy_B747_8_FMC_LegsPage {
 				}
 			}
 		}
-		fmc.currentFlightPlanWaypointIndex = offset + step + 1;
+		fmc.currentFlightPlanWaypointIndex = activeWaypoint + offset + step;
 		let isMapModePlan = SimVar.GetSimVarValue('L:B747_MAP_MODE', 'number') === 3;
 		if (isMapModePlan) {
 			if (rows[2 * step + 1][0] != '') {
