@@ -79,7 +79,7 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 		};
 
 		this.fmc.onLeftInput[5] = () => {
-			new Heavy_B747_8_FMC_MenuPage().showPage(this.fmc);
+			new Heavy_B747_8_FMC_HeavyMenuPage().showPage(this.fmc);
 		};
 	}
 
