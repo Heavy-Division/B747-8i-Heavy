@@ -13,7 +13,9 @@
 * ### MFD / ND
     *  Altitude Arc
 * ### IRS
-    
+    * IRS implemented
+    * IRS L, C and R are fully independent
+
 ## Special functions
 
 ### Sim Rate Manager (Experimental)
