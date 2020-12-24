@@ -141,19 +141,16 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 		this.fmc.onRightInput[1] = () => {
 			HeavyDataStorage.set('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.INSTANT);
-			console.log(HeavyDataStorage.get('IRS_ALIGN_SPEED'))
 			this.showPage();
 		};
 
 		this.fmc.onRightInput[2] = () => {
 			HeavyDataStorage.set('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.FAST);
-			console.log(HeavyDataStorage.get('IRS_ALIGN_SPEED'))
 			this.showPage();
 		};
 
 		this.fmc.onRightInput[3] = () => {
 			HeavyDataStorage.set('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.NORMAL);
-			console.log(HeavyDataStorage.get('IRS_ALIGN_SPEED'))
 			this.showPage();
 		};
 	}
