@@ -5,11 +5,11 @@ class Heavy_B747_8_FMC_HeavyMenuPage {
 		let rows = [
 			[FMCString.PageTitle.HEAVY],
 			['', ''],
-			[FMCString.Prompt.HEAVY_IRS_LEFT, ''],
+			['', FMCString.Prompt.HEAVY_IRS_RIGHT],
 			['', ''],
-			[FMCString.Prompt.PAYLOAD_MANAGER_LEFT, ''],
+			['', FMCString.Prompt.PAYLOAD_MANAGER_RIGHT],
 			['', ''],
-			[FMCString.Prompt.SIM_RATE_MANAGER_LEFT, ''],
+			['', FMCString.Prompt.SIM_RATE_MANAGER_RIGHT],
 			['', ''],
 			['', ''],
 			['', ''],
@@ -20,15 +20,15 @@ class Heavy_B747_8_FMC_HeavyMenuPage {
 
 		fmc.setTemplate(rows);
 
-		fmc.onLeftInput[0] = () => {
+		fmc.onRightInput[0] = () => {
 			new Heavy_B747_8_FMC_HeavyIRSMenuPage(fmc).showPage();
 		};
 
-		fmc.onLeftInput[1] = () => {
+		fmc.onRightInput[1] = () => {
 			new Heavy_B747_8_FMC_HeavyPayloadManager(fmc).showPage();
 		};
 
-		fmc.onLeftInput[2] = () => {
+		fmc.onRightInput[2] = () => {
 			new Heavy_B747_8_FMC_HeavySimRateManager(fmc).showPage();
 		};
 

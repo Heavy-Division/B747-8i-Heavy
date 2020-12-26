@@ -12,7 +12,7 @@ class Heavy_B747_8_FMC_MenuPage {
 			[],
 			[],
 			[],
-			[FMCString.Prompt.HEAVY_LEFT],
+			['', FMCString.Prompt.HEAVY_RIGHT],
 			[],
 			['<CMC']
 		];
@@ -22,7 +22,7 @@ class Heavy_B747_8_FMC_MenuPage {
 			Heavy_B747_8_FMC_IdentPage.ShowPage1(fmc);
 		};
 
-		fmc.onLeftInput[4] = () => {
+		fmc.onRightInput[4] = () => {
 			new Heavy_B747_8_FMC_HeavyMenuPage().showPage(fmc);
 		};
 	}
