@@ -56,7 +56,7 @@ Payload manager automatically adjust payload and fuel to try to fit selected Cen
    * slow down - change sim rate to 1x few miles before TOD or DECEL waypoint
    * pause - pause game few miles before TOD or DECEL waypoint
 * Rate Modes:
-   * Off - do nothing
+   * Off - do nothing (do not change sim rate)
    * Linear - Change sim rate to 4x and hold.
    * Normal - Change sim rate to 4x and hold. 5nm before waypoint change sim rate to 2x and hold. 3nm after waypoint change sim rate to 4x and hold.
    * Aggressive - change sim rate to 8x and hold (!!!Do not use this mode now!!! MSFS 747 are not able to hold altitude with rate 8, 16, 32, ... for long time. This mode will be tweaked soon.)
