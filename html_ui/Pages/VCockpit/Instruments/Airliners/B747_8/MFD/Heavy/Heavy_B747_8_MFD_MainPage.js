@@ -49,95 +49,75 @@ B747_8_MFD_MainPage.prototype.updateAltitudeArc = function (_deltatime) {
 	}
 };
 
+B747_8_MFD_MainPage.prototype.extendMFDHtmlElementsWithIrsState = () => {
+	[document.getElementById('headingGroup'),
+		document.getElementById('CourseInfo'),
+		document.getElementById('selectedHeadingGroup'),
+		document.getElementById('selectedTrackGroup'),
+		document.getElementById('ILSGroup'),
+		document.getElementById('currentRefGroup'),
+		document.getElementById('RangeGroup'),
+	].forEach((element) => {
+		element.setAttribute('irs-state', 'off');
+	});
+
+	let compassCircleGroup = document.getElementById('circleGroup');
+	compassCircleGroup.querySelectorAll('text').forEach((element) => {
+		element.setAttribute('irs-state', 'off');
+	});
+};
+
 B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
+	this.extendMFDHtmlElementsWithIrsState();
 	this.heavyIRSSimulator.update();
 
 	if (this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2) {
-		document.getElementById('align-times').style.visibility = 'hidden';
-		document.getElementById('FakeMapBox').style.visibility = 'hidden';
-		document.getElementById('FakeCompassBoxHdg').style.visibility = 'hidden';
-		document.getElementById('FakeCompassBox').style.visibility = 'hidden';
-
-		document.getElementById('Map').style.visibility = 'visible';
-		document.getElementById('headingGroup').style.visibility = 'visible';
-		document.getElementById('CourseInfo').style.visibility = 'visible';
-		document.getElementById('selectedHeadingGroup').style.visibility = 'visible';
-		document.getElementById('selectedTrackGroup').style.visibility = 'visible';
-		document.getElementById('ILSGroup').style.visibility = 'visible';
-		document.getElementById('currentRefGroup').style.visibility = 'visible';
-		document.getElementById('RangeGroup').style.visibility = 'visible';
-
-		document.getElementById('NDInfo').style.visibility = 'visible';
-
-		let compassCircleGroup = document.getElementById('circleGroup');
-		compassCircleGroup.querySelectorAll('text').forEach((element) => {
-			element.style.visibility = 'visible';
+		document.querySelectorAll('[irs-state]').forEach((element) => {
+			element.setAttribute('irs-state', 'aligned');
 		});
 		return;
-	}
+	} else if (this.heavyIRSSimulator.irsLState > 1 || this.heavyIRSSimulator.irsCState > 1 || this.heavyIRSSimulator.irsRState > 1) {
+		document.querySelectorAll('[irs-state]').forEach((element) => {
+			element.setAttribute('irs-state', 'aligning');
+		});
 
-	document.getElementById('align-times').style.visibility = 'visible';
+		let aligns = [document.getElementById('l-align'), document.getElementById('c-align'), document.getElementById('r-align')];
 
-	if (this.heavyIRSSimulator.irsLState > 0 || this.heavyIRSSimulator.irsCState > 0 || this.heavyIRSSimulator.irsRState > 0) {
-		document.getElementById('FakeCompassBoxHdg').style.visibility = 'hidden';
-		document.getElementById('FakeCompassBox').style.visibility = 'visible';
+		aligns.forEach((element) => {
+			element.style.visibility = 'hidden';
+			element.textContent = '';
+		});
+
+		let times = [];
+		let position = 0;
+		let now = Math.floor(Date.now() / 1000);
+		if (this.heavyIRSSimulator.irsLState === 2) {
+			aligns[position].textContent = 'L ' + Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60) + '+ MIN';
+			aligns[position].style.visibility = 'visible';
+			position++;
+		}
+
+		if (this.heavyIRSSimulator.irsCState === 2) {
+			aligns[position].textContent = 'C ' + Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60) + '+ MIN';
+			aligns[position].style.visibility = 'visible';
+			position++;
+		}
+
+		if (this.heavyIRSSimulator.irsRState === 2) {
+			aligns[position].textContent = 'R ' + Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60) + '+ MIN';
+			aligns[position].style.visibility = 'visible';
+			position++;
+		}
+
+	} else if (this.heavyIRSSimulator.irsLState > 0 || this.heavyIRSSimulator.irsCState > 0 || this.heavyIRSSimulator.irsRState > 0) {
+		document.querySelectorAll('[irs-state]').forEach((element) => {
+			element.setAttribute('irs-state', 'inited');
+		});
 	} else {
-		document.getElementById('FakeCompassBoxHdg').style.visibility = 'visible';
-		document.getElementById('FakeCompassBox').style.visibility = 'hidden';
+		document.querySelectorAll('[irs-state]').forEach((element) => {
+			element.setAttribute('irs-state', 'off');
+		});
 	}
-
-	document.getElementById('Map').style.visibility = 'hidden';
-
-	document.getElementById('headingGroup').style.visibility = 'hidden';
-	document.getElementById('CourseInfo').style.visibility = 'hidden';
-	document.getElementById('selectedHeadingGroup').style.visibility = 'hidden';
-	document.getElementById('selectedTrackGroup').style.visibility = 'hidden';
-	document.getElementById('ILSGroup').style.visibility = 'hidden';
-	document.getElementById('currentRefGroup').style.visibility = 'hidden';
-	document.getElementById('RangeGroup').style.visibility = 'hidden';
-
-	document.getElementById('NDInfo').style.visibility = 'hidden';
-
-	let aligns = [document.getElementById('l-align'), document.getElementById('c-align'), document.getElementById('r-align')];
-
-
-	if (this.heavyIRSSimulator.irsLState === 2 || this.heavyIRSSimulator.irsCState === 2 || this.heavyIRSSimulator.irsRState === 2) {
-		document.getElementById('time-to-align').style.visibility = 'visible';
-	} else {
-		document.getElementById('time-to-align').style.visibility = 'hidden';
-	}
-
-	aligns.forEach((element) => {
-		element.style.visibility = 'hidden';
-		element.textContent = '';
-	});
-
-	let times = [];
-	let position = 0;
-	let now = Math.floor(Date.now() / 1000);
-	if (this.heavyIRSSimulator.irsLState === 2) {
-		aligns[position].textContent = 'L ' + Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60) + '+ MIN';
-		aligns[position].style.visibility = 'visible';
-		position++;
-	}
-
-	if (this.heavyIRSSimulator.irsCState === 2) {
-		aligns[position].textContent = 'C ' + Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60) + '+ MIN';
-		aligns[position].style.visibility = 'visible';
-		position++;
-	}
-
-	if (this.heavyIRSSimulator.irsRState === 2) {
-		aligns[position].textContent = 'R ' + Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60) + '+ MIN';
-		aligns[position].style.visibility = 'visible';
-		position++;
-	}
-
-	// Hides all texts from compass circle
-	let compassCircleGroup = document.getElementById('circleGroup');
-	compassCircleGroup.querySelectorAll('text').forEach((element) => {
-		element.style.visibility = 'hidden';
-	});
 };
 
 B747_8_MFD_MainPage.prototype.onUpdate = function (_deltatime) {

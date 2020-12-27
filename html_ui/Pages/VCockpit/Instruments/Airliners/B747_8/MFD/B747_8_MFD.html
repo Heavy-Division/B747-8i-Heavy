@@ -4,8 +4,8 @@
     <glasscockpit-highlight id="highlight"></glasscockpit-highlight>
     <div id="Mainframe">
         <div id="Electricity" state="off">
-            <div id="Map">
-                <map-instrument id="MapInstrument" map-mode="plan" bing-id="MFD" show-overlay="false" show-roads="false" config-path="/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/"></map-instrument>
+            <div id="Map" irs-state="off">
+                <map-instrument irs-state="off" id="MapInstrument" map-mode="plan" bing-id="MFD" show-overlay="false" show-roads="false" config-path="/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/"></map-instrument>
             </div>
             <div id="altitudeArc" style="position: absolute; left: 0%; top: 0%; width: 100%; height: 100%; ">
                 <svg viewBox="-300 0 600 600">
@@ -14,7 +14,7 @@
             </div>
             <jet-mfd-nd-compass id="Compass"></jet-mfd-nd-compass>
             <div id="ModeChangeMask"></div>
-            <jet-mfd-nd-info id="NDInfo">
+            <jet-mfd-nd-info id="NDInfo" irs-state="off">
                 <div id="TopBox">
                     <div id="Speed">
                         <svg>
@@ -86,30 +86,30 @@
                 </div>
             </jet-mfd-nd-info>
 
-            <svg id="FakeCompassBox" viewBox = "0 0 600 600">
+            <svg id="FakeCompassBox" viewBox = "0 0 600 600" irs-state="off">
                 <text x="266" y="57" fill="green" font-size="21" font-family="Roboto-Bold" text-anchor="end" alignment-baseline="central">HDG</text>
                 <text x="300" y="57" fill="white" font-size="26" font-family="Roboto-Bold" text-anchor="middle" alignment-baseline="central">---</text>
                 <text x="335" y="57" fill="green" font-size="21" font-family="Roboto-Bold" text-anchor="start" alignment-baseline="central">MAG</text>
                 <path d="M 270 38 L 270 75 L 330 75 L 330 38" stroke-width="1" stroke="white" fill="none"></path>
             </svg>
 
-            <svg id="FakeCompassBoxHdg" viewBox = "0 0 600 600">
+            <svg id="FakeCompassBoxHdg" viewBox = "0 0 600 600" irs-state="off">
                 <text x="300" y="57">HDG</text>
                 <path d="M273 43L273 70L326 70L326 43L273 43"></path>
             </svg>
 
-            <svg id="FakeMapBox" viewBox = "0 0 600 600">
+            <svg id="FakeMapBox" viewBox = "0 0 600 600" irs-state="off">
                 <text x="300" y="320">MAP</text>
                 <path d="M273 307L273 334L326 334L326 307L273 307"></path>
             </svg>
 
-            <svg id="align-times">
-                <text id="GS_FakeText" class="Small" x="70" y="101" alignment-baseline="baseline">GS</text>
-                <text id="GS_FakeValue" class="Value" x="130" y="101" alignment-baseline="baseline">---</text>
-                <text id="time-to-align" class="align" x="50" y="150" alignment-baseline="baseline">TIME TO ALIGN</text>
-                <text id="l-align" class="align" x="50" y="190" alignment-baseline="baseline"></text>
-                <text id="c-align" class="align" x="50" y="220" alignment-baseline="baseline"></text>
-                <text id="r-align" class="align" x="50" y="250" alignment-baseline="baseline"></text>
+            <svg id="align-times" irs-state="off">
+                <text id="GS_FakeText" class="Small" x="70" y="101" alignment-baseline="baseline" irs-state="off">GS</text>
+                <text id="GS_FakeValue" class="Value" x="130" y="101" alignment-baseline="baseline" irs-state="off">---</text>
+                <text id="time-to-align" class="align" x="50" y="150" alignment-baseline="baseline" irs-state="off">TIME TO ALIGN</text>
+                <text id="l-align" class="align" x="50" y="190" alignment-baseline="baseline" irs-state="off"></text>
+                <text id="c-align" class="align" x="50" y="220" alignment-baseline="baseline" irs-state="off"></text>
+                <text id="r-align" class="align" x="50" y="250" alignment-baseline="baseline" irs-state="off"></text>
             </svg>
         </div>
     </div>
