@@ -214,7 +214,16 @@ b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg rect {
 b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg text {
     fill: var(--colorAmber);
     font-size: 18px;
-    letter-spacing:8px;
+    letter-spacing: 8px;
+}
+
+b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg text#AttText {
+    fill: var(--colorAmber);
+    font-size: 21px;
+    font-family: Roboto-Bold;
+    text-anchor: middle;
+    letter-spacing: normal;
+    alignment-baseline: central;
 }
 
 b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg #hor-left {
@@ -244,6 +253,84 @@ b747-8-pfd-element #Mainframe #FakeBlackMask #FakeMaskSvg .bank-triangle {
     fill: white;
 }
 
+/** IRS States */
 
+#FakeBlackMask[irs-state=off], #FakeBlackMask[irs-state=inited], #FakeBlackMask[irs-state=aligning] {
+    display: block;
+}
 
+#FakeBlackMask[irs-state=aligned] {
+    display: none;
+}
 
+jet-pfd-vspeed-indicator[irs-state=off], jet-pfd-vspeed-indicator[irs-state=inited], jet-pfd-vspeed-indicator[irs-state=aligning] {
+    display: none;
+}
+
+jet-pfd-vspeed-indicator[irs-state=aligned] {
+    display: block;
+}
+
+#selectedHeadingGroup[irs-state=off], #selectedHeadingGroup[irs-state=inited], #selectedHeadingGroup[irs-state=aligning] {
+    display: none;
+}
+
+#selectedHeadingGroup[irs-state=aligned] {
+    display: block;
+}
+
+#CurrentTrack[irs-state=off], #CurrentTrack[irs-state=inited], #CurrentTrack[irs-state=aligning] {
+    display: none;
+}
+
+#CurrentTrack[irs-state=aligned] {
+    display: block;
+}
+
+#VertBox[irs-state=off], #VertBox[irs-state=inited], #VertText[irs-state=off], #VertText[irs-state=inited] {
+    display: block;
+}
+
+#VertBox[irs-state=aligning], #VertBox[irs-state=aligned], #VertText[irs-state=aligning], #VertText[irs-state=aligned] {
+    display: none;
+}
+
+#AttBox[irs-state=off], #AttBox[irs-state=inited], #AttText[irs-state=off], #AttText[irs-state=inited] {
+    display: block;
+}
+
+#AttBox[irs-state=aligning], #AttBox[irs-state=aligned], #AttText[irs-state=aligning], #AttText[irs-state=aligned] {
+    display: none;
+}
+
+jet-pfd-hs-indicator[irs-state=off], jet-pfd-hs-indicator[irs-state=inited] {
+    display: none;
+}
+
+jet-pfd-hs-indicator[irs-state=aligning], jet-pfd-hs-indicator[irs-state=aligned] {
+    display: block;
+}
+
+jet-pfd-hs-indicator text[irs-state=off], jet-pfd-hs-indicator text[irs-state=inited], jet-pfd-hs-indicator text[irs-state=aligning] {
+    display: none;
+}
+
+jet-pfd-hs-indicator text[irs-state=aligned] {
+    display: block;
+}
+
+#GroundRibbonGroup[irs-state=off], #GroundRibbonGroup[irs-state=inited], #GroundRibbonGroup[irs-state=aligning] {
+    display: none;
+}
+
+#GroundRibbonGroup[irs-state=aligned] {
+    display: block;
+}
+
+#GroundLineGroup[irs-state=off], #GroundLineGroup[irs-state=inited], #GroundLineGroup[irs-state=aligning] {
+    display: none;
+}
+
+#GroundLineGroup[irs-state=aligned] {
+    display: block;
+}

@@ -4,12 +4,14 @@
     <glasscockpit-highlight id="highlight"></glasscockpit-highlight>
     <div id="Mainframe">
         <div id="Electricity" state="off">
-            <div id="FakeBlackMask">
+            <div id="FakeBlackMask" irs-state="off">
                 <svg id="FakeMaskSvg" version="1.1" viewBox="0 0 600 600 " xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <rect id="AttBox" x="244" y="264" width="54" height="27" irs-state="off" />
+                    <text id="AttText" x="270" y="277.5" irs-state="off">ATT</text>
                     <!-- VertBox -->
-                    <rect id="VertBox" x="556" y="271" width="26" height="85"/>
+                    <rect id="VertBox" x="556" y="271" width="26" height="85" irs-state="off"/>
                     <!-- Vert -->
-                    <text id="VertText" transform="rotate(90)" x="292" y="-564">
+                    <text id="VertText" transform="rotate(90)" x="292" y="-564" irs-state="off">
                         <tspan id="VertTextSpan" rotate="270 270 270 270 0">VERT</tspan>
                     </text>
 
@@ -31,8 +33,8 @@
                     <path id="hor-left" d="m158 316v-6h57.8v28h-5v-22h-40z"/>
                     <path id="hor-right" d="m388 316v-6h-57.8v28h5v-22h40z"/>
                     <rect id="hor-center" x="268" y="308.5" width="9" height="9"/>
-                </svg>
 
+                </svg>
             </div>
 
             <div id="HorizonContainer">
@@ -41,9 +43,9 @@
 
             <div id="InstrumentsContainer">
                 <jet-pfd-airspeed-indicator id="Airspeed"></jet-pfd-airspeed-indicator>
-                <jet-pfd-vspeed-indicator id="VSpeed"></jet-pfd-vspeed-indicator>
+                <jet-pfd-vspeed-indicator id="VSpeed" irs-state="off"></jet-pfd-vspeed-indicator>
                 <jet-pfd-altimeter-indicator id="Altimeter"></jet-pfd-altimeter-indicator>
-                <jet-pfd-hs-indicator id="Compass"></jet-pfd-hs-indicator>
+                <jet-pfd-hs-indicator id="Compass" irs-state="off"></jet-pfd-hs-indicator>
                 <boeing-fma id="FMA" class="B747_8_PFD"></boeing-fma>
                 <jet-pfd-ils-indicator id="ILS"></jet-pfd-ils-indicator>
             </div>
