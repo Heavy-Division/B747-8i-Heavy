@@ -447,7 +447,81 @@ b747-8-mfd-element #Mainframe #align-times text.align {
     alignment-baseline: central;
 }
 
-b747-8-mfd-element #Mainframe #align-times text#time-to-align {
-    visibility: hidden;
+/** IRS States **/
+
+/*
+		document.getElementById('Map').style.visibility = 'visible';
+		document.getElementById('headingGroup').style.visibility = 'visible';
+		document.getElementById('CourseInfo').style.visibility = 'visible';
+		document.getElementById('selectedHeadingGroup').style.visibility = 'visible';
+		document.getElementById('selectedTrackGroup').style.visibility = 'visible';
+		document.getElementById('ILSGroup').style.visibility = 'visible';
+		document.getElementById('currentRefGroup').style.visibility = 'visible';
+		document.getElementById('RangeGroup').style.visibility = 'visible';
+ */
+
+#Map[irs-state=off], #Map[irs-state=inited], #Map[irs-state=aligning],
+map-instrument[irs-state=off], map-instrument[irs-state=inited], map-instrument[irs-state=aligning],
+#headingGroup[irs-state=off], #headingGroup[irs-state=inited], #headingGroup[irs-state=aligning],
+#CourseInfo[irs-state=off], #CourseInfo[irs-state=inited], #CourseInfo[irs-state=aligning],
+#selectedHeadingGroup[irs-state=off], #selectedHeadingGroup[irs-state=inited], #selectedHeadingGroup[irs-state=aligning],
+#selectedTrackGroup[irs-state=off], #selectedTrackGroup[irs-state=inited], #selectedTrackGroup[irs-state=aligning],
+#ILSGroup[irs-state=off], #ILSGroup[irs-state=inited], #ILSGroup[irs-state=aligning],
+#currentRefGroup[irs-state=off], #currentRefGroup[irs-state=inited], #currentRefGroup[irs-state=aligning],
+#RangeGroup[irs-state=off], #RangeGroup[irs-state=inited], #RangeGroup[irs-state=aligning],
+#NDInfo[irs-state=off], #NDInfo[irs-state=inited], #NDInfo[irs-state=aligning],
+#circleGroup text[irs-state=off], #circleGroup text[irs-state=inited], #circleGroup text[irs-state=aligning]{
+    display: none;
 }
 
+#Map[irs-state=aligned],
+map-instrument[irs-state=aligned],
+#headingGroup[irs-state=aligned],
+#CourseInfo[irs-state=aligned],
+#selectedHeadingGroup[irs-state=aligned],
+#selectedTrackGroup[irs-state=aligned],
+#ILSGroup[irs-state=aligned],
+#currentRefGroup[irs-state=aligned],
+#RangeGroup[irs-state=aligned],
+#NDInfo[irs-state=aligned]
+#circleGroup text[irs-state=aligned]{
+    display: block;
+}
+
+#time-to-align[irs-state=aligning]{
+    display:block;
+}
+
+#time-to-align[irs-state=off], #time-to-align[irs-state=inited], #time-to-align[irs-state=aligned]{
+    display:none;
+}
+
+#align-times[irs-state=aligned], #FakeMapBox[irs-state=aligned], #FakeCompassBoxHdg[irs-state=aligned], #FakeCompassBox[irs-state=aligned]{
+    display: none;
+}
+
+#FakeCompassBoxHdg[irs-state=off]{
+    display:block;
+}
+
+#FakeCompassBoxHdg[irs-state=inited], #FakeCompassBoxHdg[irs-state=aligning], #FakeCompassBoxHdg[irs-state=aligned]{
+    display:none;
+}
+
+#FakeCompassBox[irs-state=off], #FakeCompassBox[irs-state=aligned]{
+    display:none;
+}
+
+#FakeCompassBox[irs-state=inited], #FakeCompassBox[irs-state=aligning]{
+    display:block;
+}
+
+#l-align[irs-state=aligning], #c-align[irs-state=aligning], #r-align[irs-state=aligning]{
+    display: block;
+}
+
+#l-align[irs-state=off], #l-align[irs-state=inited], #l-align[irs-state=aligned],
+#c-align[irs-state=off], #c-align[irs-state=inited], #c-align[irs-state=aligned],
+#r-align[irs-state=off], #r-align[irs-state=inited], #r-align[irs-state=aligned] {
+    display: none;
+}
