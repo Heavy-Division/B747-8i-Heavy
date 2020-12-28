@@ -94,7 +94,7 @@ class Heavy_B747_8_FMC_VNAVPage {
 		if (isFinite(fmc.clbSpeedRestrictionValue) && isFinite(fmc.clbSpeedRestrictionAltitude) && fmc.shouldEngageSpeedRestriction()) {
 			pageTitle += ' ' + fmc.clbSpeedRestrictionValue + 'KT ';
 		} else {
-			pageTitle += ' ' + fmc.getClbManagedSpeed() + 'KT ';
+			pageTitle += ' ' + fmc.getClbManagedSpeed().toFixed(0) + 'KT ';
 		}
 
 		pageTitle += FMCString.PageTitle.CLB;
