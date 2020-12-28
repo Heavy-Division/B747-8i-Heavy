@@ -64,11 +64,13 @@ B747_8_MFD_MainPage.prototype.extendMFDHtmlElementsWithIrsState = () => {
 	});
 
 	let compassCircleGroup = document.getElementById('circleGroup');
-	compassCircleGroup.querySelectorAll('text').forEach((element) => {
-		if (element) {
-			element.setAttribute('irs-state', 'off');
-		}
-	});
+	if(compassCircleGroup){
+		compassCircleGroup.querySelectorAll('text').forEach((element) => {
+			if (element) {
+				element.setAttribute('irs-state', 'off');
+			}
+		});
+	}
 };
 
 B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
