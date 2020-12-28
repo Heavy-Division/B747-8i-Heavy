@@ -400,6 +400,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			Heavy_B747_8_FMC_NavRadioPage.ShowPage(this);
 		};
 		this.onVNAV = () => {
+			Heavy_B747_8_FMC_VNAVPage.shouldResolvePage = true;
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(this);
 		};
 
