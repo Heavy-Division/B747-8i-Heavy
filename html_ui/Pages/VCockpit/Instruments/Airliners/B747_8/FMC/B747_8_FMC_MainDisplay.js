@@ -98,6 +98,7 @@ class B747_8_FMC_MainDisplay extends Boeing_FMC {
             Heavy_B747_8_FMC_NavRadioPage.ShowPage(this);
         };
         this.onVNAV = () => {
+            Heavy_B747_8_FMC_VNAVPage.shouldResolvePage = true;
             Heavy_B747_8_FMC_VNAVPage.ShowPage1(this);
         };
 
