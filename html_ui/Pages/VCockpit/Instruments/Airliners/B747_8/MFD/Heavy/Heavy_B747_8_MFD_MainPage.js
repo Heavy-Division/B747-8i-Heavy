@@ -56,14 +56,18 @@ B747_8_MFD_MainPage.prototype.extendMFDHtmlElementsWithIrsState = () => {
 		document.getElementById('selectedTrackGroup'),
 		document.getElementById('ILSGroup'),
 		document.getElementById('currentRefGroup'),
-		document.getElementById('RangeGroup'),
+		document.getElementById('RangeGroup')
 	].forEach((element) => {
-		element.setAttribute('irs-state', 'off');
+		if (element) {
+			element.setAttribute('irs-state', 'off');
+		}
 	});
 
 	let compassCircleGroup = document.getElementById('circleGroup');
 	compassCircleGroup.querySelectorAll('text').forEach((element) => {
-		element.setAttribute('irs-state', 'off');
+		if (element) {
+			element.setAttribute('irs-state', 'off');
+		}
 	});
 };
 
@@ -73,12 +77,16 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 
 	if (this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
-			element.setAttribute('irs-state', 'aligned');
+			if (element) {
+				element.setAttribute('irs-state', 'aligned');
+			}
 		});
 		return;
 	} else if (this.heavyIRSSimulator.irsLState > 1 || this.heavyIRSSimulator.irsCState > 1 || this.heavyIRSSimulator.irsRState > 1) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
-			element.setAttribute('irs-state', 'aligning');
+			if (element) {
+				element.setAttribute('irs-state', 'aligning');
+			}
 		});
 
 		let aligns = [document.getElementById('l-align'), document.getElementById('c-align'), document.getElementById('r-align')];
@@ -111,11 +119,15 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 
 	} else if (this.heavyIRSSimulator.irsLState > 0 || this.heavyIRSSimulator.irsCState > 0 || this.heavyIRSSimulator.irsRState > 0) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
-			element.setAttribute('irs-state', 'inited');
+			if (element) {
+				element.setAttribute('irs-state', 'inited');
+			}
 		});
 	} else {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
-			element.setAttribute('irs-state', 'off');
+			if (element) {
+				element.setAttribute('irs-state', 'off');
+			}
 		});
 	}
 };
