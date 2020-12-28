@@ -18,8 +18,6 @@ Boeing.ThrustModeDisplay.prototype.getText = (phase, mode) => {
 		}
 	} else if (phase <= FlightPhase.FLIGHT_PHASE_CRUISE) {
 		text = 'CRZ';
-	} else if (phase <= FlightPhase.FLIGHT_PHASE_DESCENT) {
-		text = 'DES';
 	}
 	return text;
 };
