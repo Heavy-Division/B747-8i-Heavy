@@ -7,7 +7,9 @@ B747_8_PFD_MainPage.prototype.onUpdate = function (_deltatime) {
 
 	if (irsLState > 2 || irsCState > 2 || irsRState > 2) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
-			element.setAttribute('irs-state', 'aligned');
+			if (element) {
+				element.setAttribute('irs-state', 'aligned');
+			}
 		});
 	} else {
 		let irsLSwitchState = SimVar.GetSimVarValue('L:HEAVY_B747_8_IRS_L_SWITCH_STATE', 'Number');
@@ -17,11 +19,15 @@ B747_8_PFD_MainPage.prototype.onUpdate = function (_deltatime) {
 
 		if ((irsLSwitchState > 0 || irsCSwitchState > 0 || irsRSwitchState > 0) && isIrsPositionSet) {
 			document.querySelectorAll('[irs-state]').forEach((element) => {
-				element.setAttribute('irs-state', 'aligning');
+				if (element) {
+					element.setAttribute('irs-state', 'aligning');
+				}
 			});
 		} else {
 			document.querySelectorAll('[irs-state]').forEach((element) => {
-				element.setAttribute('irs-state', 'inited');
+				if (element) {
+					element.setAttribute('irs-state', 'inited');
+				}
 			});
 		}
 	}
@@ -31,7 +37,9 @@ B747_8_PFD_MainPage.prototype.extendHtmlElementsWithIrsState = function () {
 	let compass = document.querySelector('jet-pfd-hs-indicator');
 	let compassTexts = compass.getElementsByTagName('text');
 	Array.from(compassTexts).forEach((element) => {
-		element.setAttribute('irs-state', 'off');
+		if (element) {
+			element.setAttribute('irs-state', 'off');
+		}
 	});
 
 	let groundRibbonGroup = document.getElementById('GroundRibbonGroup');
