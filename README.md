@@ -12,6 +12,7 @@
     *  Electrical synoptic page
 * ### MFD / ND
     *  Altitude Arc
+    *  Waypoint symbol changed to classic boeing star
 * ### IRS
     * IRS implemented
     * IRS L, C and R are fully independent
