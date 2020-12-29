@@ -73,7 +73,7 @@
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC_MainDisplay.js",
             "size": 37507,
-            "date": 132536457061462492
+            "date": 132536492446180454
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_ApproachPage.js",
@@ -138,7 +138,7 @@
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MainDisplay.js",
             "size": 17034,
-            "date": 132536457061083498
+            "date": 132536492446200352
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MaintPage.js",
@@ -203,7 +203,7 @@
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_VNAVPage.js",
             "size": 6559,
-            "date": 132536488971548646
+            "date": 132536492446210316
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/B747_8_MFD.css",
@@ -214,6 +214,11 @@
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/B747_8_MFD.html",
             "size": 9973,
             "date": 132536450009670296
+        },
+        {
+            "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/mapConfig.json",
+            "size": 2988,
+            "date": 132536754071336410
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Heavy/Heavy_B747_8_MFD_MainPage.js",
@@ -239,6 +244,16 @@
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/Shared/Boeing/Heavy_Boeing_Common.js",
             "size": 502,
             "date": 132536450009740110
+        },
+        {
+            "path": "html_ui/Pages/VCockpit/Instruments/Airliners/Shared/MFD/Images/ICON_MAP_INTERSECTION.png",
+            "size": 2677,
+            "date": 132536745602090002
+        },
+        {
+            "path": "html_ui/Pages/VCockpit/Instruments/Airliners/Shared/MFD/Images/ICON_MAP_INTERSECTION_ACTIVE.png",
+            "size": 2661,
+            "date": 132536759843110002
         },
         {
             "path": "SimObjects/Airplanes/Asobo_B747_8i/approach.FLT",
