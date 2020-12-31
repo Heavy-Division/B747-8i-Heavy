@@ -15,6 +15,14 @@ class SvgWaypointElement extends SvgMapElement {
 		this.source = source;
 	}
 
+	set isFlightPlanWaypoint(value) {
+		this._isFlightPlanWaypoint = value;
+	}
+
+	get isFlightPlanWaypoint() {
+		return this._isFlightPlanWaypoint || false;
+	}
+
 	get ident() {
 		if (this._ident) {
 			return this._ident;
@@ -133,15 +141,23 @@ class SvgWaypointElement extends SvgMapElement {
 			let waypoints = [...FlightPlanManager.DEBUG_INSTANCE.getWaypoints(), ...FlightPlanManager.DEBUG_INSTANCE.getApproachWaypoints()];
 			waypoints.forEach((waypoint) => {
 				if (this.ident === waypoint.ident && !(this instanceof SvgNearestAirportElement)) {
+					this.isFlightPlanWaypoint = true;
 					this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + 'ICON_MAP_INTERSECTION_FLIGHTPLAN.png');
 				}
 			});
 		} else {
+			this.isFlightPlanWaypoint = true;
 			this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + 'ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png');
 		}
+		let iconSize = map.config.waypointIconSize;
+		if (this.isFlightPlanWaypoint) {
+			iconSize = map.config.flightPlanWaypointIconSize;
+		}
+		this.isFlightPlanWaypoint = false;
+
 		this._lastIsActiveWaypoint = isActiveWaypoint;
-		this._image.setAttribute('width', fastToFixed(map.config.waypointIconSize, 0));
-		this._image.setAttribute('height', fastToFixed(map.config.waypointIconSize, 0));
+		this._image.setAttribute('width', fastToFixed(iconSize, 0));
+		this._image.setAttribute('height', fastToFixed(iconSize, 0));
 		return this._image;
 	}
 
@@ -215,23 +231,30 @@ class SvgWaypointElement extends SvgMapElement {
 					let waypoints = [...FlightPlanManager.DEBUG_INSTANCE.getWaypoints(), ...FlightPlanManager.DEBUG_INSTANCE.getApproachWaypoints()];
 					waypoints.forEach((waypoint) => {
 						if (this.ident === waypoint.ident && !(this instanceof SvgNearestAirportElement)) {
+							this.isFlightPlanWaypoint = true;
 							this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + 'ICON_MAP_INTERSECTION_FLIGHTPLAN.png');
 						}
 					});
 				} else {
+					this.isFlightPlanWaypoint = true;
 					this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + 'ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png');
 				}
 			}
 			this._lastIsActiveWaypoint = isActiveWaypoint;
 		}
 		if (isFinite(this.x) && isFinite(this.y)) {
+			let iconSize = map.config.waypointIconSize;
+			if (this.isFlightPlanWaypoint) {
+				iconSize = map.config.flightPlanWaypointIconSize;
+			}
+			this.isFlightPlanWaypoint = false;
 			if (this._image && this._lastMinimize !== this.minimize) {
 				if (this.minimize) {
-					this._image.setAttribute('width', fastToFixed(map.config.waypointIconSize * 0.5, 0));
-					this._image.setAttribute('height', fastToFixed(map.config.waypointIconSize * 0.5, 0));
+					this._image.setAttribute('width', fastToFixed(iconSize * 0.5, 0));
+					this._image.setAttribute('height', fastToFixed(iconSize * 0.5, 0));
 				} else {
-					this._image.setAttribute('width', fastToFixed(map.config.waypointIconSize, 0));
-					this._image.setAttribute('height', fastToFixed(map.config.waypointIconSize, 0));
+					this._image.setAttribute('width', fastToFixed(iconSize, 0));
+					this._image.setAttribute('height', fastToFixed(iconSize, 0));
 				}
 				this._lastMinimize = this.minimize;
 				this.needRepaint = true;
@@ -239,8 +262,8 @@ class SvgWaypointElement extends SvgMapElement {
 			if (this.needRepaint || Math.abs(this._lastX - this.x) > 0.1 || Math.abs(this._lastY - this.y) > 0.1) {
 				this._lastX = this.x;
 				this._lastY = this.y;
-				let x = (this.x - map.config.waypointIconSize * 0.5 * (this.minimize ? 0.5 : 1));
-				let y = (this.y - map.config.waypointIconSize * 0.5 * (this.minimize ? 0.5 : 1));
+				let x = (this.x - iconSize * 0.5 * (this.minimize ? 0.5 : 1));
+				let y = (this.y - iconSize * 0.5 * (this.minimize ? 0.5 : 1));
 				this.svgElement.setAttribute('x', x + '');
 				this.svgElement.setAttribute('y', y + '');
 				if (this.source instanceof AirportInfo) {
@@ -283,7 +306,7 @@ class SvgWaypointElement extends SvgMapElement {
 						let fontSize = map.config.waypointLabelFontSize;
 						this._textHeight = fontSize * 0.675;
 					}
-					let textX = (x + map.config.waypointIconSize * 0.5 - this._textWidth * 0.5 + map.config.waypointLabelDistanceX);
+					let textX = (x + iconSize * 0.5 - this._textWidth * 0.5 + map.config.waypointLabelDistanceX);
 					let textY = y + map.config.waypointLabelDistance;
 					this._label.setAttribute('x', textX + '');
 					this._label.setAttribute('y', textY + '');
