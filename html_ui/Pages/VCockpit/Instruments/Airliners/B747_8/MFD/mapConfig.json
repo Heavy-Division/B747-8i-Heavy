@@ -1,7 +1,7 @@
 ﻿{
   "waypointLabelFontSize": 16,
   "waypointLabelFontFamily": "Consolas",
-  "waypointLabelColor": "black",
+  "waypointLabelColor": "#11b1d5",
   "waypointLabelStrokeColor": "#black",
   "waypointLabelStrokeWidth": 10,
   "waypointLabelUseBackground": false,
@@ -10,9 +10,15 @@
   "waypointLabelBackgroundStrokeWidth": 0,
   "waypointLabelBackgroundPadding": "5 5 5 5",
   "waypointLabelDistanceX": 35,
-  "waypointLabelDistance": 5,
+  "waypointLabelDistance": 10,
   "waypointIconSize": 22,
   "flightPlanWaypointIconSize": 30,
+
+  "intersectionLabelColor": "#11b1d5",
+
+  "vorLabelColor": "#11b1d5",
+  "ndbLabelColor": "#11b1d5",
+  "airportLabelColor": "#11b1d5",
 
   "preventLabelOverlap": false,
 
