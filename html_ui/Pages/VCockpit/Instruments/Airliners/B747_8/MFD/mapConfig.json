@@ -14,11 +14,11 @@
   "waypointIconSize": 22,
   "flightPlanWaypointIconSize": 30,
 
-  "intersectionLabelColor": "#11b1d5",
+  "intersectionLabelColor": "#009696",
 
-  "vorLabelColor": "#11b1d5",
-  "ndbLabelColor": "#11b1d5",
-  "airportLabelColor": "#11b1d5",
+  "vorLabelColor": "#009696",
+  "ndbLabelColor": "#009696",
+  "airportLabelColor": "#009696",
 
   "preventLabelOverlap": false,
 

@@ -123,21 +123,17 @@ class SvgWaypointElement extends SvgMapElement {
 		ctx.font = fontSize + 'px ' + map.config.waypointLabelFontFamily;
 		this._textWidth = ctx.measureText(text).width;
 		this._textHeight = fontSize * 0.675;
+
+		c.setAttribute('width', (this._textWidth + map.config.waypointLabelBackgroundPaddingLeft + map.config.waypointLabelBackgroundPaddingRight).toFixed(0) + 'px');
+		c.setAttribute('height', (this._textHeight + map.config.waypointLabelBackgroundPaddingTop + map.config.waypointLabelBackgroundPaddingBottom).toFixed(0) + 'px');
+
 		let ident;
 		let activeWaypoint = FlightPlanManager.DEBUG_INSTANCE.getActiveWaypoint(false, true);
 		if (activeWaypoint) {
 			ident = activeWaypoint.ident;
 		}
 		let isActiveWaypoint = this.source.ident === ident;
-		if(isActiveWaypoint){
-			let labelId = this.id(map) + "-text-" + map.index;
-			let label = document.getElementById(labelId);
-			if (label instanceof SVGForeignObjectElement) {
-
-			} else {
-				this._refreshLabel(map, isActiveWaypoint);
-			}
-		}
+		this._refreshLabel(map, isActiveWaypoint);
 		this._image = document.createElementNS(Avionics.SVG.NS, 'image');
 		this._image.id = this.id(map);
 		this._image.classList.add(this.class() + '-icon');
@@ -170,7 +166,7 @@ class SvgWaypointElement extends SvgMapElement {
 	}
 
 	_refreshLabel(map, isActiveWaypoint) {
-		let labelId = this.id(map) + "-text-" + map.index;
+		let labelId = this.id(map) + '-text-' + map.index;
 		let label = document.getElementById(labelId);
 		if (label instanceof SVGForeignObjectElement) {
 			this._label = label;
@@ -180,48 +176,49 @@ class SvgWaypointElement extends SvgMapElement {
 		let text = this.ident;
 		let canvas;
 		if (!this._label) {
-			this._label = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+			this._label = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
 			this._label.id = labelId;
-			this._label.setAttribute("width", (this._textWidth + map.config.waypointLabelBackgroundPaddingLeft + map.config.waypointLabelBackgroundPaddingRight).toFixed(0) + "px");
-			this._label.setAttribute("height", (this._textHeight + map.config.waypointLabelBackgroundPaddingTop + map.config.waypointLabelBackgroundPaddingBottom).toFixed(0) + "px");
-			canvas = document.createElement("canvas");
-			canvas.setAttribute("width", (this._textWidth + map.config.waypointLabelBackgroundPaddingLeft + map.config.waypointLabelBackgroundPaddingRight).toFixed(0) + "px");
-			canvas.setAttribute("height", (this._textHeight + map.config.waypointLabelBackgroundPaddingTop + map.config.waypointLabelBackgroundPaddingBottom).toFixed(0) + "px");
+			this._label.setAttribute('width', (this._textWidth + map.config.waypointLabelBackgroundPaddingLeft + map.config.waypointLabelBackgroundPaddingRight).toFixed(0) + 'px');
+			this._label.setAttribute('height', (this._textHeight + map.config.waypointLabelBackgroundPaddingTop + map.config.waypointLabelBackgroundPaddingBottom).toFixed(0) + 'px');
+			canvas = document.createElement('canvas');
+			canvas.setAttribute('width', (this._textWidth + map.config.waypointLabelBackgroundPaddingLeft + map.config.waypointLabelBackgroundPaddingRight).toFixed(0) + 'px');
+			canvas.setAttribute('height', (this._textHeight + map.config.waypointLabelBackgroundPaddingTop + map.config.waypointLabelBackgroundPaddingBottom).toFixed(0) + 'px');
 			this._label.appendChild(canvas);
 			map.textLayer.appendChild(this._label);
-		}
-		else {
-			canvas = this._label.querySelector("canvas");
+		} else {
+			canvas = this._label.querySelector('canvas');
 		}
 		if (!canvas) {
 			return;
 		}
-		let context = canvas.getContext("2d");
+		let context = canvas.getContext('2d');
 		if (map.config.waypointLabelUseBackground) {
-			context.fillStyle = "black";
+			context.fillStyle = 'black';
 			context.fillRect(0, 0, this._textWidth + map.config.waypointLabelBackgroundPaddingLeft + map.config.waypointLabelBackgroundPaddingRight, this._textHeight + map.config.waypointLabelBackgroundPaddingTop + map.config.waypointLabelBackgroundPaddingBottom);
 		}
 		if (!isActiveWaypoint) {
 			if (this.source instanceof IntersectionInfo) {
 				context.fillStyle = map.config.intersectionLabelColor;
-			}
-			else if (this.source instanceof VORInfo) {
+			} else if (this.source instanceof VORInfo) {
 				context.fillStyle = map.config.vorLabelColor;
-			}
-			else if (this.source instanceof NDBInfo) {
+			} else if (this.source instanceof NDBInfo) {
 				context.fillStyle = map.config.ndbLabelColor;
-			}
-			else if (this.source instanceof AirportInfo) {
+			} else if (this.source instanceof AirportInfo) {
 				context.fillStyle = map.config.airportLabelColor;
-			}
-			else {
+			} else {
 				context.fillStyle = map.config.waypointLabelColor;
 			}
+
+			let waypoints = [...FlightPlanManager.DEBUG_INSTANCE.getWaypoints(), ...FlightPlanManager.DEBUG_INSTANCE.getApproachWaypoints()];
+			waypoints.forEach((waypoint) => {
+				if (this.ident === waypoint.ident && !(this instanceof SvgNearestAirportElement)) {
+					context.fillStyle = 'white';
+				}
+			});
+		} else {
+			context.fillStyle = 'magenta';
 		}
-		else {
-			context.fillStyle = "white";
-		}
-		context.font = fontSize + "px " + map.config.waypointLabelFontFamily;
+		context.font = fontSize + 'px ' + map.config.waypointLabelFontFamily;
 		context.fillText(text, map.config.waypointLabelBackgroundPaddingLeft, this._textHeight + map.config.waypointLabelBackgroundPaddingTop);
 	}
 
