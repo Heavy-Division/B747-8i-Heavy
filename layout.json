@@ -218,7 +218,7 @@
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/mapConfig.json",
             "size": 3169,
-            "date": 132539037164474062
+            "date": 132539266001939280
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Heavy/Heavy_B747_8_MFD_MainPage.js",
@@ -317,8 +317,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_INTERSECTION.png",
-            "size": 3180,
-            "date": 132539023507917166
+            "size": 3074,
+            "date": 132539397991780000
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_INTERSECTION.svg",
@@ -427,8 +427,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_VOR.png",
-            "size": 3981,
-            "date": 132539023507967046
+            "size": 2937,
+            "date": 132539388208270000
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_VOR.svg",
@@ -447,8 +447,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_VOR_DME.png",
-            "size": 3981,
-            "date": 132539023507977020
+            "size": 3697,
+            "date": 132539387856070002
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_VOR_DME.svg",
@@ -507,8 +507,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_VOR_TACAN.png",
-            "size": 3981,
-            "date": 132539023507996962
+            "size": 3274,
+            "date": 132539388069050000
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_VOR_TACAN_DISPLAYED.png",
@@ -527,8 +527,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_VOR_VORTAC.png",
-            "size": 4557,
-            "date": 132539023508006936
+            "size": 3697,
+            "date": 132539387856070002
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/MFD/Images/ICON_MAP_VOR_VORTAC.svg",
@@ -602,8 +602,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Shared/Map/Svg/SvgWaypointElement.js",
-            "size": 12417,
-            "date": 132539074835272720
+            "size": 12127,
+            "date": 132539873551503510
         },
         {
             "path": "SimObjects/Airplanes/Asobo_B747_8i/approach.FLT",
