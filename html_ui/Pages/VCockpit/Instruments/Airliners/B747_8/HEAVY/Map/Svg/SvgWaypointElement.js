@@ -117,6 +117,9 @@ class SvgWaypointElement extends SvgMapElement {
 
 	createDraw(map) {
 		let fontSize = map.config.waypointLabelFontSize;
+		if (this.ident === 'DECEL') {
+			fontSize = map.config.auxWaypointLabelFontSize;
+		}
 		let text = this.ident;
 		let c = document.createElement('canvas');
 		let ctx = c.getContext('2d');
@@ -142,6 +145,9 @@ class SvgWaypointElement extends SvgMapElement {
 		this._image.setAttribute('height', '100%');
 		if (!isActiveWaypoint) {
 			this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + this.imageFileName());
+			if (this.ident === 'DECEL') {
+				this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + 'ICON_MAP_AUX.png');
+			}
 			this.isFlightPlanWaypoint = false;
 			let waypoints = [...FlightPlanManager.DEBUG_INSTANCE.getWaypoints(), ...FlightPlanManager.DEBUG_INSTANCE.getApproachWaypoints()];
 			waypoints.forEach((waypoint) => {
@@ -174,6 +180,11 @@ class SvgWaypointElement extends SvgMapElement {
 			this.needRepaint = true;
 		}
 		let fontSize = map.config.waypointLabelFontSize;
+
+		if (this.ident === 'DECEL') {
+			fontSize = map.config.auxWaypointLabelFontSize;
+		}
+
 		let text = this.ident;
 		let canvas;
 		if (!this._label) {
@@ -215,6 +226,8 @@ class SvgWaypointElement extends SvgMapElement {
 			waypoints.forEach((waypoint) => {
 				if (this.ident === waypoint.ident && !(this instanceof SvgNearestAirportElement)) {
 					context.fillStyle = 'white';
+				} else if (this.ident === 'DECEL') {
+					context.fillStyle = 'green';
 				}
 			});
 		} else {
@@ -299,6 +312,9 @@ class SvgWaypointElement extends SvgMapElement {
 						let c = document.createElement('canvas');
 						let ctx = c.getContext('2d');
 						let fontSize = map.config.waypointLabelFontSize;
+						if (this.ident === 'DECEL') {
+							fontSize = map.config.auxWaypointLabelFontSize;
+						}
 						let text = this.ident;
 						ctx.font = fontSize + 'px ' + map.config.waypointLabelFontFamily;
 						this._textWidth = ctx.measureText(text).width;
@@ -312,12 +328,18 @@ class SvgWaypointElement extends SvgMapElement {
 						let c = document.createElement('canvas');
 						let ctx = c.getContext('2d');
 						let fontSize = map.config.waypointLabelFontSize;
+						if (this.ident === 'DECEL') {
+							fontSize = map.config.auxWaypointLabelFontSize;
+						}
 						let text = this.ident;
 						ctx.font = fontSize + 'px ' + map.config.waypointLabelFontFamily;
 						this._textWidth = ctx.measureText(text).width;
 					}
 					if (!isFinite(this._textHeight)) {
 						let fontSize = map.config.waypointLabelFontSize;
+						if (this.ident === 'DECEL') {
+							fontSize = map.config.auxWaypointLabelFontSize;
+						}
 						this._textHeight = fontSize * 0.675;
 					}
 
