@@ -142,6 +142,7 @@ class SvgWaypointElement extends SvgMapElement {
 		this._image.setAttribute('height', '100%');
 		if (!isActiveWaypoint) {
 			this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + this.imageFileName());
+			this.isFlightPlanWaypoint = false;
 			let waypoints = [...FlightPlanManager.DEBUG_INSTANCE.getWaypoints(), ...FlightPlanManager.DEBUG_INSTANCE.getApproachWaypoints()];
 			waypoints.forEach((waypoint) => {
 				if (this.ident === waypoint.ident && !(this instanceof SvgNearestAirportElement)) {
@@ -150,7 +151,7 @@ class SvgWaypointElement extends SvgMapElement {
 				}
 			});
 		} else {
-			this.isFlightPlanWaypoint = true;
+			this.isFlightPlanWaypoint = !(this instanceof SvgNearestAirportElement);
 			this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + 'ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png');
 		}
 		let iconSize = map.config.waypointIconSize;
@@ -192,6 +193,7 @@ class SvgWaypointElement extends SvgMapElement {
 			return;
 		}
 		let context = canvas.getContext('2d');
+		context.clearRect(0, 0, this._textWidth + map.config.waypointLabelBackgroundPaddingLeft + map.config.waypointLabelBackgroundPaddingRight, this._textHeight + map.config.waypointLabelBackgroundPaddingTop + map.config.waypointLabelBackgroundPaddingBottom);
 		if (map.config.waypointLabelUseBackground) {
 			context.fillStyle = 'black';
 			context.fillRect(0, 0, this._textWidth + map.config.waypointLabelBackgroundPaddingLeft + map.config.waypointLabelBackgroundPaddingRight, this._textHeight + map.config.waypointLabelBackgroundPaddingTop + map.config.waypointLabelBackgroundPaddingBottom);
@@ -239,6 +241,7 @@ class SvgWaypointElement extends SvgMapElement {
 			if (this._image) {
 				if (!isActiveWaypoint) {
 					this._image.setAttributeNS('http://www.w3.org/1999/xlink', 'href', map.config.imagesDir + this.imageFileName());
+					this.isFlightPlanWaypoint = false;
 					let waypoints = [...FlightPlanManager.DEBUG_INSTANCE.getWaypoints(), ...FlightPlanManager.DEBUG_INSTANCE.getApproachWaypoints()];
 					waypoints.forEach((waypoint) => {
 						if (this.ident === waypoint.ident && !(this instanceof SvgNearestAirportElement)) {
@@ -317,6 +320,7 @@ class SvgWaypointElement extends SvgMapElement {
 						let fontSize = map.config.waypointLabelFontSize;
 						this._textHeight = fontSize * 0.675;
 					}
+
 					let textX = (x + iconSize * 0.5 - this._textWidth * 0.5 + map.config.waypointLabelDistanceX);
 					let textY = y + map.config.waypointLabelDistance;
 					this._label.setAttribute('x', textX + '');
