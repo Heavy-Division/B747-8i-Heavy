@@ -30,7 +30,7 @@
 |<img src="DOCS/images/nd_default.jpg" width="100%">|<img src="DOCS/images/nd_heavy.jpg" width="100%">|
 
 | Symbol (default)    | Symbol (Heavy)  | Name |ND Mode | Remarks |
-|---------------------|-----------------|------|--------|---------|
+|:---------------------:|:-----------------:|------|--------|---------|
 |<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION.png" width="32" height="32">|Off route waypoint|||
 |<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION_FLIGHTPLAN.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION_FLIGHTPLAN.png" width="32" height="32">|Waypoint inactive|||
 |<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png" width="32" height="32">|Waypoint active|||
