@@ -64,7 +64,7 @@ B747_8_MFD_MainPage.prototype.extendMFDHtmlElementsWithIrsState = () => {
 	});
 
 	let compassCircleGroup = document.getElementById('circleGroup');
-	if(compassCircleGroup){
+	if (compassCircleGroup) {
 		compassCircleGroup.querySelectorAll('text').forEach((element) => {
 			if (element) {
 				element.setAttribute('irs-state', 'off');
@@ -102,19 +102,22 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 		let position = 0;
 		let now = Math.floor(Date.now() / 1000);
 		if (this.heavyIRSSimulator.irsLState === 2) {
-			aligns[position].textContent = 'L ' + Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60) + '+ MIN';
+			let time = Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60);
+			aligns[position].textContent = 'L ' + time + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
 
 		if (this.heavyIRSSimulator.irsCState === 2) {
-			aligns[position].textContent = 'C ' + Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60) + '+ MIN';
+			let time = Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60);
+			aligns[position].textContent = 'C ' + time + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
 
 		if (this.heavyIRSSimulator.irsRState === 2) {
-			aligns[position].textContent = 'R ' + Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60) + '+ MIN';
+			let time = Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60);
+			aligns[position].textContent = 'R ' + time + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
