@@ -206,7 +206,7 @@ class HeavyIRSSimulator {
 	}
 
 	shouldIRSStartAlign() {
-		return (this.shouldBeIRSInited() && this.isIrsPositionSet) && (this.irsLState !== 3 || this.irsCState !== 3 || this.irsRState !== 3);
+		return (this.shouldBeIRSInited()) && (this.irsLState !== 3 || this.irsCState !== 3 || this.irsRState !== 3);
 	}
 
 	generateTimeForAligning(minimal, maximal) {

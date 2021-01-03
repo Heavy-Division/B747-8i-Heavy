@@ -64,7 +64,7 @@ B747_8_MFD_MainPage.prototype.extendMFDHtmlElementsWithIrsState = () => {
 	});
 
 	let compassCircleGroup = document.getElementById('circleGroup');
-	if(compassCircleGroup){
+	if (compassCircleGroup) {
 		compassCircleGroup.querySelectorAll('text').forEach((element) => {
 			if (element) {
 				element.setAttribute('irs-state', 'off');
@@ -77,7 +77,7 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 	this.extendMFDHtmlElementsWithIrsState();
 	this.heavyIRSSimulator.update();
 
-	if (this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2) {
+	if ((this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2) && this.heavyIRSSimulator.isIrsPositionSet) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
 			if (element) {
 				element.setAttribute('irs-state', 'aligned');
@@ -101,20 +101,23 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 		let times = [];
 		let position = 0;
 		let now = Math.floor(Date.now() / 1000);
-		if (this.heavyIRSSimulator.irsLState === 2) {
-			aligns[position].textContent = 'L ' + Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60) + '+ MIN';
+		if (this.heavyIRSSimulator.irsLState >= 2) {
+			let time = Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60);
+			aligns[position].textContent = 'L ' + (time <= 0 ? 0 : time) + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
 
-		if (this.heavyIRSSimulator.irsCState === 2) {
-			aligns[position].textContent = 'C ' + Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60) + '+ MIN';
+		if (this.heavyIRSSimulator.irsCState >= 2) {
+			let time = Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60);
+			aligns[position].textContent = 'C ' + (time <= 0 ? 0 : time) + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
 
-		if (this.heavyIRSSimulator.irsRState === 2) {
-			aligns[position].textContent = 'R ' + Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60) + '+ MIN';
+		if (this.heavyIRSSimulator.irsRState >= 2) {
+			let time = Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60);
+			aligns[position].textContent = 'R ' + (time <= 0 ? 0 : time) + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
