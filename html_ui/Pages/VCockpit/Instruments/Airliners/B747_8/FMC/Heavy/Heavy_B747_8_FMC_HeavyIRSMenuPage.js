@@ -71,6 +71,7 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_C_STATE', 'Number', 3);
 			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_R_STATE', 'Number', 3);
 			SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_INITED', 'Number', 2);
+			SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_POSITION_SET', 'Boolean', true);
 			this.showPage();
 		};
 
