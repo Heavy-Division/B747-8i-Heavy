@@ -13,6 +13,7 @@
 * ### MFD / ND
     *  Altitude Arc
     *  Waypoint symbol changed to classic boeing star
+    *  ND partially reworked
 * ### IRS
     * IRS implemented
     * IRS L, C and R are fully independent
@@ -21,6 +22,12 @@
 * ### MISC
     * Payload Manager
     * Sim Rate manager
+  
+# ND
+
+| Default MSFS 747 ND | B747-8i Heavy ND|
+|---------------------|-----------------|
+|<img src="DOCS/images/nd_default.jpg" width="300" height="250">|<img src="DOCS/images/nd_heavy.jpg" width="300" height="250">|
 
 # Special functions
 
