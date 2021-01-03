@@ -141,3 +141,12 @@ B747_8_MFD_MainPage.prototype.onUpdate = function (_deltatime) {
 	this.updateAltitudeArc(_deltatime);
 	this.updateMapIfIrsNotAligned();
 };
+
+B747_8_MFD_MainPage.prototype.updateNDInfo = function (_deltatime) {
+	this.info.showSymbol(B747_8_ND_Symbol.WXR, this.wxRadarOn);
+	this.info.showSymbol(B747_8_ND_Symbol.WXRINFO, this.wxRadarOn);
+	this.info.showSymbol(B747_8_ND_Symbol.TERR, this.terrainOn);
+	this.info.showSymbol(B747_8_ND_Symbol.STA, this.map.instrument.showVORs);
+	this.info.showSymbol(B747_8_ND_Symbol.WPT, this.map.instrument.showIntersections);
+	this.info.showSymbol(B747_8_ND_Symbol.ARPT, this.map.instrument.showAirports);
+};
