@@ -27,7 +27,20 @@
 
 | Default MSFS 747 ND | B747-8i Heavy ND|
 |---------------------|-----------------|
-|<img src="DOCS/images/nd_default.jpg" width="100%" height="100%">|<img src="DOCS/images/nd_heavy.jpg" width="100%" height="100%">|
+|<img src="DOCS/images/nd_default.jpg" width="100%">|<img src="DOCS/images/nd_heavy.jpg" width="100%">|
+
+| Symbol (default)    | Symbol (Heavy)  | Name |ND Mode | Remarks |
+|---------------------|-----------------|------|--------|---------|
+|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION.png" width="100%">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION.png" width="100%">|Off route waypoint|||
+|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION_FLIGHTPLAN.png" width="100%">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION_FLIGHTPLAN.png" width="100%">|Waypoint inactive|||
+|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png" width="100%">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png" width="100%">|Waypoint active|||
+|<img src="DOCS/images/map/default/ICON_MAP_AIRPORT.png" width="100%">|<img src="DOCS/images/map/heavy/ICON_MAP_AIRPORT.png" width="100%">|Airport|||
+
+
+|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="100%">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR.png" width="100%">|VOR|||
+|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="100%">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_DME.png" width="100%">|VOR/DME|||
+|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="100%">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_TACAN.png" width="100%">|TACAN|||
+|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="100%">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_DME.png" width="100%">|VORTAC|||
 
 # Special functions
 
