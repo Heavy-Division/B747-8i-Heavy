@@ -31,14 +31,14 @@
 
 | Symbol (default)    | Symbol (Heavy)  | Name |ND Mode | Remarks |
 |---------------------|-----------------|------|--------|---------|
-|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION.png" width="64" height="64">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION.png" width="64" height="64">|Off route waypoint|||
-|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION_FLIGHTPLAN.png" width="64" height="64">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION_FLIGHTPLAN.png" width="64" height="64">|Waypoint inactive|||
-|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png" width="64" height="64">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png" width="64" height="64">|Waypoint active|||
-|<img src="DOCS/images/map/default/ICON_MAP_AIRPORT.png" width="64" height="64">|<img src="DOCS/images/map/heavy/ICON_MAP_AIRPORT.png" width="64" height="64">|Airport|||
-|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="64" height="64">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR.png" width="64" height="64">|VOR|||
-|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="64" height="64">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_DME.png" width="64" height="64">|VOR/DME|||
-|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="64" height="64">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_TACAN.png" width="64" height="64">|TACAN|||
-|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="64" height="64">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_DME.png" width="64" height="64">|VORTAC|||
+|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION.png" width="32" height="32">|Off route waypoint|||
+|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION_FLIGHTPLAN.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION_FLIGHTPLAN.png" width="32" height="32">|Waypoint inactive|||
+|<img src="DOCS/images/map/default/ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_INTERSECTION_FLIGHTPLAN_ACTIVE.png" width="32" height="32">|Waypoint active|||
+|<img src="DOCS/images/map/default/ICON_MAP_AIRPORT.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_AIRPORT.png" width="32" height="32">|Airport|||
+|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR.png" width="32" height="32">|VOR|||
+|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_DME.png" width="32" height="32">|VOR/DME|||
+|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_TACAN.png" width="32" height="32">|TACAN|||
+|<img src="DOCS/images/map/default/ICON_MAP_VOR.png" width="32" height="32">|<img src="DOCS/images/map/heavy/ICON_MAP_VOR_DME.png" width="32" height="32">|VORTAC|||
 
 # Special functions
 
