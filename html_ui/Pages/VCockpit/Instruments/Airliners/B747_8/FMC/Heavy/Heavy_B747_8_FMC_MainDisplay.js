@@ -286,6 +286,11 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 					let speed = this.getClbManagedSpeed();
 					if (this.shouldEngageSpeedRestriction()) {
 						speed = this.clbSpeedRestrictionValue;
+					} else {
+						this.clbSpeedRestrictionValueModified = NaN;
+						this.clbSpeedRestrictionAltitudeModified = NaN;
+						this.clbSpeedRestrictionValue = NaN;
+						this.clbSpeedRestrictionAltitude = NaN;
 					}
 
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
@@ -426,6 +431,6 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 	}
 }
 
-FMCMainDisplay.clrValue = "DELETE";
+FMCMainDisplay.clrValue = 'DELETE';
 
 registerInstrument('fmc-b747-8-main-display', Heavy_B747_8_FMC_MainDisplay);
