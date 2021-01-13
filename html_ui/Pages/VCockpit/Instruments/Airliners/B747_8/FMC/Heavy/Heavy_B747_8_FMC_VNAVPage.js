@@ -1,17 +1,18 @@
 class Heavy_B747_8_FMC_VNAVPage {
 
-	static get shouldResolvePage(){
+	static get shouldResolvePage() {
 		return this._shouldResolvePage;
 	}
 
-	static set shouldResolvePage(value){
+	static set shouldResolvePage(value) {
 		this._shouldResolvePage = value;
 	}
-	static pageResolver(fmc){
+
+	static pageResolver(fmc) {
 		Heavy_B747_8_FMC_VNAVPage.shouldResolvePage = false;
-		if (fmc.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CRUISE){
+		if (fmc.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CRUISE) {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage2(fmc);
-		} else if (fmc.currentFlightPhase >= FlightPhase.FLIGHT_PHASE_DESCENT){
+		} else if (fmc.currentFlightPhase >= FlightPhase.FLIGHT_PHASE_DESCENT) {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage3(fmc);
 		} else {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
@@ -19,13 +20,17 @@ class Heavy_B747_8_FMC_VNAVPage {
 	}
 
 	static ShowPage1(fmc) {
-		if(Heavy_B747_8_FMC_VNAVPage.shouldResolvePage){
+		if (Heavy_B747_8_FMC_VNAVPage.shouldResolvePage) {
 			Heavy_B747_8_FMC_VNAVPage.pageResolver(fmc);
 		} else {
 			fmc.clearDisplay();
 			let crzAltCell = FMCString.Line.Box['5'];
 			if (fmc.cruiseFlightLevel) {
-				crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel;
+				if (fmc.cruiseFlightLevel * 100 >= fmc.transitionAltitude) {
+					crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel;
+				} else {
+					crzAltCell = fmc.cruiseFlightLevel * 100 + '';
+				}
 			}
 			fmc.onLeftInput[0] = () => {
 				let value = fmc.inOut;
@@ -37,11 +42,11 @@ class Heavy_B747_8_FMC_VNAVPage {
 			fmc.onLeftInput[3] = () => {
 				let value = fmc.inOut;
 				fmc.clearUserInput();
-				if (value === FMCMainDisplay.clrValue){
+				if (value === FMCMainDisplay.clrValue) {
 					fmc.clbSpeedRestrictionValueModified = NaN;
-					fmc.clbSpeedRestrictionAltitudeModified = NaN
-					fmc.clbSpeedRestrictionValue = NaN
-					fmc.clbSpeedRestrictionAltitude = NaN
+					fmc.clbSpeedRestrictionAltitudeModified = NaN;
+					fmc.clbSpeedRestrictionValue = NaN;
+					fmc.clbSpeedRestrictionAltitude = NaN;
 				} else {
 					if (fmc.setSpeedRestriction(value)) {
 						//SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 1);
