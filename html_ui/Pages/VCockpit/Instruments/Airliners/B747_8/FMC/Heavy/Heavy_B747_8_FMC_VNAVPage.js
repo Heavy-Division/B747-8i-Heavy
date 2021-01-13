@@ -37,12 +37,19 @@ class Heavy_B747_8_FMC_VNAVPage {
 			fmc.onLeftInput[3] = () => {
 				let value = fmc.inOut;
 				fmc.clearUserInput();
-				if (fmc.setSpeedRestriction(value)) {
-					//SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 1);
-					if (isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)) {
-						fmc.executeSpeedRestriction();
+				if (value === FMCMainDisplay.clrValue){
+					fmc.clbSpeedRestrictionValueModified = NaN;
+					fmc.clbSpeedRestrictionAltitudeModified = NaN
+					fmc.clbSpeedRestrictionValue = NaN
+					fmc.clbSpeedRestrictionAltitude = NaN
+				} else {
+					if (fmc.setSpeedRestriction(value)) {
+						//SimVar.SetSimVarValue("L:FMC_EXEC_ACTIVE", "number", 1);
+						if (isFinite(fmc.clbSpeedRestrictionValueModified) && isFinite(fmc.clbSpeedRestrictionAltitudeModified)) {
+							fmc.executeSpeedRestriction();
+						}
+						Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 					}
-					Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 				}
 			};
 
