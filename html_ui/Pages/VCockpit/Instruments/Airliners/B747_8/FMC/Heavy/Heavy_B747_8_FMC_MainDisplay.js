@@ -350,7 +350,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		let inputSplit = input.split('/');
 		let speed = parseInt(inputSplit[0]);
 		let altitude = parseInt(inputSplit[1]);
-		if (isFinite(speed) && isFinite(altitude)) {
+		if (isFinite(speed) && isFinite(altitude) && HeavyInputChecks.speedRange(speed)) {
 			this.clbSpeedRestrictionValueModified = speed;
 			this.clbSpeedRestrictionAltitudeModified = altitude;
 			return true;
