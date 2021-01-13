@@ -24,7 +24,11 @@ class Heavy_B747_8_FMC_PerfInitPage {
 			};
 			let crzAltCell = FMCString.Line.Box['5'];
 			if (isFinite(fmc.cruiseFlightLevel)) {
-				crzAltCell = fmc.cruiseFlightLevel.toFixed(0);
+				if (fmc.cruiseFlightLevel * 100 >= fmc.transitionAltitude) {
+					crzAltCell = FMCString.Common.FLIGHT_LEVEL + fmc.cruiseFlightLevel.toFixed(0);
+				} else {
+					crzAltCell = fmc.cruiseFlightLevel * 100 + '';
+				}
 			}
 			fmc.onRightInput[0] = () => {
 				let value = fmc.inOut;
