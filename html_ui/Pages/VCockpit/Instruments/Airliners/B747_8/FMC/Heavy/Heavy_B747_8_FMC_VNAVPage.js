@@ -13,6 +13,8 @@ class Heavy_B747_8_FMC_VNAVPage {
 			Heavy_B747_8_FMC_VNAVPage.ShowPage2(fmc);
 		} else if (fmc.currentFlightPhase >= FlightPhase.FLIGHT_PHASE_DESCENT){
 			Heavy_B747_8_FMC_VNAVPage.ShowPage3(fmc);
+		} else {
+			Heavy_B747_8_FMC_VNAVPage.ShowPage1(fmc);
 		}
 	}
 
