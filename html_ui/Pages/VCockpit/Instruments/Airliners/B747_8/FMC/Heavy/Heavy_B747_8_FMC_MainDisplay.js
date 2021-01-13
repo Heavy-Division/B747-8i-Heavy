@@ -426,4 +426,6 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 	}
 }
 
+FMCMainDisplay.clrValue = "DELETE";
+
 registerInstrument('fmc-b747-8-main-display', Heavy_B747_8_FMC_MainDisplay);
