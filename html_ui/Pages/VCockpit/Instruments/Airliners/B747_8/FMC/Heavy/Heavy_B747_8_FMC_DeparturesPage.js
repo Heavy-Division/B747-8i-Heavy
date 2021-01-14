@@ -234,6 +234,9 @@ class Heavy_B747_8_FMC_DeparturesPage {
 					this.fmc._isRouteActivated = false;
 					this.updateDepartureAndRunwayVariables();
 					SimVar.SetSimVarValue('L:FMC_EXEC_ACTIVE', 'number', 0);
+					this.fmc._computeV1Speed();
+					this.fmc._computeVRSpeed();
+					this.fmc._computeV2Speed();
 					this.showPage();
 				});
 				if (this.fmc.refreshPageCallback) {
