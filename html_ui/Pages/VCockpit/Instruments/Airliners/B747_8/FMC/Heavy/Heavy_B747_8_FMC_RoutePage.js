@@ -93,6 +93,9 @@ class Heavy_B747_8_FMC_RoutePage {
 			fmc.clearUserInput();
 			fmc.setOriginRunway(value, (result) => {
 				if (result) {
+					fmc._computeV1Speed();
+					fmc._computeVRSpeed();
+					fmc._computeV2Speed();
 					Heavy_B747_8_FMC_RoutePage.ShowPage1(fmc);
 				}
 			});
