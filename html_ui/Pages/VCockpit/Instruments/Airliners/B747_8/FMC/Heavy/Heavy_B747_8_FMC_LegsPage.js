@@ -118,8 +118,10 @@ class Heavy_B747_8_FMC_LegsPage {
 								if (isLastDepartureWaypoint || isArrivalWaypoint) {
 									speedConstraint = fmc.getCrzManagedSpeed().toFixed(0);
 								} else if (isDepartureWaypoint) {
-									let d = (waypointFPIndex - 1) / (fmc.flightPlanManager.getDepartureWaypointsCount() - 1 - activeWaypoint);
-									speedConstraint = (fmc.v2Speed * (1 - d) + fmc.getCrzManagedSpeed() * d).toFixed(0);
+									if(isFinite(fmc.v2Speed)){
+										let d = (waypointFPIndex - 1) / (fmc.flightPlanManager.getDepartureWaypointsCount() - 1 - activeWaypoint);
+										speedConstraint = (fmc.v2Speed * (1 - d) + fmc.getCrzManagedSpeed() * d).toFixed(0);
+									}
 								} else if (isApproachWaypoint) {
 									let predictedFlapsIndex = i + offset - (waypoints.length - 1) + 2;
 									predictedFlapsIndex = Math.max(0, predictedFlapsIndex);
