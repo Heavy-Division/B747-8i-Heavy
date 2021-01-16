@@ -1,5 +1,13 @@
 class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 
+	static get isCustomVNAVClimbEnabled() {
+		return this._isCustomVNAVClimbEnabled || false;
+	}
+
+	static set isCustomVNAVClimbEnabled(value) {
+		this._isCustomVNAVClimbEnabled = value;
+	}
+
 	constructor() {
 		super(...arguments);
 		this.clbSpeedRestrictionValue = NaN;
@@ -292,7 +300,6 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 						this.clbSpeedRestrictionValue = NaN;
 						this.clbSpeedRestrictionAltitude = NaN;
 					}
-
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
 					let altitude = Simplane.getAltitudeAboveGround();
 					let n1 = 100;
@@ -302,9 +309,12 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 						n1 = this.getThrustClimbLimit() / 100;
 					}
 					SimVar.SetSimVarValue('AUTOPILOT THROTTLE MAX THRUST', 'number', n1);
+
+					this.executeCustomVNAVClimb();
 				}
 			} else if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CRUISE) {
 				if (this.getIsVNAVActive()) {
+					SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_CUSTOM_VNAV_CLIMB_ENABLED', 'Number', 0);
 					let speed = this.getCrzManagedSpeed();
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
 					let altitude = Simplane.getAltitudeAboveGround();
@@ -337,6 +347,49 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			}
 			this.updateAutopilotCooldown = this._apCooldown;
 		}
+	}
+
+	executeCustomVNAVClimb() {
+		/**
+		 * Set LVAR (used for hiding VS hold rectangle on PFD)
+		 */
+		SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_CUSTOM_VNAV_CLIMB_ENABLED', 'Number', 1);
+		/**
+		 * Disable FLCH mode
+		 */
+		SimVar.SetSimVarValue('K:FLIGHT_LEVEL_CHANGE_ON', 'Number', 0);
+
+		/**
+		 * Enable AIRSPEED mode
+		 */
+		SimVar.SetSimVarValue('K:AP_AIRSPEED_ON', 'Number', 1);
+
+		/**
+		 * Get vertical speed to next waypoint
+		 */
+		let rate = SimVar.GetSimVarValue('GPS WP VERTICAL SPEED', 'Feet per minute');
+
+		/**
+		 * Round (ceil) vertical speed
+		 */
+		rate = Math.ceil(rate / 50) * 50;
+		/**
+		 * Do not descent during climb
+		 */
+		if (rate < 0) {
+			rate = 0;
+		}
+
+		/**
+		 * Set vertical speed and add 150 feet per minute (better be on altitude sooner)
+		 */
+		SimVar.SetSimVarValue('K:AP_VS_VAR_SET_ENGLISH', 'Feet per minute', rate + 150);
+
+		/**
+		 * Enable AP vertical speed hold
+		 * NOTE: K:AP_VS_ON can be used instead of K:AP_VS_HOLD
+		 */
+		SimVar.SetSimVarValue('K:AP_VS_HOLD', 'Number', 1);
 	}
 
 	executeSpeedRestriction() {
