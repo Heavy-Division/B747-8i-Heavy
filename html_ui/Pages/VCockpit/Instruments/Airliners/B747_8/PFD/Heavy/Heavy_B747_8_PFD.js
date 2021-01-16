@@ -6,7 +6,7 @@ B747_8_PFD_MainPage.prototype.onUpdate = function (_deltatime) {
 	let irsRState = SimVar.GetSimVarValue('L:HEAVY_B747_8_IRS_R_STATE', 'Number');
 	let isIrsPositionSet = SimVar.GetSimVarValue('L:HEAVY_B747_8_IS_IRS_POSITION_SET', 'Boolean');
 
-	if ((irsLState > 2 || irsCState > 2 || irsRState > 2)  && isIrsPositionSet) {
+	if ((irsLState > 2 || irsCState > 2 || irsRState > 2) && isIrsPositionSet) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
 			if (element) {
 				element.setAttribute('irs-state', 'aligned');
@@ -53,4 +53,20 @@ B747_8_PFD_MainPage.prototype.extendHtmlElementsWithIrsState = function () {
 
 	let currentTrack = document.getElementById('CurrentTrack');
 	currentTrack.setAttribute('irs-state', 'off');
+};
+
+B747_8_PFD_VSpeed.prototype.onUpdate = function (_deltaTime) {
+	var vSpeed = Math.round(Simplane.getVerticalSpeed());
+	this.vsi.setAttribute('vspeed', vSpeed.toString());
+	if (Simplane.getAutoPilotVerticalSpeedHoldActive()) {
+		var selVSpeed = Math.round(Simplane.getAutoPilotVerticalSpeedHoldValue());
+		this.vsi.setAttribute('selected_vspeed', selVSpeed.toString());
+		if(SimVar.GetSimVarValue('L:HEAVY_B747_8_IS_CUSTOM_VNAV_CLIMB_ENABLED', 'Number') === 1){
+			this.vsi.setAttribute('selected_vspeed_active', 'false');
+		} else {
+			this.vsi.setAttribute('selected_vspeed_active', 'true');
+		}
+	} else {
+		this.vsi.setAttribute('selected_vspeed_active', 'false');
+	}
 };
