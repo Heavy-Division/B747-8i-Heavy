@@ -486,4 +486,50 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 
 FMCMainDisplay.clrValue = 'DELETE';
 
+FMCMainDisplay.prototype.insertWaypointsAlongAirway = async function(lastWaypointIdent, index, airwayName, callback = EmptyCallback.Boolean) {
+	let realIndex = index - 1;
+	let referenceWaypoint = this.flightPlanManager.getWaypoint(realIndex);
+	if (referenceWaypoint) {
+		let infos = referenceWaypoint.infos;
+		if (infos instanceof WayPointInfo) {
+			let airway = infos.airways.find(a => { return a.name === airwayName; });
+			if (airway) {
+				let firstIndex = airway.icaos.indexOf(referenceWaypoint.icao);
+				let lastWaypointIcao = airway.icaos.find(icao => { return icao.indexOf(lastWaypointIdent) !== -1; });
+				let lastIndex = airway.icaos.indexOf(lastWaypointIcao);
+				if (firstIndex >= 0) {
+					if (lastIndex >= 0) {
+						let inc = 1;
+						if (lastIndex < firstIndex) {
+							inc = -1;
+						}
+						let count = Math.abs(lastIndex - firstIndex);
+						for (let i = 1; i < count + 1; i++) {
+							let asyncInsertWaypointByIcao = async (icao, index) => {
+								return new Promise(resolve => {
+									this.flightPlanManager.addWaypoint(icao, index, () => {
+										resolve();
+									});
+								});
+							};
+							await asyncInsertWaypointByIcao(airway.icaos[firstIndex + i * inc], realIndex + i);
+						}
+						return callback(true);
+					}
+					this.showErrorMessage("2ND INDEX NOT FOUND");
+					return callback(false);
+				}
+				this.showErrorMessage("1ST INDEX NOT FOUND");
+				return callback(false);
+			}
+			this.showErrorMessage("NO REF WAYPOINT");
+			return callback(false);
+		}
+		this.showErrorMessage("NO WAYPOINT INFOS");
+		return callback(false);
+	}
+	this.showErrorMessage("NO REF WAYPOINT");
+	return callback(false);
+}
+
 registerInstrument('fmc-b747-8-main-display', Heavy_B747_8_FMC_MainDisplay);

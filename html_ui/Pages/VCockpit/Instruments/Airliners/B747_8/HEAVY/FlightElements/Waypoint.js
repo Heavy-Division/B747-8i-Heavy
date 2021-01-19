@@ -699,7 +699,7 @@ class VORInfo extends WayPointInfo {
                 return callback();
             }
             this.routes = data.routes;
-            this.instrument.facilityLoader.getAllAirways(this).then(airways => {
+            this.instrument.facilityLoader.getAllAirways(this, 100).then(airways => {
                 this.airways = airways;
                 return callback();
             });
@@ -774,7 +774,7 @@ class NDBInfo extends WayPointInfo {
                 return callback();
             }
             this.routes = data.routes;
-            this.instrument.facilityLoader.getAllAirways(this).then(airways => {
+            this.instrument.facilityLoader.getAllAirways(this, 100).then(airways => {
                 this.airways = airways;
                 return callback();
             });
@@ -894,13 +894,13 @@ class IntersectionInfo extends WayPointInfo {
         this.nearestVORTrueRadial = data.nearestVorTrueRadial;
         this.nearestVORMagneticRadial = data.nearestVorMagneticRadial;
         this.nearestVORDistance = data.nearestVorDistance;
-        this.instrument.facilityLoader.getAllAirways(this, 5).then(airways => {
+        this.instrument.facilityLoader.getAllAirways(this, 100).then(airways => {
             this.airways = airways;
             return callback();
         });
     }
     async UpdateAirways() {
-        this.airways = await this.instrument.facilityLoader.getAllAirways(this);
+        this.airways = await this.instrument.facilityLoader.getAllAirways(this, 100);
     }
     static GetCommonAirway(wp1, wp2) {
         if (wp1 && wp2) {
@@ -916,6 +916,52 @@ class IntersectionInfo extends WayPointInfo {
                 }
             }
             if (wp2.infos instanceof IntersectionInfo) {
+                if (wp2.infos.airways && wp2.infos.airways.length > 0) {
+                    for (let i = 0; i < wp2.infos.airways.length; i++) {
+                        let wp2Airway = wp2.infos.airways[i];
+                        let wp1Index = wp2Airway.icaos.indexOf(wp1.icao);
+                        if (wp1Index !== -1) {
+                            return wp2Airway;
+                        }
+                    }
+                }
+            }
+
+            if (wp1.infos instanceof VORInfo) {
+                if (wp1.infos.airways && wp1.infos.airways.length > 0) {
+                    for (let i = 0; i < wp1.infos.airways.length; i++) {
+                        let wp1Airway = wp1.infos.airways[i];
+                        let wp2Index = wp1Airway.icaos.indexOf(wp2.icao);
+                        if (wp2Index !== -1) {
+                            return wp1Airway;
+                        }
+                    }
+                }
+            }
+            if (wp2.infos instanceof VORInfo) {
+                if (wp2.infos.airways && wp2.infos.airways.length > 0) {
+                    for (let i = 0; i < wp2.infos.airways.length; i++) {
+                        let wp2Airway = wp2.infos.airways[i];
+                        let wp1Index = wp2Airway.icaos.indexOf(wp1.icao);
+                        if (wp1Index !== -1) {
+                            return wp2Airway;
+                        }
+                    }
+                }
+            }
+
+            if (wp1.infos instanceof NDBInfo) {
+                if (wp1.infos.airways && wp1.infos.airways.length > 0) {
+                    for (let i = 0; i < wp1.infos.airways.length; i++) {
+                        let wp1Airway = wp1.infos.airways[i];
+                        let wp2Index = wp1Airway.icaos.indexOf(wp2.icao);
+                        if (wp2Index !== -1) {
+                            return wp1Airway;
+                        }
+                    }
+                }
+            }
+            if (wp2.infos instanceof NDBInfo) {
                 if (wp2.infos.airways && wp2.infos.airways.length > 0) {
                     for (let i = 0; i < wp2.infos.airways.length; i++) {
                         let wp2Airway = wp2.infos.airways[i];
