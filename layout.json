@@ -82,8 +82,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC.html",
-            "size": 6252,
-            "date": 132550330558257544
+            "size": 6268,
+            "date": 132554030601170258
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/B747_8_FMC_MainDisplay.js",
@@ -152,8 +152,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MainDisplay.js",
-            "size": 18707,
-            "date": 132552481896455570
+            "size": 20407,
+            "date": 132554725825443128
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_MaintPage.js",
@@ -192,8 +192,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_RoutePage.js",
-            "size": 9289,
-            "date": 132552120781519222
+            "size": 12549,
+            "date": 132554971210109016
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/FMC/Heavy/Heavy_B747_8_FMC_SelectWptPage.js",
@@ -227,8 +227,8 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/HEAVY/FlightElements/Waypoint.js",
-            "size": 34005,
-            "date": 132540868010304646
+            "size": 36082,
+            "date": 132554827090688192
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/HEAVY/Map/MapInstrument.css",
@@ -632,13 +632,13 @@
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/PFD/B747_8_PFD.html",
-            "size": 6166,
-            "date": 132552391952634842
+            "size": 6182,
+            "date": 132554030672928404
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/B747_8/PFD/Heavy/Heavy_B747_8_PFD.js",
             "size": 2966,
-            "date": 132552388999670802
+            "date": 132553852877184836
         },
         {
             "path": "html_ui/Pages/VCockpit/Instruments/Airliners/Shared/Boeing/Heavy_Boeing_Common.js",
