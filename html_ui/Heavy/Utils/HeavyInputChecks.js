@@ -30,15 +30,15 @@ HeavyInputChecks.waypointConstraints = (input, convertToFeet = true, convertAlti
 		altitudes = inputCheck;
 	}
 
-	if(speed){
-		if(HeavyInputChecks.speedRange(speed)){
+	if (speed) {
+		if (HeavyInputChecks.speedRange(speed)) {
 			output.speed = Math.round(parseInt(speed));
 		} else {
-			return false
+			return false;
 		}
 	}
 
-	if(altitudes){
+	if (altitudes) {
 		output.altitudes = altitudes.match(/^([0-9]{4}|[0-5][0-9]{4}|FL[0-5][0-9]{2}|[0-5][0-9]{2})([AB]?)$/);
 		if (!output.altitudes) {
 			output.altitudes = altitudes.match(/^([0-9]{4}|[0-5][0-9]{4}|FL[0-5][0-9]{2}|[0-5][0-9]{2})(A)([0-9]{4}|[0-5][0-9]{4}|FL[0-5][0-9]{2}|[0-5][0-9]{2})(B)$/);
@@ -59,14 +59,14 @@ HeavyInputChecks.waypointConstraints = (input, convertToFeet = true, convertAlti
 				}
 			}
 		}
-	}
 
-	if (convertAltitudeDescriptionLettersToIndexes) {
-		if (output.altitudes[2] || output.altitudes[2] === '') {
-			output.altitudes[2] = HeavyInputChecks.convertAltitudeDescriptionLettersToIndexes(output.altitudes[2]);
-		}
-		if (output.altitudes[5]) {
-			output.altitudes[5] = HeavyInputChecks.convertAltitudeDescriptionLettersToIndexes(output.altitudes[5]);
+		if (convertAltitudeDescriptionLettersToIndexes) {
+			if (output.altitudes[2] || output.altitudes[2] === '') {
+				output.altitudes[2] = HeavyInputChecks.convertAltitudeDescriptionLettersToIndexes(output.altitudes[2]);
+			}
+			if (output.altitudes[5]) {
+				output.altitudes[5] = HeavyInputChecks.convertAltitudeDescriptionLettersToIndexes(output.altitudes[5]);
+			}
 		}
 	}
 	return (output.speed !== -1 || output.altitudes ? output : false);
