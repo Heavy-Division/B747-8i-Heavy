@@ -28,9 +28,9 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 
 	onUpdate(_deltaTime) {
 		super.onUpdate(_deltaTime);
-		if (this.refreshPageCallback) {
-			this.refreshPageCallback();
-		}
+		//if (this.refreshPageCallback) {
+		//	this.refreshPageCallback();
+		//}
 	}
 
 	updateAutopilot() {
