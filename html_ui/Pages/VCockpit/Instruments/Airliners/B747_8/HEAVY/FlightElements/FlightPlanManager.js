@@ -148,9 +148,6 @@ class FlightPlanManager {
 					icao += this.getApproachIndex().toFixed(0);
 				}
 			}
-			this._waypointsConstraints[index].forEach((x) => {
-				console.log(x.speedConstraint);
-			});
 
 			if (currentWaypoints[ii] &&
 				currentWaypoints[ii].infos &&
@@ -199,14 +196,7 @@ class FlightPlanManager {
 				v.infos.airwayIdentInFP = waypointData.airwayIdent;
 				v.speedConstraint = waypointData.speedConstraint;
 				v.transitionLLas = waypointData.transitionLLas;
-				/*
-				if(this._waypointsConstraints[index][ii]){
-					console.log("Waypoint constraint exist: " + this._waypointsConstraints[index][ii].speedConstraint)
-				} else {
-					console.log("Waypoint constraint not exist: " + ii)
-				}
 
-				 */
 				if (this._waypointsConstraints[index][ii]) {
 					if (this._waypointsConstraints[index][ii].speedConstraint > 0) {
 						v.speedConstraint = this._waypointsConstraints[index][ii].speedConstraint;
@@ -762,7 +752,7 @@ class FlightPlanManager {
 	}
 
 	updateFlightPlan(callback = () => {
-	}, log = true) {
+	}, log = false) {
 		let t0 = performance.now();
 		Coherent.call('GET_FLIGHTPLAN').then((flightPlanData) => {
 			let t1 = performance.now();
@@ -804,19 +794,6 @@ class FlightPlanManager {
 
 			this._loadWaypoints(flightPlanData.waypoints, this._waypoints[index], index, (wps) => {
 				this._waypoints[index] = wps;
-				//this._waypointsConstraints[index] = wps;
-				/*
-				if(this._waypoints[index].length !== this._waypointsConstraints[index].length){
-					console.log("Waypoint Constraints override");
-					this._waypointsConstraints[index] = wps;
-				}
-				*/
-
-				/*
-								for(let i = 0; i < this._waypoints[index].length; i++){
-									console.log(this._waypoints[index][i].ident + ':' + this._waypointsConstraints[index][i].ident + ' - ' + this._waypoints[index][i].speedConstraint + ':' + this._waypointsConstraints[index][i].speedConstraint + ' - ' + this._waypoints[index][i].legAltitude1 + ':' + this._waypointsConstraints[index][i].legAltitude1)
-								}
-				*/
 				let t2 = performance.now();
 				if (log) {
 					console.log('update flight plan');
@@ -829,7 +806,7 @@ class FlightPlanManager {
 	}
 
 	updateCurrentApproach(callback = () => {
-	}, log = true) {
+	}, log = false) {
 		let t0 = performance.now();
 		Coherent.call('GET_APPROACH_FLIGHTPLAN').then((flightPlanData) => {
 			this._loadWaypoints(flightPlanData.waypoints, this._approachWaypoints, null, (wps) => {
@@ -1518,6 +1495,26 @@ class FlightPlanManager {
 		}
 		if (!considerApproachWaypoints || i < this.getWaypointsCount() - 1) {
 			return this._waypoints[flightPlanIndex][i];
+		} else {
+			let approachWaypoints = this.getApproachWaypoints();
+			let apprWp = approachWaypoints[i - (this.getWaypointsCount() - 1)];
+			if (apprWp) {
+				return apprWp;
+			}
+			return this.getDestination();
+		}
+	}
+
+	getWaypointConstraintsByIndex(i, flightPlanIndex = NaN, considerApproachWaypoints) {
+		if (isNaN(flightPlanIndex)) {
+			flightPlanIndex = this._currentFlightPlanIndex;
+		}
+		if (!considerApproachWaypoints || i < this.getWaypointsCount() - 1) {
+			if(this._waypointsConstraints[flightPlanIndex][i]){
+				return this._waypointsConstraints[flightPlanIndex][i];
+			} else {
+				return null;
+			}
 		} else {
 			let approachWaypoints = this.getApproachWaypoints();
 			let apprWp = approachWaypoints[i - (this.getWaypointsCount() - 1)];
