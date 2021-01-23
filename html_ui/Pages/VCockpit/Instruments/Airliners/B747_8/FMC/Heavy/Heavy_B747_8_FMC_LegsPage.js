@@ -112,19 +112,19 @@ class Heavy_B747_8_FMC_LegsPage {
 						if (isEnRouteWaypoint) {
 
 							let flightLevel = fmc.transitionAltitude <= waypoint.legAltitude1;
-							let speedConstraint = Math.round(fmc.getCrzManagedSpeed(true))
-							if(waypoint.speedConstraint > 0){
+							let speedConstraint = Math.round(fmc.getCrzManagedSpeed(true));
+							if (waypoint.speedConstraint > 0) {
 								speedConstraint = Math.round(waypoint.speedConstraint);
 							}
-							let altitudeConstraint
-							if(waypoint.legAltitudeDescription === 1){
-								altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0))
+							let altitudeConstraint;
+							if (waypoint.legAltitudeDescription === 1) {
+								altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0));
 							} else if (waypoint.legAltitudeDescription === 2) {
-								altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'A'
+								altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'A';
 							} else if (waypoint.legAltitudeDescription === 3) {
-								altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'B'
+								altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'B';
 							} else if (waypoint.legAltitudeDescription === 4) {
-								altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'A' + ' ' + (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'B'
+								altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'A' + ' ' + (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude2 / 100).toFixed(0) : waypoint.legAltitude2.toFixed(0)) + 'B';
 							} else {
 								altitudeConstraint = fmc.cruiseFlightLevel;
 							}
@@ -135,20 +135,62 @@ class Heavy_B747_8_FMC_LegsPage {
 								speedConstraint = waypoint.speedConstraint.toFixed(0);
 							} else {
 								if (isLastDepartureWaypoint || isArrivalWaypoint) {
-									speedConstraint = fmc.getCrzManagedSpeed().toFixed(0);
+									if (waypoint.speedConstraint > 0) {
+										speedConstraint = Math.round(waypoint.speedConstraint).toFixed(0);
+									} else {
+										speedConstraint = fmc.getCrzManagedSpeed().toFixed(0);
+									}
 								} else if (isDepartureWaypoint) {
-									if (isFinite(fmc.v2Speed)) {
-										let d = (waypointFPIndex - 1) / (fmc.flightPlanManager.getDepartureWaypointsCount() - 1 - activeWaypoint);
-										speedConstraint = (fmc.v2Speed * (1 - d) + fmc.getCrzManagedSpeed() * d).toFixed(0);
+									if (waypoint.speedConstraint > 0) {
+										speedConstraint = Math.round(waypoint.speedConstraint).toFixed(0);
+									} else {
+										if (isFinite(fmc.v2Speed)) {
+											let d = (waypointFPIndex - 1) / (fmc.flightPlanManager.getDepartureWaypointsCount() - 1 - activeWaypoint);
+											speedConstraint = (fmc.v2Speed * (1 - d) + fmc.getCrzManagedSpeed() * d).toFixed(0);
+										}
 									}
 								} else if (isApproachWaypoint) {
-									let predictedFlapsIndex = i + offset - (waypoints.length - 1) + 2;
-									predictedFlapsIndex = Math.max(0, predictedFlapsIndex);
-									console.log(waypoint.ident + ' ' + predictedFlapsIndex);
-									speedConstraint = fmc.getManagedApproachSpeed(predictedFlapsIndex).toFixed(0);
+									if (waypoint.speedConstraint > 0) {
+										speedConstraint = Math.round(waypoint.speedConstraint).toFixed(0);
+									} else {
+										let predictedFlapsIndex = i + offset - (waypoints.length - 1) + 2;
+										predictedFlapsIndex = Math.max(0, predictedFlapsIndex);
+										console.log(waypoint.ident + ' ' + predictedFlapsIndex);
+										speedConstraint = fmc.getManagedApproachSpeed(predictedFlapsIndex).toFixed(0);
+									}
 								}
 							}
+
+							let flightLevel = fmc.transitionAltitude <= waypoint.legAltitude1;
 							let altitudeConstraint = '-----';
+
+							if (waypoint.legAltitudeDescription !== 0) {
+								if (waypoint.legAltitudeDescription === 1) {
+									altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0));
+								}
+								if (waypoint.legAltitudeDescription === 2) {
+									altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'A';
+								}
+								if (waypoint.legAltitudeDescription === 3) {
+									altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'B';
+								} else if (waypoint.legAltitudeDescription === 4) {
+									altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0)) + 'A' + ' ' + (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude2 / 100).toFixed(0) : waypoint.legAltitude2.toFixed(0)) + 'B';
+									//altitudeConstraint = 'FL' + ((waypoint.legAltitude1 + waypoint.legAltitude2) * 0.5 / 100).toFixed(0);
+								}
+							} else if (isDepartureWaypoint) {
+								if (isLastDepartureWaypoint) {
+									altitudeConstraint = (flightLevel ? 'FL' : '') + fmc.cruiseFlightLevel;
+								} else {
+									let altitude = Math.floor(waypoint.cumulativeDistanceInFP * 0.14 * 6076.118 / 10).toFixed(0) + '0';
+									altitudeConstraint = (fmc.transitionAltitude <= altitude ? 'FL' : '') + altitude;
+								}
+							} else {
+								if (isLastDepartureWaypoint || isFirstArrivalWaypoint) {
+									altitudeConstraint = (flightLevel ? 'FL' : '') + fmc.cruiseFlightLevel;
+								}
+							}
+
+
 							if (waypoint.legAltitudeDescription !== 0) {
 								if (waypoint.legAltitudeDescription === 1) {
 									if (waypoint.legAltitude1 >= fmc.transitionAltitude) {
@@ -182,32 +224,33 @@ class Heavy_B747_8_FMC_LegsPage {
 							let value = fmc.inOut;
 							if (value.length > 0) {
 								fmc.clearUserInput();
-								//let wp = fmc.flightPlanManager.getWaypointConstraints(waypointFPIndex);
-								let wp = fmc.flightPlanManager.getWaypoint(waypointFPIndex);
+								let wpOriginal = fmc.flightPlanManager.getWaypoint(waypointFPIndex);
+								let wp = Object.assign({}, wpOriginal);
 								let constraints = HeavyInputChecks.waypointConstraints(value);
-								if (constraints.altitudes.length === 3) {
-									wp.legAltitude1 = constraints.altitudes[1];
-									wp.legAltitudeDescription = parseInt(constraints.altitudes[2]);
-								} else if (constraints.altitudes.length === 5) {
-									wp.legAltitude1 = constraints.altitudes[1];
-									wp.legAltitude2 = constraints.altitudes[3];
-									wp.legAltitudeDescription = 4;
+								if(constraints.altitudes){
+									if (constraints.altitudes.length === 3) {
+										wp.legAltitude1 = constraints.altitudes[1];
+										wp.legAltitudeDescription = parseInt(constraints.altitudes[2]);
+									} else if (constraints.altitudes.length === 5) {
+										wp.legAltitude1 = constraints.altitudes[1];
+										wp.legAltitude2 = constraints.altitudes[3];
+										wp.legAltitudeDescription = 4;
+									}
 								}
-								constraints.speed = 215;
+
 								if (constraints.speed !== -1) {
-									wp.speedConstraint = Math.round(constraints.speed)
+									wp.speedConstraint = Math.round(constraints.speed);
 								}
-								//console.log(wp.speedConstraint);
 
 								fmc.flightPlanManager.updateWaypointConstraints(waypointFPIndex, wp, NaN, () => {
 									fmc.flightPlanManager.updateFlightPlan(() => {
 										Heavy_B747_8_FMC_LegsPage.ShowPage1(fmc, currentPage);
-									})
+									});
 								});
 
 							} else {
-								fmc.inOut = rows[2 * i + 1][1];
-								fmc.inOut = '215/5000';
+								let inOut = rows[2 * i + 1][1].replace(/ /g, '');
+								fmc.inOut = inOut;
 							}
 						};
 					}

@@ -43,8 +43,6 @@ HeavyInputChecks.waypointConstraints = (input, convertToFeet = true, convertAlti
 		if (!output.altitudes) {
 			output.altitudes = altitudes.match(/^([0-9]{4}|[0-5][0-9]{4}|FL[0-5][0-9]{2}|[0-5][0-9]{2})(A)([0-9]{4}|[0-5][0-9]{4}|FL[0-5][0-9]{2}|[0-5][0-9]{2})(B)$/);
 		}
-	} else {
-		return false;
 	}
 
 

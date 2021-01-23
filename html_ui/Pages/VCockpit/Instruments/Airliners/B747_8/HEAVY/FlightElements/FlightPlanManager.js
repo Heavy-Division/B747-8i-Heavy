@@ -215,6 +215,7 @@ class FlightPlanManager {
 					if (this._waypointsConstraints[index][ii]) {
 						v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 						v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+						v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 					} else {
 						v.legAltitudeDescription = 2;
 						v.legAltitude1 = v.altitudeinFP;
@@ -223,6 +224,7 @@ class FlightPlanManager {
 					if (this._waypointsConstraints[index][ii]) {
 						v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 						v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+						v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 					} else {
 						v.legAltitudeDescription = 2;
 						v.legAltitude1 = v.altitudeinFP;
@@ -231,6 +233,7 @@ class FlightPlanManager {
 					if (this._waypointsConstraints[index][ii]) {
 						v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 						v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+						v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 					} else {
 						v.legAltitudeDescription = 1;
 						v.legAltitude1 = v.altitudeinFP;
@@ -239,9 +242,16 @@ class FlightPlanManager {
 					if (this._waypointsConstraints[index][ii]) {
 						v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 						v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+						v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 					} else {
 						v.legAltitudeDescription = 1;
 						v.legAltitude1 = v.altitudeinFP;
+					}
+				} else {
+					if (this._waypointsConstraints[index][ii]) {
+						v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
+						v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+						v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 					}
 				}
 				this.addHardCodedConstraints(v);
@@ -293,6 +303,7 @@ class FlightPlanManager {
 						if (this._waypointsConstraints[index][ii]) {
 							wp.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 							wp.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+							wp.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 						} else {
 							wp.legAltitudeDescription = 2;
 							wp.legAltitude1 = wp.altitudeinFP;
@@ -301,6 +312,7 @@ class FlightPlanManager {
 						if (this._waypointsConstraints[index][ii]) {
 							wp.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 							wp.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+							wp.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 						} else {
 							wp.legAltitudeDescription = 2;
 							wp.legAltitude1 = wp.altitudeinFP;
@@ -309,11 +321,17 @@ class FlightPlanManager {
 						if (this._waypointsConstraints[index][ii]) {
 							wp.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 							wp.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+							wp.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 						} else {
 							wp.legAltitudeDescription = 1;
 							wp.legAltitude1 = wp.altitudeinFP;
 						}
-
+					} else {
+						if (this._waypointsConstraints[index][ii]) {
+							wp.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
+							wp.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+							wp.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
+						}
 					}
 					this.addHardCodedConstraints(wp);
 					waypoints[ii] = wp;
@@ -360,6 +378,7 @@ class FlightPlanManager {
 								if (this._waypointsConstraints[index][ii]) {
 									v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 									v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+									v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 								} else {
 									v.legAltitudeDescription = 2;
 									v.legAltitude1 = v.altitudeinFP;
@@ -368,6 +387,7 @@ class FlightPlanManager {
 								if (this._waypointsConstraints[index][ii]) {
 									v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 									v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+									v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 								} else {
 									v.legAltitudeDescription = 2;
 									v.legAltitude1 = v.altitudeinFP;
@@ -376,9 +396,16 @@ class FlightPlanManager {
 								if (this._waypointsConstraints[index][ii]) {
 									v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
 									v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+									v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 								} else {
 									v.legAltitudeDescription = 1;
 									v.legAltitude1 = v.altitudeinFP;
+								}
+							} else {
+								if (this._waypointsConstraints[index][ii]) {
+									v.legAltitudeDescription = this._waypointsConstraints[index][ii].legAltitudeDescription;
+									v.legAltitude1 = this._waypointsConstraints[index][ii].legAltitude1;
+									v.legAltitude2 = this._waypointsConstraints[index][ii].legAltitude2;
 								}
 							}
 							this.addHardCodedConstraints(v);
@@ -1510,7 +1537,7 @@ class FlightPlanManager {
 			flightPlanIndex = this._currentFlightPlanIndex;
 		}
 		if (!considerApproachWaypoints || i < this.getWaypointsCount() - 1) {
-			if(this._waypointsConstraints[flightPlanIndex][i]){
+			if (this._waypointsConstraints[flightPlanIndex][i]) {
 				return this._waypointsConstraints[flightPlanIndex][i];
 			} else {
 				return null;
