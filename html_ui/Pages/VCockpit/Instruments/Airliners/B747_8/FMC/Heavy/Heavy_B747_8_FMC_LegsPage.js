@@ -165,6 +165,7 @@ class Heavy_B747_8_FMC_LegsPage {
 							let altitudeConstraint = '-----';
 
 							if (waypoint.legAltitudeDescription !== 0) {
+								console.log(waypoint.ident + " - LegDescription: " + waypoint.legAltitudeDescription)
 								if (waypoint.legAltitudeDescription === 1) {
 									altitudeConstraint = (flightLevel ? 'FL' : '') + (flightLevel ? (waypoint.legAltitude1 / 100).toFixed(0) : waypoint.legAltitude1.toFixed(0));
 								}
@@ -179,43 +180,19 @@ class Heavy_B747_8_FMC_LegsPage {
 								}
 							} else if (isDepartureWaypoint) {
 								if (isLastDepartureWaypoint) {
+									console.log(waypoint.ident + " - LegDescription: " + waypoint.legAltitudeDescription + " - Last DP")
 									altitudeConstraint = (flightLevel ? 'FL' : '') + fmc.cruiseFlightLevel;
 								} else {
+									console.log(waypoint.ident + " - LegDescription: " + waypoint.legAltitudeDescription + " - DP")
 									let altitude = Math.floor(waypoint.cumulativeDistanceInFP * 0.14 * 6076.118 / 10).toFixed(0) + '0';
 									altitudeConstraint = (fmc.transitionAltitude <= altitude ? 'FL' : '') + altitude;
 								}
 							} else {
 								if (isLastDepartureWaypoint || isFirstArrivalWaypoint) {
+									console.log(waypoint.ident + " - LegDescription: " + waypoint.legAltitudeDescription + " - Last DP 2 OR First Arrival")
 									altitudeConstraint = (flightLevel ? 'FL' : '') + fmc.cruiseFlightLevel;
-								}
-							}
-
-
-							if (waypoint.legAltitudeDescription !== 0) {
-								if (waypoint.legAltitudeDescription === 1) {
-									if (waypoint.legAltitude1 >= fmc.transitionAltitude) {
-										altitudeConstraint = 'FL' + (waypoint.legAltitude1 / 100).toFixed(0);
-									} else {
-										altitudeConstraint = waypoint.legAltitude1.toFixed(0);
-									}
-								}
-								if (waypoint.legAltitudeDescription === 2) {
-									altitudeConstraint = waypoint.legAltitude1.toFixed(0) + 'A';
-								}
-								if (waypoint.legAltitudeDescription === 3) {
-									altitudeConstraint = waypoint.legAltitude1.toFixed(0) + 'B';
-								} else if (waypoint.legAltitudeDescription === 4) {
-									altitudeConstraint = 'FL' + ((waypoint.legAltitude1 + waypoint.legAltitude2) * 0.5 / 100).toFixed(0);
-								}
-							} else if (isDepartureWaypoint) {
-								if (isLastDepartureWaypoint) {
-									altitudeConstraint = 'FL' + fmc.cruiseFlightLevel;
 								} else {
-									altitudeConstraint = Math.floor(waypoint.cumulativeDistanceInFP * 0.14 * 6076.118 / 10).toFixed(0) + '0';
-								}
-							} else {
-								if (isLastDepartureWaypoint || isFirstArrivalWaypoint) {
-									altitudeConstraint = 'FL' + fmc.cruiseFlightLevel;
+									console.log(waypoint.ident + " - LegDescription: " + waypoint.legAltitudeDescription + " - Else")
 								}
 							}
 							rows[2 * i + 1][1] = speedConstraint + '/' + altitudeConstraint;

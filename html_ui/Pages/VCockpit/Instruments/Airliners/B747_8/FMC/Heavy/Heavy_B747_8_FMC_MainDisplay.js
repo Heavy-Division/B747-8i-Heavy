@@ -27,7 +27,9 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 	}
 
 	onUpdate(_deltaTime) {
-		super.onUpdate(_deltaTime);
+		//super.onUpdate(_deltaTime);
+		//this.flightPlanManager.updateFlightPlan();
+		//this.flightPlanManager.updateCurrentApproach();
 		//if (this.refreshPageCallback) {
 		//	this.refreshPageCallback();
 		//}
