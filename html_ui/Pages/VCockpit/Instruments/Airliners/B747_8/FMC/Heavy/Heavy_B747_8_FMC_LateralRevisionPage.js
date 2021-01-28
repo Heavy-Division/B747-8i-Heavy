@@ -19,7 +19,7 @@ class Heavy_B747_8_FMC_LateralRevisionPage {
 		} else if (waypoint === fmc.flightPlanManager.getDestination()) {
 			departureArrival = '<ARRIVAL';
 			fmc.onLeftInput[0] = () => {
-				Heavy_B747_8_FMC_ArrivalsPage.ShowPage(fmc, waypoint);
+				//Heavy_B747_8_FMC_ArrivalsPage.ShowPage(fmc, waypoint);
 			};
 		}
 		fmc.setTemplate([
