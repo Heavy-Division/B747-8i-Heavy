@@ -274,7 +274,7 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 	 * This function will start interval of auto rate
 	 */
 	activateAutoRate() {
-		SimVar.SetSimVarValue('L:HEAVY_SIM_RATE_MANAGER_ACTIVATED', 'Boolean', 1).then(() => {
+		SimVar.SetSimVarValue(B748H_LocalVariables.SIM_RATE_MANAGER.ACTIVATED, 'Boolean', 1).then(() => {
 				let interval = {};
 				interval.id = setInterval(this.autoRateInterval.bind(this, interval), 4000);
 				Heavy_B747_8_FMC_HeavySimRateManager.managedIntervalId = interval.id;
@@ -297,7 +297,7 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 			return;
 		}
 
-		let activated = SimVar.GetSimVarValue('L:HEAVY_SIM_RATE_MANAGER_ACTIVATED', 'Boolean');
+		let activated = SimVar.GetSimVarValue(B748H_LocalVariables.SIM_RATE_MANAGER.ACTIVATED, 'Boolean');
 		if (activated) {
 
 			if (this.shouldDeactivateBecauseOfTOD() || this.shouldDeactivateBecauseOfDecel()) {
@@ -416,7 +416,7 @@ class Heavy_B747_8_FMC_HeavySimRateManager {
 	 * This function will start interval of auto rate deactivation
 	 */
 	deactivateAutoRate(autoDeactivation = true) {
-		SimVar.SetSimVarValue('L:HEAVY_SIM_RATE_MANAGER_ACTIVATED', 'Boolean', 0).then(() => {
+		SimVar.SetSimVarValue(B748H_LocalVariables.SIM_RATE_MANAGER.ACTIVATED, 'Boolean', 0).then(() => {
 			let interval = {};
 			interval.id = setInterval(this.autoRateIntervalDeactivation.bind(this, interval, autoDeactivation), 1000);
 			Heavy_B747_8_FMC_HeavySimRateManager.slowDownIntervalId = interval.id;

@@ -7,9 +7,9 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 	showPage() {
 		this.fmc.clearDisplay();
 
-		let irsLState = SimVar.GetSimVarValue('L:HEAVY_B747_8_IRS_L_STATE', 'Number');
-		let irsCState = SimVar.GetSimVarValue('L:HEAVY_B747_8_IRS_C_STATE', 'Number');
-		let irsRState = SimVar.GetSimVarValue('L:HEAVY_B747_8_IRS_R_STATE', 'Number');
+		let irsLState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.L.STATE, 'Number');
+		let irsCState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.C.STATE, 'Number');
+		let irsRState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.R.STATE, 'Number');
 		let irsState = Math.max(irsLState, irsCState, irsRState);
 		let irsStateString = '';
 		switch (irsState) {
@@ -64,14 +64,14 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 		this.fmc.setTemplate(rows);
 
 		this.fmc.onRightInput[4] = () => {
-			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_L_SWITCH_STATE', 'Number', 2);
-			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_C_SWITCH_STATE', 'Number', 2);
-			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_R_SWITCH_STATE', 'Number', 2);
-			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_L_STATE', 'Number', 3);
-			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_C_STATE', 'Number', 3);
-			SimVar.SetSimVarValue('L:HEAVY_B747_8_IRS_R_STATE', 'Number', 3);
-			SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_INITED', 'Number', 2);
-			SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_POSITION_SET', 'Boolean', true);
+			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.L.SWITCH_STATE, 'Number', 2);
+			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.C.SWITCH_STATE, 'Number', 2);
+			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.R.SWITCH_STATE, 'Number', 2);
+			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.L.STATE, 'Number', 3);
+			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.C.STATE, 'Number', 3);
+			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.R.STATE, 'Number', 3);
+			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.IS_INITED, 'Number', 2);
+			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.POSITION_SET, 'Boolean', true);
 			this.showPage();
 		};
 
@@ -87,9 +87,9 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 	showAlignSpeedConfigurationPage(){
 		this.fmc.clearDisplay();
 
-		let irsLState = SimVar.GetSimVarValue('L:HEAVY_B747_8_IRS_L_STATE', 'Number');
-		let irsCState = SimVar.GetSimVarValue('L:HEAVY_B747_8_IRS_C_STATE', 'Number');
-		let irsRState = SimVar.GetSimVarValue('L:HEAVY_B747_8_IRS_R_STATE', 'Number');
+		let irsLState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.L.STATE, 'Number');
+		let irsCState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.C.STATE, 'Number');
+		let irsRState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.R.STATE, 'Number');
 		let irsState = Math.max(irsLState, irsCState, irsRState);
 		let irsStateString = '';
 		switch (irsState) {

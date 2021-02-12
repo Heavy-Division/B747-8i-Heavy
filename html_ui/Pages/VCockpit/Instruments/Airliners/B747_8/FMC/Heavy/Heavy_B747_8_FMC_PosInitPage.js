@@ -8,7 +8,7 @@ class Heavy_B747_8_FMC_PosInitPage {
 
 		let currPos = '';
 
-		let isIrsInited = SimVar.GetSimVarValue('L:HEAVY_B747_8_IS_IRS_INITED', 'Number')
+		let isIrsInited = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.IS_INITED, 'Number')
 
 		if(isIrsInited > 100000){
 			currPos = new LatLong(SimVar.GetSimVarValue('GPS POSITION LAT', 'degree latitude'), SimVar.GetSimVarValue('GPS POSITION LON', 'degree longitude')).toDegreeString();

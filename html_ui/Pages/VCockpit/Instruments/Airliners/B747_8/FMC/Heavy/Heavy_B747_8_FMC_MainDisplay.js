@@ -316,7 +316,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 				}
 			} else if (this.currentFlightPhase === FlightPhase.FLIGHT_PHASE_CRUISE) {
 				if (this.getIsVNAVActive()) {
-					SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_CUSTOM_VNAV_CLIMB_ENABLED', 'Number', 0);
+					SimVar.SetSimVarValue(B748H_LocalVariables.VNAV.CUSTOM_VNAV_CLIMB_ENABLED, 'Number', 0);
 					let speed = this.getCrzManagedSpeed();
 					this.setAPManagedSpeed(speed, Aircraft.B747_8);
 					let altitude = Simplane.getAltitudeAboveGround();
@@ -355,7 +355,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		/**
 		 * Set LVAR (used for hiding VS hold rectangle on PFD)
 		 */
-		SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_CUSTOM_VNAV_CLIMB_ENABLED', 'Number', 1);
+		SimVar.SetSimVarValue(B748H_LocalVariables.VNAV.CUSTOM_VNAV_CLIMB_ENABLED, 'Number', 1);
 		/**
 		 * Disable FLCH mode
 		 */
@@ -479,7 +479,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 			this.showErrorMessage(this.defaultInputErrorMessage);
 			return false;
 		}
-		await SimVar.SetSimVarValue('L:HEAVY_B747_8_IS_IRS_POSITION_SET', 'Boolean', true);
+		await SimVar.SetSimVarValue(B748H_LocalVariables.IRS.POSITION_SET, 'Boolean', true);
 		this.initCoordinates = newIrsCoordinatesDisplay;
 		this.lastPos = this.initCoordinates;
 		return true;
