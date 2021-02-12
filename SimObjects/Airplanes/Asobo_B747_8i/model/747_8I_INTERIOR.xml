@@ -10,6 +10,7 @@
 	</LODS>
 	<Behaviors>
 		<Include ModelBehaviorFile="Asobo\Common.xml"/> <!-- ###################################### -->
+		<Include ModelBehaviorFile="Heavy\Common.xml"/>
 		<Include ModelBehaviorFile="Asobo\Airliner\AirlinerCommon.xml"/>
 		<Include ModelBehaviorFile="Asobo\Airliner\Boeing.xml"/>
 		<Include ModelBehaviorFile="Asobo\Airliner\FMC.xml"/>
