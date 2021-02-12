@@ -2,15 +2,13 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 	constructor(fmc) {
 		this.fmc = fmc;
+		this.irsInfo = new B748H_IRSInfo();
 	}
 
 	showPage() {
 		this.fmc.clearDisplay();
-
-		let irsLState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.L.STATE, 'Number');
-		let irsCState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.C.STATE, 'Number');
-		let irsRState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.R.STATE, 'Number');
-		let irsState = Math.max(irsLState, irsCState, irsRState);
+		this.fmc.refreshPageCallback = this.showPage;
+		let irsState = Math.max(this.irsInfo.getLState(), this.irsInfo.getCState(), this.irsInfo.getRState());
 		let irsStateString = '';
 		switch (irsState) {
 			case 0:
@@ -29,15 +27,15 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 		let irsAlignSpeed;
 
-		switch (HeavyDataStorage.get('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.NORMAL)) {
-			case HeavyIRSSimulator.ALIGN_SPEED.INSTANT:
-				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.INSTANT;
+		switch (HeavyDataStorage.get('B748H_IRS_ALIGN_SPEED', B748H_IRSInfo.ALIGN_SPEED.NORMAL)) {
+			case B748H_IRSInfo.ALIGN_SPEED.INSTANT:
+				irsAlignSpeed = B748H_IRSInfo.ALIGN_SPEED.INSTANT;
 				break;
-			case HeavyIRSSimulator.ALIGN_SPEED.FAST:
-				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.FAST;
+			case B748H_IRSInfo.ALIGN_SPEED.FAST:
+				irsAlignSpeed = B748H_IRSInfo.ALIGN_SPEED.FAST;
 				break;
-			case HeavyIRSSimulator.ALIGN_SPEED.NORMAL:
-				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.NORMAL;
+			case B748H_IRSInfo.ALIGN_SPEED.NORMAL:
+				irsAlignSpeed = B748H_IRSInfo.ALIGN_SPEED.NORMAL;
 				break;
 		}
 
@@ -64,14 +62,14 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 		this.fmc.setTemplate(rows);
 
 		this.fmc.onRightInput[4] = () => {
-			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.L.SWITCH_STATE, 'Number', 2);
-			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.C.SWITCH_STATE, 'Number', 2);
-			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.R.SWITCH_STATE, 'Number', 2);
-			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.L.STATE, 'Number', 3);
-			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.C.STATE, 'Number', 3);
-			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.R.STATE, 'Number', 3);
-			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.IS_INITED, 'Number', 2);
-			SimVar.SetSimVarValue(B748H_LocalVariables.IRS.POSITION_SET, 'Boolean', true);
+			this.irsInfo.setLState(3);
+			this.irsInfo.setCState(3);
+			this.irsInfo.setRState(3);
+			this.irsInfo.setLSwitchState(2);
+			this.irsInfo.setCSwitchState(2);
+			this.irsInfo.setRSwitchState(2);
+			this.irsInfo.setInited(2);
+			this.irsInfo.setPositionSet(1);
 			this.showPage();
 		};
 
@@ -84,13 +82,10 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 		};
 	}
 
-	showAlignSpeedConfigurationPage(){
+	showAlignSpeedConfigurationPage() {
 		this.fmc.clearDisplay();
 
-		let irsLState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.L.STATE, 'Number');
-		let irsCState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.C.STATE, 'Number');
-		let irsRState = SimVar.GetSimVarValue(B748H_LocalVariables.IRS.R.STATE, 'Number');
-		let irsState = Math.max(irsLState, irsCState, irsRState);
+		let irsState = Math.max(this.irsInfo.getLState(), this.irsInfo.getCState(), this.irsInfo.getRState());
 		let irsStateString = '';
 		switch (irsState) {
 			case 0:
@@ -109,17 +104,18 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 		let irsAlignSpeed;
 
-		switch (HeavyDataStorage.get('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.NORMAL)) {
-			case HeavyIRSSimulator.ALIGN_SPEED.INSTANT:
-				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.INSTANT;
+		switch (HeavyDataStorage.get('B748H_IRS_ALIGN_SPEED', B748H_IRSInfo.ALIGN_SPEED.NORMAL)) {
+			case B748H_IRSInfo.ALIGN_SPEED.INSTANT:
+				irsAlignSpeed = B748H_IRSInfo.ALIGN_SPEED.INSTANT;
 				break;
-			case HeavyIRSSimulator.ALIGN_SPEED.FAST:
-				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.FAST;
+			case B748H_IRSInfo.ALIGN_SPEED.FAST:
+				irsAlignSpeed = B748H_IRSInfo.ALIGN_SPEED.FAST;
 				break;
-			case HeavyIRSSimulator.ALIGN_SPEED.NORMAL:
-				irsAlignSpeed = HeavyIRSSimulator.ALIGN_SPEED.NORMAL;
+			case B748H_IRSInfo.ALIGN_SPEED.NORMAL:
+				irsAlignSpeed = B748H_IRSInfo.ALIGN_SPEED.NORMAL;
 				break;
 		}
+
 
 		let rows = [
 			[FMCString.PageTitle.HEAVY_IRS],
@@ -141,17 +137,17 @@ class Heavy_B747_8_FMC_HeavyIRSMenuPage {
 
 
 		this.fmc.onRightInput[1] = () => {
-			HeavyDataStorage.set('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.INSTANT);
+			HeavyDataStorage.set('B748H_IRS_ALIGN_SPEED', B748H_IRSInfo.ALIGN_SPEED.INSTANT);
 			this.showPage();
 		};
 
 		this.fmc.onRightInput[2] = () => {
-			HeavyDataStorage.set('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.FAST);
+			HeavyDataStorage.set('B748H_IRS_ALIGN_SPEED', B748H_IRSInfo.ALIGN_SPEED.FAST);
 			this.showPage();
 		};
 
 		this.fmc.onRightInput[3] = () => {
-			HeavyDataStorage.set('IRS_ALIGN_SPEED', HeavyIRSSimulator.ALIGN_SPEED.NORMAL);
+			HeavyDataStorage.set('B748H_IRS_ALIGN_SPEED', B748H_IRSInfo.ALIGN_SPEED.NORMAL);
 			this.showPage();
 		};
 	}

@@ -4,8 +4,6 @@ B747_8_MFD_MainPage.prototype.altitudeArcOffsets = [
 	[110, 330, 360]  // centered map
 ];
 
-B747_8_MFD_MainPage.prototype.heavyIRSSimulator = new HeavyIRSSimulator();
-
 B747_8_MFD_MainPage.prototype.getAbsoluteAltitudeDeltaForAltitudeArc = function () {
 	return Math.abs(Simplane.getAutoPilotDisplayedAltitudeLockValue() - Simplane.getAltitude());
 };
@@ -75,16 +73,21 @@ B747_8_MFD_MainPage.prototype.extendMFDHtmlElementsWithIrsState = () => {
 
 B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 	this.extendMFDHtmlElementsWithIrsState();
-	this.heavyIRSSimulator.update();
+	let irsInfo = new B748H_IRSInfo();
+	let irsLState = irsInfo.getLState();
+	let irsCState = irsInfo.getCState();
+	let irsRState = irsInfo.getRState();
+	let isIrsPositionSet = irsInfo.isPositionSet();
 
-	if ((this.heavyIRSSimulator.irsLState > 2 || this.heavyIRSSimulator.irsCState > 2 || this.heavyIRSSimulator.irsRState > 2) && this.heavyIRSSimulator.isIrsPositionSet) {
+
+	if ((irsLState > 2 || irsCState > 2 || irsRState > 2) && isIrsPositionSet) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
 			if (element) {
 				element.setAttribute('irs-state', 'aligned');
 			}
 		});
 		return;
-	} else if (this.heavyIRSSimulator.irsLState > 1 || this.heavyIRSSimulator.irsCState > 1 || this.heavyIRSSimulator.irsRState > 1) {
+	} else if (irsLState > 1 || irsCState > 1 || irsRState > 1) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
 			if (element) {
 				element.setAttribute('irs-state', 'aligning');
@@ -98,31 +101,39 @@ B747_8_MFD_MainPage.prototype.updateMapIfIrsNotAligned = function () {
 			element.textContent = '';
 		});
 
+		let initLTime = parseFloat(irsInfo.getLInitTime());
+		let initCTime = irsInfo.getCInitTime() * 1;
+		let initRTime = irsInfo.getRInitTime() * 1;
+
+		let lTimeForAlign = parseFloat(irsInfo.getLTimeForAlign());
+		let cTimeForAlign = irsInfo.getCTimeForAlign() * 1;
+		let rTimeForAlign = irsInfo.getRTimeForAlign() * 1;
+
 		let times = [];
 		let position = 0;
 		let now = Math.floor(Date.now() / 1000);
-		if (this.heavyIRSSimulator.irsLState >= 2) {
-			let time = Math.floor(((this.heavyIRSSimulator.initLAlignTime + this.heavyIRSSimulator.irsLTimeForAligning) - now) / 60);
+		if (irsLState >= 2) {
+			let time = Math.floor(((initLTime + lTimeForAlign) - now) / 60);
 			aligns[position].textContent = 'L ' + (time <= 0 ? 0 : time) + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
 
-		if (this.heavyIRSSimulator.irsCState >= 2) {
-			let time = Math.floor(((this.heavyIRSSimulator.initCAlignTime + this.heavyIRSSimulator.irsCTimeForAligning) - now) / 60);
+		if (irsCState >= 2) {
+			let time = Math.floor(((initCTime + cTimeForAlign) - now) / 60);
 			aligns[position].textContent = 'C ' + (time <= 0 ? 0 : time) + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
 
-		if (this.heavyIRSSimulator.irsRState >= 2) {
-			let time = Math.floor(((this.heavyIRSSimulator.initRAlignTime + this.heavyIRSSimulator.irsRTimeForAligning) - now) / 60);
+		if (irsRState >= 2) {
+			let time = Math.floor(((initRTime + rTimeForAlign) - now) / 60);
 			aligns[position].textContent = 'R ' + (time <= 0 ? 0 : time) + (time > 6 ? '+' : '') + ' MIN';
 			aligns[position].style.visibility = 'visible';
 			position++;
 		}
 
-	} else if (this.heavyIRSSimulator.irsLState > 0 || this.heavyIRSSimulator.irsCState > 0 || this.heavyIRSSimulator.irsRState > 0) {
+	} else if (irsLState > 0 || irsCState > 0 || irsRState > 0) {
 		document.querySelectorAll('[irs-state]').forEach((element) => {
 			if (element) {
 				element.setAttribute('irs-state', 'inited');
