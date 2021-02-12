@@ -375,8 +375,8 @@ class Heavy_B747_8_FMC_HeavyPayloadManager {
 			this.fmc.refreshPageCallback = () => {
 				this.showPage();
 			};
+			SimVar.SetSimVarValue('L:FMC_UPDATE_CURRENT_PAGE', 'Number', 1);
 		}
-		console.log('refresh');
 		let rows = HeavyArray.Fmc.EmptyRows;
 
 		rows[0][0] = FMCString.PageTitle.PAYLOAD_MANAGER;
