@@ -369,7 +369,7 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		/**
 		 * Get vertical speed to next waypoint
 		 */
-		let rate = SimVar.GetSimVarValue('GPS WP VERTICAL SPEED', 'Feet per minute');
+		let rate = this.calculateClimbRate();
 
 		/**
 		 * Round (ceil) vertical speed
@@ -385,13 +385,144 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 		/**
 		 * Set vertical speed and add 150 feet per minute (better be on altitude sooner)
 		 */
-		SimVar.SetSimVarValue('K:AP_VS_VAR_SET_ENGLISH', 'Feet per minute', rate + 150);
+		SimVar.SetSimVarValue('K:AP_VS_VAR_SET_ENGLISH', 'Feet per minute', rate);
 
 		/**
 		 * Enable AP vertical speed hold
 		 * NOTE: K:AP_VS_ON can be used instead of K:AP_VS_HOLD
 		 */
 		SimVar.SetSimVarValue('K:AP_VS_HOLD', 'Number', 1);
+
+		console.log('VS Climb rate: ' + rate);
+		console.log('custom Climb VNAV path');
+	}
+
+	calculateClimbRate() {
+		let nextWaypoint = this.flightPlanManager.getActiveWaypoint();
+		let targetAltitude = null;
+
+		let nextAltitude = nextWaypoint.legAltitude1;
+		let nextDistance = SimVar.GetSimVarValue('GPS WP DISTANCE', 'Meters') * 0.00062;
+
+		if (!this.maxRate) {
+			this.maxRate = 3500;
+		}
+
+		if (!this.asapRate) {
+			this.asapRate = this.maxRate;
+		}
+		let asap = false;
+
+		if (nextWaypoint.legAltitudeDescription === 1) {
+			targetAltitude = nextWaypoint.legAltitude1;
+		} else if (nextWaypoint.legAltitudeDescription === 2) {
+			asap = true;
+			let nextWaypointIndex = this.flightPlanManager.getActiveWaypointIndex();
+			let waypoints = this.flightPlanManager.getWaypoints();
+
+			for (let i = nextWaypointIndex; i < waypoints.length; i++) {
+				if (waypoints[i].legAltitudeDescription === 3) {
+					nextAltitude = waypoints[i].legAltitude1;
+					nextDistance += Avionics.Utils.computeGreatCircleDistance(waypoints[i - 1].infos.coordinates, waypoints[i].infos.coordinates);
+					break;
+				} else if (waypoints[i].legAltitudeDescription === 1) {
+					nextAltitude = waypoints[i].legAltitude1;
+					nextDistance += Avionics.Utils.computeGreatCircleDistance(waypoints[i - 1].infos.coordinates, waypoints[i].infos.coordinates);
+					break;
+				} else if (waypoints[i].legAltitudeDescription === 2) {
+					nextAltitude = waypoints[i].legAltitude1;
+					nextDistance += Avionics.Utils.computeGreatCircleDistance(waypoints[i - 1].infos.coordinates, waypoints[i].infos.coordinates);
+				}
+			}
+
+			targetAltitude = nextAltitude;
+		} else if (nextWaypoint.legAltitudeDescription === 3) {
+			asap = true;
+			targetAltitude = nextWaypoint.legAltitude1;
+		}
+
+		let absoluteAltitudeDelta = Math.abs(targetAltitude - Simplane.getAltitude());
+		let groundSpeed = Simplane.getGroundSpeed();
+		let milesPerMinute = groundSpeed / 60;
+		let minutesToTarget = nextDistance / milesPerMinute;
+
+
+		console.log('Target altitude: ' + targetAltitude);
+		console.log('Rate: ' + absoluteAltitudeDelta / minutesToTarget);
+
+		let speedTrend = this.computeIASAcceleration(Simplane.getIndicatedSpeed());
+
+
+		console.log('Speed trend:' + speedTrend);
+		let rate = absoluteAltitudeDelta / minutesToTarget;
+		let now = performance.now();
+
+		if (!this._lastUpdateAsapRateTime) {
+			this._lastUpdateAsapRateTime = now;
+		}
+		if (!this._delayedAsapRateUpdateTime) {
+			this._delayedAsapRateUpdateTime = 0;
+		}
+
+		let dt = now - this._lastUpdateAsapRateTime;
+		this._lastUpdateAsapRateTime = now;
+
+
+		this._delayedAsapRateUpdateTime += dt;
+
+		let delayValueUp = (speedTrend < 0 ? 6000 : 3000);
+		let delayValueDown = (speedTrend < 0.2 ? 3000 : 6000);
+
+		let delayUp = (this._delayedAsapRateUpdateTime > delayValueUp ? false : true);
+		let delayDown = (this._delayedAsapRateUpdateTime > delayValueDown ? false : true);
+
+		if ((speedTrend < -0.4) || (Simplane.getIndicatedSpeed() < Simplane.getAutoPilotManagedAirspeedHoldValue() - 5)) {
+			if (!delayDown) {
+				this._delayedAsapRateUpdateTime = 0;
+				if (this.asapRate > 100) {
+					this.asapRate -= 100;
+				}
+			}
+		}
+
+		if (((speedTrend > 0) && (Simplane.getIndicatedSpeed() > Simplane.getAutoPilotManagedAirspeedHoldValue() - 5)) || ((speedTrend > 1.5))) {
+			if (!delayUp) {
+				this._delayedAsapRateUpdateTime = 0;
+				if (this.asapRate < this.maxRate) {
+					this.asapRate += 100;
+				}
+			}
+		}
+
+		console.log('AsapRate:' + this.asapRate);
+
+		if (targetAltitude) {
+			return (asap && absoluteAltitudeDelta > 1000 ? this.asapRate : rate);
+		} else {
+			return SimVar.GetSimVarValue('GPS WP VERTICAL SPEED', 'Feet per minute');
+		}
+	}
+
+	computeIASAcceleration(_currentAirspeed) {
+		let speed = _currentAirspeed;
+		if (speed < 30)
+			speed = 30;
+		let time = performance.now() / 1000;
+		if (!this._lastIASTime) {
+			this._lastIASTime = {
+				ias: speed,
+				t: time
+			};
+			return;
+		}
+		let dTime = time - this._lastIASTime.t;
+		if (dTime > 0) {
+			let frameIASAcceleration = (speed - this._lastIASTime.ias) / dTime;
+			this._computedIASAcceleration = Utils.SmoothSin(this._computedIASAcceleration, frameIASAcceleration, 0.28, dTime);
+		}
+		this._lastIASTime.ias = speed;
+		this._lastIASTime.t = time;
+		return this._computedIASAcceleration;
 	}
 
 	executeSpeedRestriction() {
@@ -488,16 +619,20 @@ class Heavy_B747_8_FMC_MainDisplay extends B747_8_FMC_MainDisplay {
 
 FMCMainDisplay.clrValue = 'DELETE';
 
-FMCMainDisplay.prototype.insertWaypointsAlongAirway = async function(lastWaypointIdent, index, airwayName, callback = EmptyCallback.Boolean) {
+FMCMainDisplay.prototype.insertWaypointsAlongAirway = async function (lastWaypointIdent, index, airwayName, callback = EmptyCallback.Boolean) {
 	let realIndex = index - 1;
 	let referenceWaypoint = this.flightPlanManager.getWaypoint(realIndex);
 	if (referenceWaypoint) {
 		let infos = referenceWaypoint.infos;
 		if (infos instanceof WayPointInfo) {
-			let airway = infos.airways.find(a => { return a.name === airwayName; });
+			let airway = infos.airways.find(a => {
+				return a.name === airwayName;
+			});
 			if (airway) {
 				let firstIndex = airway.icaos.indexOf(referenceWaypoint.icao);
-				let lastWaypointIcao = airway.icaos.find(icao => { return icao.indexOf(lastWaypointIdent) !== -1; });
+				let lastWaypointIcao = airway.icaos.find(icao => {
+					return icao.indexOf(lastWaypointIdent) !== -1;
+				});
 				let lastIndex = airway.icaos.indexOf(lastWaypointIcao);
 				if (firstIndex >= 0) {
 					if (lastIndex >= 0) {
@@ -518,20 +653,20 @@ FMCMainDisplay.prototype.insertWaypointsAlongAirway = async function(lastWaypoin
 						}
 						return callback(true);
 					}
-					this.showErrorMessage("2ND INDEX NOT FOUND");
+					this.showErrorMessage('2ND INDEX NOT FOUND');
 					return callback(false);
 				}
-				this.showErrorMessage("1ST INDEX NOT FOUND");
+				this.showErrorMessage('1ST INDEX NOT FOUND');
 				return callback(false);
 			}
-			this.showErrorMessage("NO REF WAYPOINT");
+			this.showErrorMessage('NO REF WAYPOINT');
 			return callback(false);
 		}
-		this.showErrorMessage("NO WAYPOINT INFOS");
+		this.showErrorMessage('NO WAYPOINT INFOS');
 		return callback(false);
 	}
-	this.showErrorMessage("NO REF WAYPOINT");
+	this.showErrorMessage('NO REF WAYPOINT');
 	return callback(false);
-}
+};
 
 registerInstrument('fmc-b747-8-main-display', Heavy_B747_8_FMC_MainDisplay);

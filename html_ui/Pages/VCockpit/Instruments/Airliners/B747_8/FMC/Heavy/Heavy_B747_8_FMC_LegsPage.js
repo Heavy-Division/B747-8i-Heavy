@@ -184,6 +184,8 @@ class Heavy_B747_8_FMC_LegsPage {
 									altitudeConstraint = (flightLevel ? 'FL' : '') + fmc.cruiseFlightLevel;
 								} else {
 									console.log(waypoint.ident + " - LegDescription: " + waypoint.legAltitudeDescription + " - DP")
+									console.log("DP index: " + waypointFPIndex)
+									console.log("Altitude in FP: " + waypoint.altitudeinFP);
 									let altitude = Math.floor(waypoint.cumulativeDistanceInFP * 0.14 * 6076.118 / 10).toFixed(0) + '0';
 									altitudeConstraint = (fmc.transitionAltitude <= altitude ? 'FL' : '') + altitude;
 								}
